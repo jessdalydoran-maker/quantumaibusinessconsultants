@@ -2,16 +2,16 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --color-bg: #181c17;
-  --color-bg-alt: #1f241b;
-  --color-bg-raised: #262b21;
+  --color-bg: #0e2a1c;
+  --color-bg-alt: #153a27;
+  --color-bg-raised: #1e4632;
   --color-text: #f5f1eb;
-  --color-text-muted: #b8b4a8;
-  --color-accent-gold: #d4af37;
-  --color-accent-gold-soft: #e8cf7a;
+  --color-text-muted: #aebbae;
+  --color-accent-gold: #c9a227;
+  --color-accent-gold-soft: #e3c267;
   --color-accent-bronze: #97623b;
-  --color-border: rgba(245, 241, 235, 0.12);
-  --color-border-strong: rgba(245, 241, 235, 0.22);
+  --color-border: rgba(245, 241, 235, 0.14);
+  --color-border-strong: rgba(245, 241, 235, 0.26);
 }
 
 @theme inline {

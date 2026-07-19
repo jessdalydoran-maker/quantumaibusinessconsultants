@@ -14,7 +14,7 @@ export function renderOgImage(eyebrow: string, title: string) {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "#181c17",
+          background: "#0e2a1c",
           color: "#f5f1eb",
           fontFamily: "sans-serif",
         }}
@@ -46,7 +46,7 @@ export function renderOgImage(eyebrow: string, title: string) {
           style={{
             marginTop: 48,
             fontSize: 28,
-            color: "#d4af37",
+            color: "#c9a227",
             display: "flex",
           }}
         >

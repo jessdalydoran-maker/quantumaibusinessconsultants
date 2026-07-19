@@ -40,7 +40,7 @@ export function RoiCalculator() {
             max={40}
             value={hours}
             onChange={(e) => setHours(Number(e.target.value))}
-            className="mt-3 w-full accent-[#d4af37]"
+            className="mt-3 w-full accent-[#c9a227]"
           />
         </div>
 
@@ -57,7 +57,7 @@ export function RoiCalculator() {
             step={5}
             value={hourlyValue}
             onChange={(e) => setHourlyValue(Number(e.target.value))}
-            className="mt-3 w-full accent-[#d4af37]"
+            className="mt-3 w-full accent-[#c9a227]"
           />
         </div>
 
@@ -77,7 +77,7 @@ export function RoiCalculator() {
             step={5}
             value={automatable}
             onChange={(e) => setAutomatable(Number(e.target.value))}
-            className="mt-3 w-full accent-[#d4af37]"
+            className="mt-3 w-full accent-[#c9a227]"
           />
         </div>
       </div>
