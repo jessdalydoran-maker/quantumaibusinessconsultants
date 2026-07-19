@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quantum AI Business Consultants — Website
 
-## Getting Started
+Next.js (App Router) + TypeScript + Tailwind CSS v4 rebuild of aibusinessconsultants.co.uk.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env.local   # fill in the keys below
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+See `.env.example` for the full list. Required before launch:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `ANTHROPIC_API_KEY` — powers the AI receptionist chat widget (`/api/chat`). Without it, the widget replies with a graceful fallback message instead of chatting.
+- `RESEND_API_KEY` — sends contact form submissions and AI-captured leads to `jess@` and `mark@aibusinessconsultants.co.uk` (`/api/contact` and the chat widget's lead capture tool).
+- `NEXT_PUBLIC_GA_ID` — Google Analytics 4 measurement ID. Leave blank to disable analytics.
+- `NEXT_PUBLIC_BOOKING_URL` — discovery call booking link (e.g. Calendly). Falls back to `/contact` until set.
 
-## Learn More
+## Content
 
-To learn more about Next.js, take a look at the following resources:
+- Services, industries, and case studies are structured data in `src/lib/content/`.
+- Blog posts live as MDX files in `content/resources/` with frontmatter (`title`, `description`, `date`, `author`, `excerpt`).
+- The AI receptionist's knowledge comes from `src/lib/chat-knowledge.ts`, which is generated from the same structured content — update the content files and the assistant's knowledge updates with them.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `src/app/` — routes (App Router), one folder per page in the sitemap.
+- `src/components/` — shared UI (Header, Footer, PageHero, CtaBand, FaqAccordion, ChatWidget, RoiCalculator, ContactForm).
+- `src/lib/` — content data, site constants, JSON-LD schema builders, OG image generator.
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built for Vercel. Set the environment variables above in the Vercel project settings before going live — the site builds and runs without them, but the chat widget and contact form won't send anywhere until they're set.
