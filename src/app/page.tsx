@@ -3,6 +3,7 @@ import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { RoiCalculator } from "@/components/RoiCalculator";
 import { FaqAccordion } from "@/components/FaqAccordion";
+import { HeroBanner } from "@/components/HeroBanner";
 import { services } from "@/lib/content/services";
 import { industries } from "@/lib/content/industries";
 import { caseStudies } from "@/lib/content/case-studies";
@@ -61,6 +62,8 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(faqSchema(homeFaqs))} />
+
+      <HeroBanner />
 
       <section className="border-b border-border pt-20 pb-16 md:pt-28 md:pb-24">
         <Container>

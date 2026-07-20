@@ -23,8 +23,8 @@ export const site = {
     country: "GB",
   },
   founded: "2026",
-  emails: ["jess@aibusinessconsultants.co.uk", "mark@aibusinessconsultants.co.uk"],
-  contactEmail: "jess@aibusinessconsultants.co.uk",
+  emails: ["jd@aibusinessconsultants.co.uk", "mark@aibusinessconsultants.co.uk"],
+  contactEmail: "jd@aibusinessconsultants.co.uk",
   responseTime: "within 24 hours",
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact",
   social: {

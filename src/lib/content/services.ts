@@ -58,9 +58,9 @@ export const services: Service[] = [
           "24/7 inbound call handling with natural conversation, smart routing, and booking directly into your calendar where appropriate.",
       },
       {
-        title: "Website chat",
+        title: "24/7 AI receptionist",
         description:
-          "Captures and qualifies leads around the clock on your existing website, without needing a redesign.",
+          "Trained specifically on your business, it answers by phone or on your website around the clock, capturing and qualifying every enquiry without needing a redesign — not a generic chat widget bolted on top.",
       },
       {
         title: "Missed-call text-back",
@@ -342,7 +342,7 @@ export const services: Service[] = [
   {
     slug: "admin-and-back-office",
     name: "Admin & Back-Office",
-    dek: "Notes, records, and reporting that keep themselves up to date, so nothing depends on remembering to write it down later.",
+    dek: "The admin you're personally stuck doing for hours can be automated with a bespoke build — saving considerable time and money, not just tidier records.",
     summary:
       "A system of record that captures every enquiry, call, and booking automatically, plus simple reporting so you can see what's actually happening in the business without digging for it.",
     intro: [
@@ -350,6 +350,7 @@ export const services: Service[] = [
       "The cost shows up later, not immediately. A customer calls back and nobody can find the notes from their last job. A quiet month arrives and there's no clear picture of where enquiries actually came from, so there's nothing solid to act on. None of this is anyone's fault — it's just what happens when record-keeping depends on someone finding a spare ten minutes that rarely comes.",
       "An admin and back-office system removes the dependency on that spare ten minutes. Enquiries, calls, and bookings get logged as they happen, automatically, so the record exists whether or not anyone had time to write it down.",
       "It's also the foundation the rest of your systems build on. Enquiry handling, bookings, and follow-up all work better with an accurate, up-to-date record behind them — which is why this is often the quiet, unglamorous piece that makes everything else run more smoothly, even though it's rarely the one a business notices first.",
+      "Beyond basic logging, a bespoke build can take on the specific admin task that's actually eating your hours — reconciling job sheets, preparing figures for invoicing, compiling the same monthly report by hand, chasing paperwork between systems that don't talk to each other. Once we know exactly what that task involves, we can usually automate it directly, which is where the real time and cost savings come from, not just having tidier records.",
     ],
     signs: [
       "You've had to ask a customer to remind you what was discussed on a previous call",
@@ -397,9 +398,9 @@ export const services: Service[] = [
         "Every interaction captured and organised automatically — the foundation the rest of your systems build on, and useful on its own from day one, even before anything else is connected to it.",
     },
     bespoke: {
-      title: "Full CRM and reporting build",
+      title: "Bespoke admin automation",
       description:
-        "A client record system and monthly reporting dashboard built around the fields and metrics that actually matter to your business, not a generic CRM template with fields you'll never use.",
+        "Once we understand exactly which admin task is taking up hours of your week, we build a system specifically around automating it — whether that's a full CRM and reporting dashboard or something narrower and more specific to how you work. Done properly, this is where a bespoke build saves considerable time and money, not just a generic template with fields you'll never use.",
     },
     relatedIndustries: ["professional-services", "trades", "salons-and-personal-care"],
     faqs: [
