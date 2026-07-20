@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/Container";
 import { nav, site } from "@/lib/site";
 import { services } from "@/lib/content/services";
@@ -9,7 +10,10 @@ export function Footer() {
     <footer className="border-t border-border bg-bg-alt">
       <Container className="grid gap-12 py-16 md:grid-cols-4">
         <div>
-          <span className="font-display text-lg text-gold">Quantum AI</span>
+          <div className="flex items-center gap-2">
+            <Image src="/logo-mark.png" alt="" width={32} height={32} className="h-8 w-8" />
+            <span className="font-display text-lg text-gold">Quantum AI</span>
+          </div>
           <p className="mt-3 max-w-xs text-sm text-text-muted">{site.description}</p>
           <p className="mt-6 text-xs uppercase tracking-[0.2em] text-text-muted">
             {site.location.locality}, {site.location.region} &middot; Est. {site.founded}

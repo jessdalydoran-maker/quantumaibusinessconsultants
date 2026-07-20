@@ -1,10 +1,51 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
 import { RoiCalculator } from "@/components/RoiCalculator";
+import { FaqAccordion } from "@/components/FaqAccordion";
 import { services } from "@/lib/content/services";
 import { industries } from "@/lib/content/industries";
 import { caseStudies } from "@/lib/content/case-studies";
+import { site } from "@/lib/site";
+import { faqSchema, jsonLdScript } from "@/lib/schema";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+const homeFaqs = [
+  {
+    question: "What does an AI business consultancy actually build?",
+    answer:
+      `${site.name} designs and builds bespoke AI systems that handle enquiries, bookings, follow-ups, and back-office admin for independent trades and service businesses. Systems are trained on each client's specific services, tone, and existing tools — not sold as an off-the-shelf chatbot plugin.`,
+  },
+  {
+    question: "Is this only for big companies, or does it work for a one- or two-person business?",
+    answer:
+      "It's built primarily for independent and small businesses — sole traders, small teams, and independent clinics, salons, and trades firms — where there's nobody spare to catch every enquiry. Larger operations benefit too, but the core problem this solves (a busy person who can't always answer the phone) is most acute for small, independent businesses.",
+  },
+  {
+    question: "How much does it cost?",
+    answer:
+      "We don't publish prices, because a fixed price list can't reflect the difference between a simple missed-call text-back and a full AI voice receptionist with CRM integration. Pricing is scoped individually based on complexity, integrations, and ongoing support — see how it works for the full explanation.",
+  },
+  {
+    question: "How long does it take to get a system live?",
+    answer:
+      "It depends on scope. Simple quick wins, like automated review requests or missed-call text-back, are often live within days. Fuller bespoke systems with multiple integrations take longer — we'll give you a realistic timeline as part of your proposal.",
+  },
+  {
+    question: "Will my customers know they're talking to AI?",
+    answer:
+      "Where it matters, systems introduce themselves clearly, and a customer can always ask for a real person. Every system is written in your business's own tone rather than a generic corporate voice, so most customers simply experience a fast, helpful answer.",
+  },
+  {
+    question: "What happens after the system goes live?",
+    answer:
+      "It doesn't end at launch. Every system is monitored and refined on an ongoing basis as real conversations come in and your business changes — see our ongoing partnership approach on the how it works page.",
+  },
+];
 
 const capabilityTags = [
   "AI Voice Receptionist",
@@ -19,6 +60,8 @@ const capabilityTags = [
 export default function Home() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(faqSchema(homeFaqs))} />
+
       <section className="border-b border-border pt-20 pb-16 md:pt-28 md:pb-24">
         <Container>
           <p className="text-xs uppercase tracking-[0.3em] text-bronze">
@@ -59,12 +102,37 @@ export default function Home() {
 
       <section className="border-b border-border py-20 md:py-28">
         <Container>
+          <div className="max-w-3xl space-y-5 text-text-muted">
+            <p>
+              {site.name} designs and builds bespoke AI systems for independent trades and
+              service businesses across Northern Ireland. We handle the enquiries, bookings,
+              follow-ups, and admin that eat into evenings and weekends — using AI trained
+              specifically on your business, not a generic script bolted onto your website.
+            </p>
+            <p>
+              Every business we work with is doing genuinely good work and losing some of it
+              anyway, not because the work is lacking but because the timing is. A call rings out
+              mid-job, a web enquiry sits unanswered overnight, a quote goes cold because nobody
+              circled back. None of that reflects on the quality of the trade or service — it
+              reflects on how much of a busy day is realistically left over for admin once the
+              actual work is done.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-border py-20 md:py-28">
+        <Container>
           <div className="grid gap-12 md:grid-cols-[1fr_2fr] md:gap-16">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-bronze">Sound familiar?</p>
               <h2 className="mt-4 font-display text-3xl text-text md:text-4xl">
                 You&apos;re doing everything. The AI does the rest.
               </h2>
+              <p className="mt-4 text-sm text-text-muted">
+                Three patterns show up again and again in the businesses we talk to — see if any
+                of them sound like your week.
+              </p>
             </div>
             <div className="grid gap-10 sm:grid-cols-3">
               {[
@@ -109,6 +177,17 @@ export default function Home() {
             </Button>
           </div>
 
+          <p className="mt-8 max-w-2xl text-text-muted">
+            Every business&apos;s version of missed calls, slow follow-up, and admin overload looks
+            different, so we don&apos;t sell a fixed package and try to make your business fit
+            it. Each of the four areas below has a low-cost quick win to start with, and a fuller
+            bespoke build for when you&apos;re ready for more — see{" "}
+            <Link href="/how-it-works" className="text-gold hover:underline">
+              how it works
+            </Link>{" "}
+            for the difference between the two.
+          </p>
+
           <div className="mt-14 divide-y divide-border border-t border-border">
             {services.map((service, i) => (
               <Link
@@ -140,6 +219,12 @@ export default function Home() {
           <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
             Built around how your business actually operates.
           </h2>
+          <p className="mt-4 max-w-2xl text-text-muted">
+            A physio clinic&apos;s booking flow isn&apos;t a tradesperson&apos;s callout flow,
+            and a salon&apos;s no-show problem isn&apos;t a solicitor&apos;s intake problem. We
+            build around the specifics of your industry rather than adapting one generic template
+            across every client.
+          </p>
           <div className="mt-12 grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
             {industries.map((industry) => (
               <Link
@@ -205,6 +290,18 @@ export default function Home() {
           </h2>
           <div className="mt-12">
             <RoiCalculator />
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-border py-20 md:py-28">
+        <Container>
+          <p className="text-xs uppercase tracking-[0.3em] text-bronze">Common Questions</p>
+          <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
+            Before you book a call.
+          </h2>
+          <div className="mt-8 max-w-3xl">
+            <FaqAccordion faqs={homeFaqs} />
           </div>
         </Container>
       </section>

@@ -12,18 +12,41 @@ When an AI receptionist can't confidently handle something, it escalates to a re
 
 Every system — human or AI — occasionally mishandles something. A new receptionist misquotes a price on their first week too. The real question business owners should be asking is: what happens next, and who's in control of where the boundaries are?
 
+This reframes the conversation in a useful way. The right question isn't "is this system perfect," because no system, human or otherwise, is. The right question is: when it isn't, does it fail safely, does someone find out quickly, and can it be fixed without starting over.
+
 ## How we design for it
 
 Every system we build starts with an explicit list of what it's allowed to decide on its own, and what it must hand off. Booking a routine appointment within normal hours: fine to handle directly. An unusual request, a complaint, or anything involving a price that isn't standard: escalate, every time.
 
 That escalation isn't a vague "it'll figure it out" promise — it's a specific set of rules we agree with you during scoping, and you can change them at any point once the system is live. If something happens that you didn't anticipate, we adjust the rules, not just apologise for it.
 
+## What "escalation" actually looks like
+
+In practice, escalation means one of a few concrete things happening, depending on what you've asked for during scoping:
+
+- The conversation is flagged and a summary is sent straight to you or a team member, so a human picks it up quickly rather than the customer being left hanging.
+- The system tells the customer directly that this needs a person, and gives them a way to reach one — rather than pretending it can help and giving a guess instead.
+- For anything involving money outside standard pricing, or anything that sounds like a complaint, the system defaults to capturing the details and handing off rather than attempting to resolve it.
+
+None of this is automatic in the sense of being baked into every AI tool by default — it's something we design deliberately for your business, because what counts as "needs a human" is different for a solicitor's intake line than it is for a plumber's emergency call-out line.
+
+## Testing before it ever meets a real customer
+
+Before a system goes live, it's tested against real, sometimes deliberately awkward questions — the kind an actual customer might ask, including edge cases and things slightly outside what it was trained on. This isn't a one-off check box; it's how we find the gaps in what the system knows before a customer does, and it's part of why "trained on your business" means more than a short list of FAQs handed over once and forgotten.
+
 ## Your data, your control
 
-Business owners considering AI are usually more worried about losing control than excited about the technology, and that's a reasonable instinct. Practically, that means:
+Business owners considering AI are usually more worried about losing control than excited about the technology, and that's a reasonable instinct — you're trusting something you didn't build to represent your business to your customers. Practically, staying in control means:
 
 - You know what data is captured and where it's stored — see our [privacy approach](/legal/privacy) for the specifics.
 - You can review call summaries and enquiry logs, not just trust that they happened correctly.
 - Escalation rules are yours to set and change, not fixed by us and left alone.
+- You can pause or turn off the system at any time — see our [how it works](/how-it-works) FAQ for more on this.
 
-An AI system that can't be adjusted once it's live isn't one we'd want to build for you either. If you're weighing this up for your own business, a [discovery call](/contact) is the fastest way to see exactly how the control and escalation would work for your specific setup.
+An AI system that can't be adjusted once it's live isn't one we'd want to build for you either.
+
+## What we do when something genuinely goes wrong
+
+If a customer flags that the system gave a confusing or inaccurate answer, that's treated as a fault to fix, not an inevitability to shrug off. Because every system we build is trained specifically on your business rather than running off a generic public model with no oversight, mistakes are traceable back to a specific gap in what it knows — which means the fix is usually a targeted update, not a rebuild. This is part of what "[ongoing partnership](/how-it-works)" actually means in practice: the system is watched and refined as real conversations happen, not shipped once and left alone.
+
+If you're weighing this up for your own business, a [discovery call](/contact) is the fastest way to see exactly how the control and escalation would work for your specific setup — including which situations you'd want handled directly and which you'd always want to see yourself first.

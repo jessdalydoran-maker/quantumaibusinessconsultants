@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { PageHero } from "@/components/PageHero";
 import { CtaBand } from "@/components/CtaBand";
+import { AuthorByline } from "@/components/AuthorByline";
 import { Container } from "@/components/Container";
 import { getAllResources, getResourceBySlug } from "@/lib/content/resources";
 import { site } from "@/lib/site";
@@ -37,6 +39,9 @@ export default async function ResourcePage({
   if (!resource) notFound();
 
   const { meta, content } = resource;
+  const related = getAllResources()
+    .filter((r) => r.slug !== slug)
+    .slice(0, 3);
 
   return (
     <>
@@ -77,8 +82,33 @@ export default async function ResourcePage({
           <article className="prose prose-invert max-w-3xl prose-headings:font-display prose-a:text-gold prose-a:no-underline hover:prose-a:underline prose-strong:text-text">
             <MDXRemote source={content} />
           </article>
+          <div className="max-w-3xl">
+            <AuthorByline authorName={meta.author} />
+          </div>
         </Container>
       </section>
+
+      {related.length > 0 && (
+        <section className="border-t border-border py-16 md:py-24">
+          <Container>
+            <h2 className="font-display text-xl text-text">Related reading</h2>
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              {related.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/resources/${post.slug}`}
+                  className="group block rounded-sm border border-border p-6 hover:border-gold"
+                >
+                  <h3 className="font-display text-lg text-text group-hover:text-gold">
+                    {post.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-text-muted">{post.excerpt}</p>
+                </Link>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       <CtaBand />
     </>

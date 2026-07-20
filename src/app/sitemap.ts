@@ -6,6 +6,8 @@ import { caseStudies } from "@/lib/content/case-studies";
 import { getAllResources } from "@/lib/content/resources";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+
   const staticRoutes = [
     "",
     "/services",
@@ -23,15 +25,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...services.map((s) => `/services/${s.slug}`),
     ...industries.map((i) => `/industries/${i.slug}`),
     ...caseStudies.map((c) => `/case-studies/${c.slug}`),
-    ...getAllResources().map((r) => `/resources/${r.slug}`),
   ];
 
-  const now = new Date();
+  const resourceRoutes = getAllResources().map((r) => ({
+    url: `${site.url}/resources/${r.slug}`,
+    lastModified: new Date(r.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
-  return [...staticRoutes, ...dynamicRoutes].map((route) => ({
+  const otherRoutes = [...staticRoutes, ...dynamicRoutes].map((route) => ({
     url: `${site.url}${route}`,
     lastModified: now,
-    changeFrequency: route === "" ? "weekly" : "monthly",
+    changeFrequency: (route === "" ? "weekly" : "monthly") as "weekly" | "monthly",
     priority: route === "" ? 1 : 0.7,
   }));
+
+  return [...otherRoutes, ...resourceRoutes];
 }

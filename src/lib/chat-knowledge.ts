@@ -8,8 +8,8 @@ function servicesBlock() {
     .map(
       (s) => `### ${s.name} (/services/${s.slug})
 ${s.summary}
-Problem it solves: ${s.problem}
-What it covers: ${s.whatItCovers.join("; ")}
+Problem it solves: ${s.intro[0]}
+What it covers: ${s.whatItCovers.map((c) => `${c.title} (${c.description})`).join("; ")}
 Quick win entry point: ${s.quickWin.title} — ${s.quickWin.description}
 Bespoke version: ${s.bespoke.title} — ${s.bespoke.description}
 FAQs:
@@ -23,7 +23,7 @@ function industriesBlock() {
     .map(
       (i) => `### ${i.name} (/industries/${i.slug})
 ${i.summary}
-Examples: ${i.scenarios.join("; ")}`
+Examples: ${i.scenarios.map((s) => `${s.title} (${s.description})`).join("; ")}`
     )
     .join("\n\n");
 }

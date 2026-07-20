@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Container } from "@/components/Container";
@@ -14,10 +15,13 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur">
       <Container className="flex h-20 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="font-display text-xl text-gold">Quantum AI</span>
-          <span className="hidden text-xs uppercase tracking-[0.2em] text-text-muted sm:inline">
-            Business Consultants
+        <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+          <Image src="/logo-mark.png" alt="" width={44} height={44} className="h-11 w-11" priority />
+          <span className="flex flex-col leading-tight">
+            <span className="font-display text-lg text-gold">Quantum AI</span>
+            <span className="hidden text-[0.65rem] uppercase tracking-[0.2em] text-text-muted sm:inline">
+              Business Consultants
+            </span>
           </span>
         </Link>
 
