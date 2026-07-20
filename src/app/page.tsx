@@ -65,31 +65,6 @@ export default function Home() {
 
       <HeroBanner />
 
-      <section className="border-b border-border pt-20 pb-16 md:pt-28 md:pb-24">
-        <Container>
-          <p className="text-xs uppercase tracking-[0.3em] text-bronze">
-            AI Systems for Trades &amp; Service Businesses
-          </p>
-          <h1 className="text-balance mt-6 max-w-3xl font-display text-5xl leading-[1.05] text-text md:text-7xl">
-            Stop running your business.
-            <br />
-            <span className="text-gold">Let it run itself.</span>
-          </h1>
-          <p className="mt-8 max-w-xl text-lg text-text-muted">
-            We build bespoke AI systems that handle your enquiries, bookings, follow-ups, and
-            admin — so you can focus on the work that actually grows your business.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Button href="/contact" variant="primary">
-              Book a Discovery Call
-            </Button>
-            <Button href="/services" variant="secondary">
-              See What We Build
-            </Button>
-          </div>
-        </Container>
-      </section>
-
       <div className="overflow-hidden border-b border-border bg-bg-alt py-5">
         <div className="animate-marquee flex w-max gap-10 whitespace-nowrap">
           {[...capabilityTags, ...capabilityTags].map((tag, i) => (
