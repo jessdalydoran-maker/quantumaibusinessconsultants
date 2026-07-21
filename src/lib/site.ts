@@ -26,7 +26,8 @@ export const site = {
   emails: ["hello@quantumbusinessconsultants.com"],
   contactEmail: "hello@quantumbusinessconsultants.com",
   responseTime: "within 24 hours",
-  bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "/contact",
+  bookingUrl:
+    process.env.NEXT_PUBLIC_BOOKING_URL || "https://cal.eu/jess-daly-doran-vaqkcv/discovery-call",
   social: {
     // [INSERT: real social profile URLs once confirmed by Jess]
   },
