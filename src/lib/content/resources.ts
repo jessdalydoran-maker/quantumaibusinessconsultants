@@ -7,6 +7,7 @@ const RESOURCES_DIR = path.join(process.cwd(), "content", "resources");
 export type ResourceMeta = {
   slug: string;
   title: string;
+  metaTitle: string;
   description: string;
   date: string;
   author: string;
@@ -22,6 +23,7 @@ export function getAllResources(): ResourceMeta[] {
     return {
       slug,
       title: data.title,
+      metaTitle: data.metaTitle || data.title,
       description: data.description,
       date: data.date,
       author: data.author,
@@ -40,6 +42,7 @@ export function getResourceBySlug(slug: string) {
     meta: {
       slug,
       title: data.title,
+      metaTitle: data.metaTitle || data.title,
       description: data.description,
       date: data.date,
       author: data.author,

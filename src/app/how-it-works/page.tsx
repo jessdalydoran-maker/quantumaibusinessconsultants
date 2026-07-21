@@ -9,7 +9,7 @@ import { faqSchema, jsonLdScript } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "How It Works",
   description:
-    "From a first conversation to a system running quietly in the background of your day: exactly how we scope, build, and look after AI systems for trades and service businesses.",
+    "From first conversation to a system running quietly in the background: how we scope, build, and look after AI systems for trades and service businesses.",
   alternates: { canonical: "/how-it-works" },
 };
 

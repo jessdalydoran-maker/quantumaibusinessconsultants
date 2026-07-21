@@ -20,7 +20,7 @@ export const industries: Industry[] = [
     name: "Trades",
     dek: "Electricians, plumbers, builders, and heating engineers, for whom every unanswered call is a job that went to someone else.",
     summary:
-      "When you're up a ladder or under a floor, you can't answer the phone. We build systems that answer it for you, book the callout, and follow up on the quote you sent last week.",
+      "When you cannot answer the phone up a ladder or under a floor, we can. We book the callout and follow up on last week's quote for you.",
     intro: [
       "Trades work doesn't pause for the phone. You're mid-rewire, mid-install, or elbow-deep in a boiler when the call comes in, and by the time you're free to check who rang, they've often already called the next name on the list. It's not a reflection of how good the work is, it's just physics. You can't be on a job and on a call at the same time.",
       "The same pattern shows up around quotes. A customer gets three call-outs for the same kitchen rewire, and the job usually goes to whoever got back to them first and made booking easy, not necessarily whoever would have done the best job. Being genuinely excellent at the trade itself doesn't protect against losing work to slower response times.",
@@ -89,7 +89,7 @@ export const industries: Industry[] = [
     name: "Home & Property Services",
     dek: "Cleaning, landscaping, and property maintenance businesses juggling recurring schedules and one-off jobs at once.",
     summary:
-      "Recurring clients need reliable reminders; one-off enquiries need a fast reply. We build systems that handle both without you managing two separate processes by hand.",
+      "Recurring clients need reliable reminders; one-off enquiries need a fast reply. We handle both without a second manual process.",
     intro: [
       "Home and property services businesses run two different rhythms at once. There's the recurring side — the same client, the same visit, week after week or month after month — and there's the one-off side: a new enquiry that needs a fast reply before it goes cold. Managing both well, by hand, usually means one of them slips.",
       "Recurring clients are usually the easier half to under-serve, precisely because they feel low-risk. A missed reminder here and there doesn't feel urgent in the moment, but it adds up to rescheduling, awkward doorstep conversations, and the occasional client who quietly stops rebooking because it started to feel unreliable.",
@@ -214,7 +214,7 @@ export const industries: Industry[] = [
     name: "Automotive Services",
     dek: "Garages and MOT centres balancing walk-ins, bookings, and parts logistics with a phone that never stops ringing.",
     summary:
-      "Between diagnostics, walk-ins, and the phone ringing, booking calls are the first thing to get delayed. We build systems that take the call while you keep working on the car in front of you.",
+      "Between diagnostics and walk-ins, booking calls are the first thing to get delayed. We take the call while you work on the car.",
     intro: [
       "A garage phone rings constantly, and answering it usually means stepping away from a car that's up on the ramp or mid-diagnostic — work that doesn't pause cleanly the way a desk job does. Every call answered is a few minutes not spent on the vehicle in front of you; every call missed is a booking that might go to the garage down the road instead.",
       "MOT and service bookings are time-sensitive in a way that adds pressure: a customer whose MOT is due this week isn't going to wait around for a call back, they'll ring the next garage on the list. And once a car's in for one job, customers understandably want updates — is it ready, has the part come in — which means more calls on top of the booking calls.",

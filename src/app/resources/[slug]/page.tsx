@@ -23,7 +23,7 @@ export async function generateMetadata({
   const resource = getResourceBySlug(slug);
   if (!resource) return {};
   return {
-    title: resource.meta.title,
+    title: { absolute: `${resource.meta.metaTitle} | Quantum AI` },
     description: resource.meta.description,
     alternates: { canonical: `/resources/${slug}` },
   };

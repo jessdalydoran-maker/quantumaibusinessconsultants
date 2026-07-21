@@ -243,7 +243,7 @@ export const services: Service[] = [
     name: "Follow-Ups & Nurture",
     dek: "The quote that never got chased, the review that was never asked for: handled automatically, every time.",
     summary:
-      "Automated follow-up across email, SMS, and WhatsApp that keeps warm enquiries warm and turns finished jobs into reviews, without you having to remember to do it.",
+      "Automated follow-up across email, SMS, and WhatsApp that keeps warm enquiries warm and turns finished jobs into reviews.",
     intro: [
       "Following up takes discipline and time, two things in short supply after a full day of actual work. A quote goes out on Monday, and by Friday it's forgotten, not because the customer wasn't interested, but because nobody circled back before they went with someone who did.",
       "The same pattern shows up after the job's done. A happy customer would gladly leave a review or book again, but the moment passes, nobody asks, and the goodwill from a job well done never turns into anything you can point new customers to.",
@@ -344,7 +344,7 @@ export const services: Service[] = [
     name: "Admin & Back-Office",
     dek: "The admin you're personally stuck doing for hours can be automated with a custom-built system. That saves considerable time and money, not just tidier records.",
     summary:
-      "A system of record that captures every enquiry, call, and booking automatically, plus simple reporting so you can see what's actually happening in the business without digging for it.",
+      "A system of record that logs every enquiry, call, and booking automatically, with simple reporting on what is actually happening in your business.",
     intro: [
       "The admin that keeps a business running — logging enquiries, updating records, pulling together what happened this month — is exactly the work that gets pushed to \"later\" and then never quite gets done. It's rarely urgent on any given day, which is precisely why it's usually the first thing to slip.",
       "The cost shows up later, not immediately. A customer calls back and nobody can find the notes from their last job. A quiet month arrives and there's no clear picture of where enquiries actually came from, so there's nothing solid to act on. None of this is anyone's fault — it's just what happens when record-keeping depends on someone finding a spare ten minutes that rarely comes.",

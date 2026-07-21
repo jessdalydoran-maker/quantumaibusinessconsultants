@@ -25,7 +25,7 @@ const gaId = process.env.NEXT_PUBLIC_GA_ID;
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Bespoke AI Systems for Trades & Service Businesses`,
+    default: `${site.name} | AI for Trades & Services`,
     template: `%s — ${site.name}`,
   },
   description: site.description,
@@ -34,12 +34,12 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     url: site.url,
-    title: `${site.name} — Bespoke AI Systems for Trades & Service Businesses`,
+    title: `${site.name} | AI for Trades & Services`,
     description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Bespoke AI Systems for Trades & Service Businesses`,
+    title: `${site.name} | AI for Trades & Services`,
     description: site.description,
   },
   alternates: {

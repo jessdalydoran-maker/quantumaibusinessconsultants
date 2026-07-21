@@ -4,7 +4,7 @@ export const site = {
   legacyDomain: "aibusinessconsultants.co.uk",
   url: "https://aibusinessconsultants.co.uk",
   description:
-    "We build bespoke AI systems that handle enquiries, bookings, follow-ups, and admin for independent trades and service businesses — so owners can get back to the work that actually grows the business.",
+    "We build bespoke AI systems that handle enquiries, bookings, follow-ups, and admin for independent trades and service businesses, so owners reclaim their time.",
   founders: [
     {
       name: "Mark",

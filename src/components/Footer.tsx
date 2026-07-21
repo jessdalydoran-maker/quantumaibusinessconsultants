@@ -11,7 +11,13 @@ export function Footer() {
       <Container className="grid gap-12 py-16 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <Image src="/logo-mark.png" alt="" width={32} height={32} className="h-8 w-8" />
+            <Image
+              src="/logo-mark.png"
+              alt="Quantum AI Business Consultants logo"
+              width={32}
+              height={32}
+              className="h-8 w-8"
+            />
             <span className="font-display text-lg text-gold">Quantum AI</span>
           </div>
           <p className="mt-3 max-w-xs text-sm text-text-muted">{site.description}</p>
