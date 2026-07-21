@@ -23,8 +23,13 @@ export function Button({
   variant?: Variant;
   className?: string;
 }) {
+  const external = /^https?:\/\//.test(href);
   return (
-    <Link href={href} className={`${base} ${variants[variant]} ${className}`}>
+    <Link
+      href={href}
+      className={`${base} ${variants[variant]} ${className}`}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {children}
     </Link>
   );

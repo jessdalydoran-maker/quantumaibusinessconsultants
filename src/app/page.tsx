@@ -310,7 +310,7 @@ export default function Home() {
             business and show you exactly what a custom-built system could look like for you.
           </p>
           <div className="mt-10">
-            <Button href="/contact" variant="primary">
+            <Button href={site.bookingUrl} variant="primary">
               Book Your Discovery Call
             </Button>
           </div>

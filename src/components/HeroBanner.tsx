@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
+import { site } from "@/lib/site";
 
 export function HeroBanner() {
   return (
@@ -33,7 +34,7 @@ export function HeroBanner() {
             admin, so you can focus on the work that actually grows your business.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <Button href="/contact" variant="primary">
+            <Button href={site.bookingUrl} variant="primary">
               Book a Discovery Call
             </Button>
             <Button href="/services" variant="secondary">

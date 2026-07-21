@@ -50,7 +50,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href="/contact" variant="primary">
+          <Button href={site.bookingUrl} variant="primary">
             Book a Discovery Call
           </Button>
         </div>
@@ -89,7 +89,9 @@ export function Header() {
               </Link>
             ))}
             <Link
-              href="/contact"
+              href={site.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-2 inline-flex items-center justify-center rounded-sm bg-gold px-6 py-3 text-sm font-medium text-bg"
               onClick={() => setOpen(false)}
             >

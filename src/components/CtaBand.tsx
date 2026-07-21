@@ -1,5 +1,6 @@
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
+import { site } from "@/lib/site";
 
 export function CtaBand({
   title = "Ready to talk about your business specifically?",
@@ -16,7 +17,7 @@ export function CtaBand({
         </h2>
         <p className="mx-auto mt-5 max-w-lg text-text-muted">{dek}</p>
         <div className="mt-8">
-          <Button href="/contact" variant="primary">
+          <Button href={site.bookingUrl} variant="primary">
             Book a Discovery Call
           </Button>
         </div>
