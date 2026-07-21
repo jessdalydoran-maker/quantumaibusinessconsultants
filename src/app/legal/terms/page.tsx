@@ -23,14 +23,14 @@ export default function TermsPage() {
         <Container>
           <div className="prose prose-invert max-w-3xl prose-headings:font-display prose-a:text-gold">
             <p className="rounded-sm border border-bronze/40 bg-bg-alt p-6 text-sm not-prose text-text-muted">
-              <strong className="text-text">[INSERT: solicitor review]</strong> — drafted as a
+              <strong className="text-text">[INSERT: solicitor review]</strong>: drafted as a
               reasonable starting point, not reviewed by a solicitor. Please have it checked
               before relying on it publicly.
             </p>
 
             <h2>Who these terms apply to</h2>
             <p>
-              These terms apply to anyone who visits or uses this website — prospective clients
+              These terms apply to anyone who visits or uses this website: prospective clients
               researching our services, current clients looking up how-it-works or contact
               details, and anyone reading our resources content. If you&apos;re a client with a
               signed project agreement, that agreement takes precedence over these terms for
@@ -41,7 +41,7 @@ export default function TermsPage() {
             <p>
               By accessing or using this website, you agree to these terms of use. If you do not
               agree, please do not continue to use the site. These terms apply to your use of the
-              website only — they do not govern services delivered under a signed client
+              website only. They do not govern services delivered under a signed client
               agreement, which are covered separately below.
             </p>
 
@@ -51,9 +51,9 @@ export default function TermsPage() {
               give prospective clients a genuine sense of what we build and how we work before
               deciding whether to get in touch. You
               may browse and use it for lawful purposes only, and must not attempt to interfere
-              with its operation, security, or availability — including through automated
+              with its operation, security, or availability, including through automated
               scraping, overloading our infrastructure, or attempting to bypass access controls.
-              Content on this site — including copy, case studies, and design — is owned by{" "}
+              Content on this site, including copy, case studies, and design, is owned by{" "}
               {site.name} unless otherwise stated, and may not be reproduced without permission.
             </p>
 
@@ -64,14 +64,14 @@ export default function TermsPage() {
               It is not a substitute for a discovery call or a formal proposal, and nothing it
               says constitutes a binding quote, contract, or professional advice. While the
               assistant is built and trained to answer accurately based on information about our
-              own business, it may occasionally be incomplete or imprecise — for anything specific
+              own business, it may occasionally be incomplete or imprecise. For anything specific
               to your business or a decision you intend to rely on, please book a discovery call
               or confirm directly with our team.
             </p>
 
             <h2>No published pricing</h2>
             <p>
-              We do not publish prices on this site, by design — see{" "}
+              We do not publish prices on this site, by design. See{" "}
               <a href="/how-it-works">how it works</a> for why. Any figures referenced in tools
               such as our admin-cost calculator are illustrative estimates based on inputs you
               provide, not quotes, and do not constitute an offer or a binding commitment of any
@@ -88,8 +88,8 @@ export default function TermsPage() {
 
             <h2>Client engagements</h2>
             <p>
-              Services delivered to clients — the design, build, and ongoing support of AI
-              systems — are governed by a separate written agreement entered into following a
+              Services delivered to clients, the design, build, and ongoing support of AI
+              systems, are governed by a separate written agreement entered into following a
               discovery call and proposal, not by these website terms. That agreement will set
               out project scope, fees, timelines, intellectual property, and support terms
               specific to your project, agreed directly between you and {site.name} before any
@@ -100,7 +100,7 @@ export default function TermsPage() {
             <p>
               This site does not require you to create an account to browse it or read our
               resources. Submitting the enquiry form or messaging the AI chat assistant requires
-              you to provide accurate information — please don&apos;t submit false contact details
+              you to provide accurate information. Please don&apos;t submit false contact details
               or enquiries on behalf of someone else without their knowledge, as this makes it
               harder for us to respond helpfully and can result in us being unable to follow up at
               all. We reserve the right to disregard enquiries that appear spam, abusive, or
@@ -131,7 +131,7 @@ export default function TermsPage() {
             <p>
               We aim to keep this website available and up to date, but we don&apos;t guarantee
               uninterrupted access. We may update, suspend, or withdraw any part of the site,
-              including the AI chat assistant or the enquiry form, at any time without notice —
+              including the AI chat assistant or the enquiry form, at any time without notice,
               for example for maintenance, security, or content updates.
             </p>
 

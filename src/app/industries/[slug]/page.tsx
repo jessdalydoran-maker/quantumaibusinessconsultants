@@ -118,14 +118,14 @@ export default async function IndustryDetailPage({
               It would be simpler, and cheaper for us, to build one generic AI receptionist and
               sell a slightly different colour scheme to every industry. We don&apos;t, because it
               wouldn&apos;t actually work well for anyone. What counts as an urgent enquiry, how
-              bookings are actually structured, what a customer is likely to ask first — all of
+              bookings are actually structured, what a customer is likely to ask first. All of
               that differs meaningfully between a {industry.name.toLowerCase()} business and, say,
               a solicitor&apos;s office or a hotel front desk.
             </p>
             <p>
               Scoping around your specific industry means the system asks the right follow-up
               questions, recognises genuine urgency correctly, and represents your business in a
-              way that feels accurate rather than generic — the difference between a customer
+              way that feels accurate rather than generic: the difference between a customer
               feeling like they&apos;re talking to your business, and feeling like they&apos;re
               talking to a chatbot that happens to mention your business&apos;s name.
             </p>
@@ -134,7 +134,7 @@ export default async function IndustryDetailPage({
               <Link href="/how-it-works" className="text-gold hover:underline">
                 discovery call
               </Link>{" "}
-              always starts with your actual business rather than a template for your industry —
+              always starts with your actual business rather than a template for your industry,
               even within {industry.name.toLowerCase()}, no two businesses run identically, and
               the system should reflect yours specifically, not just the sector average.
             </p>
@@ -187,7 +187,7 @@ export default async function IndustryDetailPage({
             <p className="mt-3 max-w-xl text-text-muted">
               Our published case studies aren&apos;t in the {industry.name.toLowerCase()} space
               yet, but the systems and principles are the same ones we&apos;d apply to your
-              business — take a look at what&apos;s live and launching.
+              business, take a look at what&apos;s live and launching.
             </p>
           </Link>
         </Container>

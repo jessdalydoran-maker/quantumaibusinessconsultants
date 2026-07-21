@@ -10,7 +10,7 @@ import { faqSchema, jsonLdScript } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Book a no-obligation discovery call or send an enquiry — we respond within 24 hours.",
+    "Book a no-obligation discovery call or send an enquiry. We respond within 24 hours.",
   alternates: { canonical: "/contact" },
 };
 
@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "What actually happens on the discovery call?",
     answer:
-      "We spend around an hour understanding your business: how enquiries reach you today, where they slip through the cracks, and what a good outcome would mean for you. It's a genuine conversation, not a sales pitch — we ask questions, listen, and only talk about what we might build once we actually understand the problem.",
+      "We spend around an hour understanding your business: how enquiries reach you today, where they slip through the cracks, and what a good outcome would mean for you. It's a genuine conversation, not a sales pitch. We ask questions, listen, and only talk about what we might build once we actually understand the problem.",
   },
   {
     question: "Is the discovery call really free, with no obligation?",
@@ -28,32 +28,32 @@ const faqs = [
   {
     question: "What happens after the call, if I want to go ahead?",
     answer:
-      "You'll receive a written proposal built around what came up on the call — what we'd build, how it fits your existing tools, and roughly what it would involve from your side. There's no pressure to decide on the call itself.",
+      "You'll receive a written proposal built around what came up on the call: what we'd build, how it fits your existing tools, and roughly what it would involve from your side. There's no pressure to decide on the call itself.",
   },
   {
-    question: "I'm not sure if I'm ready for a full system yet — should I still get in touch?",
+    question: "I'm not sure if I'm ready for a full system yet. Should I still get in touch?",
     answer:
       "Yes. Plenty of people who talk to us start with a small quick win rather than a full bespoke build, and that's a completely normal starting point. Part of the discovery call is figuring out which makes sense for where your business is right now.",
   },
   {
     question: "Do you only work with businesses that already know exactly what they want?",
     answer:
-      "No — most people who contact us know what's frustrating about their current process, not what the technical fix should look like. Working that out with you is exactly what the conversation is for.",
+      "No, most people who contact us know what's frustrating about their current process, not what the technical fix should look like. Working that out with you is exactly what the conversation is for.",
   },
   {
     question: "What if I have a general question and I'm not ready to book a call yet?",
     answer:
-      "Send it through the enquiry form below, or ask our AI receptionist in the chat widget on this site — it's trained on our services, industries, and how we work, and can answer most general questions directly.",
+      "Send it through the enquiry form below, or ask our AI receptionist in the chat widget on this site. It's trained on our services, industries, and how we work, and can answer most general questions directly.",
   },
   {
     question: "Do you cover businesses outside Belfast and Northern Ireland?",
     answer:
-      "We're based in Belfast and most of our client base is in Northern Ireland, but the systems we build aren't location-dependent — an AI receptionist works the same way regardless of where your business is. Get in touch and we'll tell you honestly whether we're the right fit.",
+      "We're based in Belfast and most of our client base is in Northern Ireland, but the systems we build aren't location-dependent. An AI receptionist works the same way regardless of where your business is. Get in touch and we'll tell you honestly whether we're the right fit.",
   },
   {
     question: "Can I get a quote without booking a full discovery call?",
     answer:
-      "Not a meaningful one, honestly. We don't publish prices because they depend entirely on scope, and giving you a number without understanding your business first would mean guessing — see how it works for why we approach pricing this way. A discovery call is the fastest route to an actual answer.",
+      "Not a meaningful one, honestly. We don't publish prices because they depend entirely on scope, and giving you a number without understanding your business first would mean guessing. See how it works for why we approach pricing this way. A discovery call is the fastest route to an actual answer.",
   },
 ];
 
@@ -63,7 +63,7 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Let's talk about your business."
-        dek="Book a no-obligation discovery call, or send an enquiry below — we respond within 24 hours."
+        dek="Book a no-obligation discovery call, or send an enquiry below. We respond within 24 hours."
         breadcrumbs={[{ name: "Contact", href: "/contact" }]}
       />
 
@@ -76,7 +76,7 @@ export default function ContactPage() {
               <h2 className="font-display text-2xl text-text">Book a discovery call</h2>
               <p className="mt-3 text-text-muted">
                 An hour, no obligation. We&apos;ll ask about how enquiries reach you today and
-                where things slip — no pitch, just a conversation. If you want the full detail on
+                where things slip, no pitch, just a conversation. If you want the full detail on
                 what happens next, see{" "}
                 <a href="/how-it-works" className="text-gold hover:underline">
                   how it works
@@ -137,7 +137,7 @@ export default function ContactPage() {
               <h3 className="mt-3 font-display text-lg text-text">You reach out</h3>
               <p className="mt-2 text-sm text-text-muted">
                 Whether you book a discovery call directly or send an enquiry through the form,
-                it reaches Mark or Jess personally — not a queue or a support ticket system.
+                it reaches Mark or Jess personally, not a queue or a support ticket system.
               </p>
             </div>
             <div>
@@ -201,7 +201,7 @@ export default function ContactPage() {
             Nothing to prepare, but if you want a head start.
           </h2>
           <p className="mt-6 max-w-2xl text-text-muted">
-            You don&apos;t need to prepare anything for the discovery call — most of the useful
+            You don&apos;t need to prepare anything for the discovery call. Most of the useful
             information comes out through conversation, not a form you fill in beforehand. If you
             do want to get more out of the hour, it can help to have a rough sense of:
           </p>
@@ -210,7 +210,7 @@ export default function ContactPage() {
               <span className="text-gold" aria-hidden>
                 &mdash;
               </span>
-              Roughly how enquiries reach you today — phone, website, WhatsApp, social media, or a mix
+              Roughly how enquiries reach you today: phone, website, WhatsApp, social media, or a mix
             </li>
             <li className="flex gap-3 rounded-sm border border-border bg-bg-alt p-5 text-text-muted">
               <span className="text-gold" aria-hidden>
@@ -222,7 +222,7 @@ export default function ContactPage() {
               <span className="text-gold" aria-hidden>
                 &mdash;
               </span>
-              Any tools you already use — a booking system, a CRM, a specific phone setup
+              Any tools you already use: a booking system, a CRM, a specific phone setup
             </li>
             <li className="flex gap-3 rounded-sm border border-border bg-bg-alt p-5 text-text-muted">
               <span className="text-gold" aria-hidden>
@@ -242,7 +242,7 @@ export default function ContactPage() {
           </h2>
           <p className="mt-6 max-w-2xl text-text-muted">
             If you&apos;re not ready to book a call but want a quick answer, the chat widget in
-            the corner of this site is a live example of what we build — trained on our services,
+            the corner of this site is a live example of what we build, trained on our services,
             industries, and how pricing works, so it can answer most general questions directly.
             If it can&apos;t answer something, it&apos;ll offer to pass your details to Mark or
             Jess so a real person follows up. It&apos;s a genuinely useful way to get a feel for

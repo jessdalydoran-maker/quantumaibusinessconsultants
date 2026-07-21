@@ -10,7 +10,7 @@ import { faqSchema, jsonLdScript } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Four bespoke starting points for handling enquiries, bookings, follow-ups, and admin — built around your business, not a fixed package.",
+    "Four bespoke starting points for handling enquiries, bookings, follow-ups, and admin, built around your business, not a fixed package.",
   alternates: { canonical: "/services" },
 };
 
@@ -18,32 +18,32 @@ const faqs = [
   {
     question: "Do I have to choose just one of these services?",
     answer:
-      "No — most businesses end up with a combination, because the four areas connect naturally. An enquiries system feeds a bookings system, which feeds follow-up, which feeds the record-keeping in admin and back-office. We'll recommend where to start based on where you're losing the most time or leads right now, not sell you all four regardless of need.",
+      "No, most businesses end up with a combination, because the four areas connect naturally. An enquiries system feeds a bookings system, which feeds follow-up, which feeds the record-keeping in admin and back-office. We'll recommend where to start based on where you're losing the most time or leads right now, not sell you all four regardless of need.",
   },
   {
     question: "What's the difference between a \"quick win\" and a \"bespoke build\"?",
     answer:
-      "A quick win is a small, contained piece of automation — like missed-call text-back or automated review requests — that connects to what you already have and is usually live within days. A bespoke build is a fuller system, integrated with your calendar, CRM, or phone line, scoped specifically around how your business operates. Every service page below explains both options for that area.",
+      "A quick win is a small, contained piece of automation, like missed-call text-back or automated review requests, that connects to what you already have and is usually live within days. A bespoke build is a fuller system, integrated with your calendar, CRM, or phone line, scoped specifically around how your business operates. Every service page below explains both options for that area.",
   },
   {
     question: "How do you decide which service is the right starting point?",
     answer:
-      "On the discovery call. We ask about your typical week, where enquiries currently come from, and where things slip — the answer to \"where should we start\" is usually obvious once we've actually talked it through, rather than something we'd guess at from a form.",
+      "On the discovery call. We ask about your typical week, where enquiries currently come from, and where things slip. The answer to \"where should we start\" is usually obvious once we've actually talked it through, rather than something we'd guess at from a form.",
   },
   {
     question: "Can these services work together as one connected system?",
     answer:
-      "Yes, and for most established businesses that's the eventual goal — an enquiry gets captured, booked, followed up on, and logged automatically, as one flow rather than four separate tools. We can build toward that over time rather than requiring it all at once.",
+      "Yes, and for most established businesses that's the eventual goal: an enquiry gets captured, booked, followed up on, and logged automatically, as one flow rather than four separate tools. We can build toward that over time rather than requiring it all at once.",
   },
   {
     question: "Is any of this suitable if I've never used AI tools in my business before?",
     answer:
-      "Yes — most of the businesses we work with haven't. You don't need any technical background; the system is built and managed by us, and every proposal is written in plain terms so you know exactly what you're getting before you commit to anything.",
+      "Yes, most of the businesses we work with haven't. You don't need any technical background; the system is built and managed by us, and every proposal is written in plain terms so you know exactly what you're getting before you commit to anything.",
   },
   {
     question: "Do these services replace tools I'm already paying for?",
     answer:
-      "Sometimes, but not by default. We look at what you already use during scoping and generally prefer to integrate with tools that are working rather than replace them for the sake of it — replacement only happens where it genuinely serves the system better.",
+      "Sometimes, but not by default. We look at what you already use during scoping and generally prefer to integrate with tools that are working rather than replace them for the sake of it. Replacement only happens where it genuinely serves the system better.",
   },
 ];
 
@@ -53,7 +53,7 @@ export default function ServicesPage() {
       <PageHero
         eyebrow="Services"
         title="Bespoke starting points, not fixed packages."
-        dek="Every business's version of missed calls, slow follow-up, and admin overload looks different. These are the four areas we build around — each one tailored to how you actually operate, with a low-cost way in if you're not ready for a full build."
+        dek="Every business's version of missed calls, slow follow-up, and admin overload looks different. These are the four areas we build around, each one tailored to how you actually operate, with a low-cost way in if you're not ready for a full build."
         breadcrumbs={[{ name: "Services", href: "/services" }]}
       />
 
@@ -64,7 +64,7 @@ export default function ServicesPage() {
           <div className="max-w-2xl space-y-5 text-text-muted">
             <p>
               Most &quot;AI for business&quot; offers are really one product wearing different
-              branding — a chatbot widget, or a booking calendar, sold as if every
+              branding, a chatbot widget or a booking calendar, sold as if every
               business&apos;s biggest
               problem is the same one. It usually isn&apos;t. A roofer&apos;s biggest problem is
               missed calls during a job. A salon&apos;s is no-shows on a fully booked day. A
@@ -82,7 +82,7 @@ export default function ServicesPage() {
             </p>
             <p>
               Each area below has a low-cost quick win you can see working within days, and a
-              fuller bespoke build for when you&apos;re ready to go further — see{" "}
+              fuller bespoke build for when you&apos;re ready to go further. See{" "}
               <Link href="/how-it-works" className="text-gold hover:underline">
                 how it works
               </Link>{" "}

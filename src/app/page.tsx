@@ -19,22 +19,22 @@ const homeFaqs = [
   {
     question: "What does an AI business consultancy actually build?",
     answer:
-      `${site.name} designs and builds bespoke AI systems that handle enquiries, bookings, follow-ups, and back-office admin for independent trades and service businesses. Systems are trained on each client's specific services, tone, and existing tools — not sold as an off-the-shelf chatbot plugin.`,
+      `${site.name} designs and builds custom-built AI systems that handle enquiries, bookings, follow-ups, and back-office admin for independent trades and service businesses. Systems are trained on each client's specific services, tone, and existing tools, not sold as an off-the-shelf chatbot plugin.`,
   },
   {
     question: "Is this only for big companies, or does it work for a one- or two-person business?",
     answer:
-      "It's built primarily for independent and small businesses — sole traders, small teams, and independent clinics, salons, and trades firms — where there's nobody spare to catch every enquiry. Larger operations benefit too, but the core problem this solves (a busy person who can't always answer the phone) is most acute for small, independent businesses.",
+      "It's built primarily for independent and small businesses: sole traders, small teams, and independent clinics, salons, and trades firms, where there's nobody spare to catch every enquiry. Larger operations benefit too, but the core problem this solves (a busy person who can't always answer the phone) is most acute for small, independent businesses.",
   },
   {
     question: "How much does it cost?",
     answer:
-      "We don't publish prices, because a fixed price list can't reflect the difference between a simple missed-call text-back and a full AI voice receptionist with CRM integration. Pricing is scoped individually based on complexity, integrations, and ongoing support — see how it works for the full explanation.",
+      "We don't publish prices, because a fixed price list can't reflect the difference between a simple missed-call text-back and a full AI voice receptionist with CRM integration. Pricing is scoped individually based on complexity, integrations, and ongoing support. See how it works for the full explanation.",
   },
   {
     question: "How long does it take to get a system live?",
     answer:
-      "It depends on scope. Simple quick wins, like automated review requests or missed-call text-back, are often live within days. Fuller bespoke systems with multiple integrations take longer — we'll give you a realistic timeline as part of your proposal.",
+      "It depends on scope. Simple quick wins, like automated review requests or missed-call text-back, are often live within days. Fuller tailored systems with multiple integrations take longer, and we'll give you a realistic timeline as part of your proposal.",
   },
   {
     question: "Will my customers know they're talking to AI?",
@@ -44,7 +44,7 @@ const homeFaqs = [
   {
     question: "What happens after the system goes live?",
     answer:
-      "It doesn't end at launch. Every system is monitored and refined on an ongoing basis as real conversations come in and your business changes — see our ongoing partnership approach on the how it works page.",
+      "It doesn't end at launch. Every system is monitored and refined on an ongoing basis as real conversations come in and your business changes. See our ongoing partnership approach on the how it works page.",
   },
 ];
 
@@ -82,16 +82,17 @@ export default function Home() {
         <Container>
           <div className="max-w-3xl space-y-5 text-text-muted">
             <p>
-              {site.name} designs and builds bespoke AI systems for independent trades and
-              service businesses across Northern Ireland. We handle the enquiries, bookings,
-              follow-ups, and admin that eat into evenings and weekends — using AI trained
-              specifically on your business, not a generic script bolted onto your website.
+              {site.name} designs and builds AI systems built around your business for
+              independent trades and service businesses across Northern Ireland. We handle the
+              enquiries, bookings, follow-ups, and admin that eat into evenings and weekends,
+              using AI trained specifically on your business, not a generic script bolted onto
+              your website.
             </p>
             <p>
               Every business we work with is doing genuinely good work and losing some of it
               anyway, not because the work is lacking but because the timing is. A call rings out
               mid-job, a web enquiry sits unanswered overnight, a quote goes cold because nobody
-              circled back. None of that reflects on the quality of the trade or service — it
+              circled back. None of that reflects on the quality of the trade or service. It
               reflects on how much of a busy day is realistically left over for admin once the
               actual work is done.
             </p>
@@ -108,7 +109,7 @@ export default function Home() {
                 You&apos;re doing everything. The AI does the rest.
               </h2>
               <p className="mt-4 text-sm text-text-muted">
-                Three patterns show up again and again in the businesses we talk to — see if any
+                Three patterns show up again and again in the businesses we talk to. See if any
                 of them sound like your week.
               </p>
             </div>
@@ -147,7 +148,7 @@ export default function Home() {
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-bronze">What We Build</p>
               <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
-                Bespoke starting points, not fixed packages.
+                Tailored starting points, not fixed packages.
               </h2>
             </div>
             <Button href="/services" variant="ghost">
@@ -159,7 +160,7 @@ export default function Home() {
             Every business&apos;s version of missed calls, slow follow-up, and admin overload looks
             different, so we don&apos;t sell a fixed package and try to make your business fit
             it. Each of the four areas below has a low-cost quick win to start with, and a fuller
-            bespoke build for when you&apos;re ready for more — see{" "}
+            custom-built option for when you&apos;re ready for more. See{" "}
             <Link href="/how-it-works" className="text-gold hover:underline">
               how it works
             </Link>{" "}
@@ -188,6 +189,21 @@ export default function Home() {
               </Link>
             ))}
           </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-border py-20 md:py-28">
+        <Container>
+          <p className="text-xs uppercase tracking-[0.3em] text-bronze">Real Results</p>
+          <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
+            Built for businesses like yours.
+          </h2>
+          <p className="mt-4 max-w-2xl text-text-muted">
+            We recently built a full booking, follow-up, and review system for a flooring and
+            blinds retailer in Northern Ireland — calendars that fill themselves, quotes that get
+            chased automatically, and reviews requested after every job, without anyone lifting a
+            phone.
+          </p>
         </Container>
       </section>
 
@@ -291,7 +307,7 @@ export default function Home() {
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-text-muted">
             Book a no-obligation discovery call. We&apos;ll spend an hour understanding your
-            business and show you exactly what a bespoke system could look like for you.
+            business and show you exactly what a custom-built system could look like for you.
           </p>
           <div className="mt-10">
             <Button href="/contact" variant="primary">

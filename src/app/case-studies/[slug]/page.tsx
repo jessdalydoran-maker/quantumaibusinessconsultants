@@ -181,7 +181,7 @@ export default async function CaseStudyPage({
           </h2>
           <div className="mt-6 max-w-2xl space-y-4 text-text-muted">
             <p>
-              Everything above reflects an actual project we scoped and built — the challenge is
+              Everything above reflects an actual project we scoped and built. The challenge is
               the real problem the client came to us with, and the approach is what we actually
               built, not a simplified or idealised version of it. Where a result is quoted, it&apos;s
               a genuine outcome the client has confirmed, not a projection or an industry average
@@ -195,7 +195,7 @@ export default async function CaseStudyPage({
               : a discovery call to understand the real problem, a bespoke proposal built around
               what we heard, a build that integrates with what the business already has, and
               ongoing support once it&apos;s live. Nothing above happened by accident or as an
-              off-the-shelf configuration — it was scoped specifically for this business, the same
+              off-the-shelf configuration. It was scoped specifically for this business, the same
               way we&apos;d scope a system for yours.
             </p>
           </div>

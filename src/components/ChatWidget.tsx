@@ -60,9 +60,9 @@ export function ChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
       {open && (
-        <div className="mb-4 flex h-[32rem] w-[22rem] max-w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-sm border border-border-strong bg-bg-alt shadow-2xl">
+        <div className="mb-4 flex h-[28rem] w-[calc(100vw-2rem)] max-w-[22rem] flex-col overflow-hidden rounded-sm border border-border-strong bg-bg-alt shadow-2xl sm:h-[32rem]">
           <div className="flex items-center justify-between border-b border-border bg-bg px-5 py-4">
             <div>
               <p className="font-display text-sm text-gold">AI Receptionist</p>
@@ -124,15 +124,15 @@ export function ChatWidget() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-gold text-bg shadow-xl transition-transform hover:scale-105"
+        className="flex h-11 w-11 items-center justify-center rounded-full bg-gold text-bg shadow-xl transition-transform hover:scale-105 sm:h-14 sm:w-14"
         aria-label={open ? "Close chat" : "Chat with our AI receptionist"}
       >
         {open ? (
-          <span className="text-2xl" aria-hidden>
+          <span className="text-lg sm:text-2xl" aria-hidden>
             &times;
           </span>
         ) : (
-          <span className="font-display text-lg" aria-hidden>
+          <span className="font-display text-base sm:text-lg" aria-hidden>
             Q
           </span>
         )}

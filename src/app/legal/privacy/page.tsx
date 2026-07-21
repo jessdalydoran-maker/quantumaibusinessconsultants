@@ -23,7 +23,7 @@ export default function PrivacyPage() {
         <Container>
           <div className="prose prose-invert max-w-3xl prose-headings:font-display prose-a:text-gold">
             <p className="rounded-sm border border-bronze/40 bg-bg-alt p-6 text-sm not-prose text-text-muted">
-              <strong className="text-text">[INSERT: solicitor review]</strong> — this policy is
+              <strong className="text-text">[INSERT: solicitor review]</strong>: this policy is
               drafted to reflect UK GDPR principles in plain language and covers the processors
               actually used by this site, but it has not yet been reviewed by a qualified
               solicitor. Please have it checked before this page is relied on publicly,
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
               of UK data protection law, {site.name} is the data controller for personal data
               collected through this website. This policy covers both our own website and, in
               general terms, the kind of data our client systems process on our clients&apos;
-              behalf — client-specific data handling is documented separately for each
+              behalf. Client-specific data handling is documented separately for each
               engagement, since it depends on the system being built.
             </p>
 
@@ -45,19 +45,19 @@ export default function PrivacyPage() {
             <p>We collect the following categories of personal data through this website:</p>
             <ul>
               <li>
-                <strong>Contact and enquiry data</strong> — name, email address, business name,
+                <strong>Contact and enquiry data</strong>: name, email address, business name,
                 and the content of your message, submitted through our enquiry form, discovery
                 call booking, or by emailing us directly. We collect this to respond to your
                 enquiry and, if you proceed, to scope and deliver a project.
               </li>
               <li>
-                <strong>AI chat conversation data</strong> — messages you send to the AI
+                <strong>AI chat conversation data</strong>: messages you send to the AI
                 receptionist widget on this site, including any contact details you choose to
                 share with it. We collect this to answer your questions and, where you ask to be
                 contacted, to pass your enquiry to our team.
               </li>
               <li>
-                <strong>Analytics data</strong> — pages visited, approximate location (derived
+                <strong>Analytics data</strong>: pages visited, approximate location (derived
                 from IP address, not precise), device and browser type, and general usage
                 patterns, collected via Google Analytics only where you have consented to
                 non-essential cookies.
@@ -83,21 +83,21 @@ export default function PrivacyPage() {
             </p>
             <ul>
               <li>
-                <strong>Anthropic</strong> (anthropic.com) — powers the AI receptionist chat
+                <strong>Anthropic</strong> (anthropic.com): powers the AI receptionist chat
                 widget. Messages sent to the widget are processed to generate a response, in line
                 with Anthropic&apos;s standard commercial data handling terms, and are not used to
                 train Anthropic&apos;s models.
               </li>
               <li>
-                <strong>Resend</strong> (resend.com) — delivers enquiry form submissions and
+                <strong>Resend</strong> (resend.com): delivers enquiry form submissions and
                 AI-captured leads to our team by email.
               </li>
               <li>
-                <strong>Vercel</strong> (vercel.com) — hosts this website and processes standard
+                <strong>Vercel</strong> (vercel.com): hosts this website and processes standard
                 web server logs (IP address, request metadata) as part of hosting infrastructure.
               </li>
               <li>
-                <strong>Google Analytics</strong> (google.com) — provides anonymised usage
+                <strong>Google Analytics</strong> (google.com): provides anonymised usage
                 analytics, only loaded where you&apos;ve consented to non-essential cookies.
               </li>
             </ul>
@@ -114,7 +114,7 @@ export default function PrivacyPage() {
             <p>
               For client projects, the specifics of what data an AI system processes, where
               it&apos;s stored, and who can access it are agreed individually during scoping and
-              documented for each client — because the answer genuinely depends on the system
+              documented for each client, because the answer genuinely depends on the system
               being built, the sector, and whether any special category data (such as health
               information, in a clinic setting) is involved.
             </p>
@@ -130,7 +130,7 @@ export default function PrivacyPage() {
             <h2>Data retention</h2>
             <p>
               We retain enquiry and contact data for as long as reasonably necessary to respond
-              to you and, if you become a client, to maintain business and accounting records —
+              to you and, if you become a client, to maintain business and accounting records,
               generally no longer than seven years after the end of a client relationship, in
               line with standard UK accounting and tax obligations. Where you contact us but do
               not proceed to a client relationship, we retain your enquiry only as long as
@@ -166,7 +166,7 @@ export default function PrivacyPage() {
             <h2>Cookies</h2>
             <p>
               We use essential cookies required for the site to function (for example, remembering
-              your cookie consent choice), and — only with your consent — analytics cookies via
+              your cookie consent choice), and, only with your consent, analytics cookies via
               Google Analytics to understand how the site is used. No advertising or tracking
               cookies unrelated to analytics are used. You can withdraw consent at any time by
               clearing your browser&apos;s cookies for this site.

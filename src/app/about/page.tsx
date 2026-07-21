@@ -18,27 +18,27 @@ const faqs = [
   {
     question: "Are you a big agency or a small team?",
     answer:
-      `We're a small, Belfast-based team, not a large agency. That's a deliberate choice — every project we take on gets direct involvement from the people who actually understand the technical build, rather than being handed off through account managers.`,
+      `We're a small, Belfast-based team, not a large agency. That's a deliberate choice: every project we take on gets direct involvement from the people who actually understand the technical build, rather than being handed off through account managers.`,
   },
   {
     question: "Do you only work with businesses in Belfast or Northern Ireland?",
     answer:
-      "We're based in Belfast and our client base so far is concentrated in Northern Ireland, but the systems we build aren't location-dependent — an AI receptionist or booking system works the same way regardless of where the business is based.",
+      "We're based in Belfast and our client base so far is concentrated in Northern Ireland, but the systems we build aren't location-dependent. An AI receptionist or booking system works the same way regardless of where the business is based.",
   },
   {
     question: "Why did you start Quantum AI Business Consultants?",
     answer:
-      "We kept seeing the same pattern in independent businesses we knew and worked with: genuinely good businesses losing genuinely winnable work because there simply wasn't time to answer every enquiry, chase every quote, and keep every record up to date on top of doing the actual job. That gap — between doing excellent work and having the admin capacity to capture everything that work should be winning — is what we built the business to close.",
+      "We kept seeing the same pattern in independent businesses we knew and worked with: genuinely good businesses losing genuinely winnable work because there simply wasn't time to answer every enquiry, chase every quote, and keep every record up to date on top of doing the actual job. That gap, between doing excellent work and having the admin capacity to capture everything that work should be winning, is what we built the business to close.",
   },
   {
     question: "Do you work with businesses outside trades and services?",
     answer:
-      "Our focus is independent trades and service businesses, because that's where we've built the deepest understanding of the specific problems — callout scheduling, no-show reduction, intake for professional services. If your business sits outside that but shares the same underlying problem, we're happy to have the conversation.",
+      "Our focus is independent trades and service businesses, because that's where we've built the deepest understanding of the specific problems: callout scheduling, no-show reduction, intake for professional services. If your business sits outside that but shares the same underlying problem, we're happy to have the conversation.",
   },
   {
     question: "How do Mark and Jess divide the work?",
     answer:
-      "Mark leads on understanding the business side of every engagement — what's actually costing a client time or leads, and whether a proposed system genuinely addresses it. Jess leads the technical build, turning that understanding into a working system. Both are involved from the first discovery call through to launch, rather than working in separate silos that only meet at handoff points.",
+      "Mark leads on understanding the business side of every engagement: what's actually costing a client time or leads, and whether a proposed system genuinely addresses it. Jess leads the technical build, turning that understanding into a working system. Both are involved from the first discovery call through to launch, rather than working in separate silos that only meet at handoff points.",
   },
 ];
 
@@ -78,7 +78,7 @@ export default function AboutPage() {
               We&apos;ve watched good businesses lose good customers to bad timing.
             </h2>
             <p className="mt-6 text-text-muted">
-              Not because the work wasn&apos;t good enough — because the phone rang while someone
+              Not because the work wasn&apos;t good enough, but because the phone rang while someone
               was on a ladder, or a quote sat unanswered for a week while the job went to
               whoever replied first. Mark brings a decade of business strategy experience,
               ensuring every system actually impacts the bottom line rather than just looking
@@ -116,8 +116,8 @@ export default function AboutPage() {
             <div>
               <h3 className="font-display text-lg text-text">Business first, technology second</h3>
               <p className="mt-2 text-sm text-text-muted">
-                Every project starts with a genuine question — what&apos;s actually costing you
-                time or leads — rather than starting from what AI can technically do and looking
+                Every project starts with a genuine question: what&apos;s actually costing you
+                time or leads, rather than starting from what AI can technically do and looking
                 for somewhere to apply it. Mark&apos;s background is business strategy, not sales,
                 and it shapes how every proposal is written.
               </p>
@@ -135,7 +135,7 @@ export default function AboutPage() {
               <p className="mt-2 text-sm text-text-muted">
                 We&apos;ve deliberately kept the business small. That means every client works
                 directly with the people building their system, from the first discovery call
-                through to ongoing support — not handed off to whoever&apos;s free.
+                through to ongoing support, not handed off to whoever&apos;s free.
               </p>
             </div>
           </div>
@@ -150,7 +150,7 @@ export default function AboutPage() {
               The businesses with the least spare capacity have the most to gain.
             </h2>
             <p className="mt-6 text-text-muted">
-              Large companies solve the missed-enquiry problem with headcount — bigger reception
+              Large companies solve the missed-enquiry problem with headcount: bigger reception
               teams, dedicated call centres, shift cover around the clock. Independent and
               small businesses don&apos;t have that option, and shouldn&apos;t need to hire their
               way to a solution just to stop losing enquiries outside a narrow window of
@@ -160,8 +160,8 @@ export default function AboutPage() {
             <p className="mt-4 text-text-muted">
               It also means we&apos;re building for owners who are directly affected by every
               decision, not a procurement team several layers removed from the actual work. Every
-              proposal is written for the person who&apos;ll actually use the system day to day —
-              see{" "}
+              proposal is written for the person who&apos;ll actually use the system day to day.
+              See{" "}
               <Link href="/how-it-works" className="text-gold hover:underline">
                 how it works
               </Link>{" "}
@@ -180,14 +180,14 @@ export default function AboutPage() {
             </h2>
             <p className="mt-6 text-text-muted">
               We don&apos;t publish prices, because a price list can&apos;t reflect the real
-              difference between a small quick win and a fully integrated system — see{" "}
+              difference between a small quick win and a fully integrated system. See{" "}
               <Link href="/how-it-works" className="text-gold hover:underline">
                 how pricing actually works
               </Link>
               . We don&apos;t sell every client the same package regardless of what they actually
-              need — some businesses need one small piece of automation and nothing more, and
+              need. Some businesses need one small piece of automation and nothing more, and
               we&apos;ll say so rather than upselling. And we don&apos;t build systems we
-              can&apos;t explain in plain terms — if we can&apos;t describe what something does
+              can&apos;t explain in plain terms. If we can&apos;t describe what something does
               and why in a way that makes sense to you, we don&apos;t think it belongs in your
               business. That&apos;s a slower way to grow than saying yes to everything, and
               we&apos;re fine with that trade-off.

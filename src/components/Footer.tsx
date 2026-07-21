@@ -73,7 +73,7 @@ export function Footer() {
       </Container>
 
       <div className="border-t border-border">
-        <Container className="flex flex-col gap-2 py-6 text-xs text-text-muted md:flex-row md:items-center md:justify-between">
+        <Container className="flex flex-col gap-2 pb-20 pt-6 text-xs text-text-muted sm:pb-6 md:flex-row md:items-center md:justify-between">
           <span>
             &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
           </span>

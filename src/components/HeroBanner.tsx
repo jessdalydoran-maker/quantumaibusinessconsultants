@@ -30,7 +30,7 @@ export function HeroBanner() {
           </h1>
           <p className="mt-8 max-w-xl text-lg text-text-muted">
             We build bespoke AI systems that handle your enquiries, bookings, follow-ups, and
-            admin — so you can focus on the work that actually grows your business.
+            admin, so you can focus on the work that actually grows your business.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <Button href="/contact" variant="primary">

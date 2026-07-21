@@ -8,7 +8,7 @@ export function FaqAccordion({ faqs }: { faqs: Faq[] }) {
       {faqs.map((faq) => (
         <details key={faq.question} className="group py-6">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left">
-            <span className="font-display text-lg text-text">{faq.question}</span>
+            <span className="min-w-0 break-words font-display text-lg text-text">{faq.question}</span>
             <span
               aria-hidden
               className="shrink-0 text-2xl text-gold transition-transform duration-200 group-open:rotate-45"

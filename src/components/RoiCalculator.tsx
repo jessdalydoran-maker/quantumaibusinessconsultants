@@ -29,9 +29,9 @@ export function RoiCalculator() {
     <div className="grid gap-10 rounded-sm border border-border bg-bg-alt p-8 md:grid-cols-2 md:p-12">
       <div className="space-y-8">
         <div>
-          <label htmlFor="hours" className="flex items-baseline justify-between text-sm text-text-muted">
-            <span>Admin hours per week</span>
-            <span className="font-display text-lg text-gold">{hours} hrs</span>
+          <label htmlFor="hours" className="flex items-baseline justify-between gap-2 text-sm text-text-muted">
+            <span className="min-w-0 break-words">Admin hours per week</span>
+            <span className="shrink-0 font-display text-lg text-gold">{hours} hrs</span>
           </label>
           <input
             id="hours"
@@ -45,9 +45,9 @@ export function RoiCalculator() {
         </div>
 
         <div>
-          <label htmlFor="value" className="flex items-baseline justify-between text-sm text-text-muted">
-            <span>Your hourly value</span>
-            <span className="font-display text-lg text-gold">{formatGBP(hourlyValue)}</span>
+          <label htmlFor="value" className="flex items-baseline justify-between gap-2 text-sm text-text-muted">
+            <span className="min-w-0 break-words">Your hourly value</span>
+            <span className="shrink-0 font-display text-lg text-gold">{formatGBP(hourlyValue)}</span>
           </label>
           <input
             id="value"
@@ -64,10 +64,10 @@ export function RoiCalculator() {
         <div>
           <label
             htmlFor="automatable"
-            className="flex items-baseline justify-between text-sm text-text-muted"
+            className="flex items-baseline justify-between gap-2 text-sm text-text-muted"
           >
-            <span>Share of that admin you think could realistically be automated</span>
-            <span className="font-display text-lg text-gold">{automatable}%</span>
+            <span className="min-w-0 break-words">Share of that admin you think could realistically be automated</span>
+            <span className="shrink-0 font-display text-lg text-gold">{automatable}%</span>
           </label>
           <input
             id="automatable"

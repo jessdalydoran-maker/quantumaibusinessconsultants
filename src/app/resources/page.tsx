@@ -21,7 +21,7 @@ export default function ResourcesPage() {
       <PageHero
         eyebrow="Resources"
         title="Straight answers, not AI trend pieces."
-        dek="Written for the questions independent business owners actually ask before adopting AI — updated as our thinking and the field move on."
+        dek="Written for the questions independent business owners actually ask before adopting AI, updated as our thinking and the field move on."
         breadcrumbs={[{ name: "Resources", href: "/resources" }]}
       />
 
@@ -32,13 +32,13 @@ export default function ResourcesPage() {
               Most &quot;AI trends&quot; content is written for other people in the AI industry,
               not for the business owner actually deciding whether to adopt any of it. This
               section is written for the second group. No listicles of buzzwords, no &quot;10 ways
-              AI will transform your industry in 2026&quot; — just direct answers to the specific,
+              AI will transform your industry in 2026&quot;, just direct answers to the specific,
               practical questions that come up before, during, and after adopting AI in an
               independent business.
             </p>
             <p>
               Topics span trust and data handling, how to decide between a small quick win and a
-              fuller bespoke build, and what this looks like in specific industries — trades,
+              fuller bespoke build, and what this looks like in specific industries: trades,
               salons, garages, professional services. Each piece opens with a direct answer to the
               question in its title, so you can get the substance in a paragraph even if you
               don&apos;t read the rest.
@@ -46,7 +46,7 @@ export default function ResourcesPage() {
             <p>
               This is a working library, not a one-off content push. We add to it as real
               questions come up in discovery calls and client conversations, and revisit older
-              pieces as our own approach develops — the dates on each post reflect when it was
+              pieces as our own approach develops. The dates on each post reflect when it was
               last substantively written or updated, not just published once and abandoned.
             </p>
           </div>
@@ -146,7 +146,7 @@ export default function ResourcesPage() {
           </div>
           <p className="mt-8 max-w-2xl text-sm text-text-muted">
             Every post is written by Mark or Jess directly, based on real questions from real
-            client conversations — not commissioned from a freelance content mill or generated
+            client conversations, not commissioned from a freelance content mill or generated
             wholesale and lightly edited. See the{" "}
             <a href="/about" className="text-gold hover:underline">
               about page

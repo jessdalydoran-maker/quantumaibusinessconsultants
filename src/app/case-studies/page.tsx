@@ -10,7 +10,7 @@ import { faqSchema, jsonLdScript } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Real results from real independent businesses running on Quantum AI systems — health & wellness, hospitality, and food & beverage.",
+    "Real results from real independent businesses running on Quantum AI systems: health & wellness, hospitality, and food & beverage.",
   alternates: { canonical: "/case-studies" },
 };
 
@@ -18,17 +18,17 @@ const faqs = [
   {
     question: "Are these results typical, or best-case examples?",
     answer:
-      "They're the complete list of clients whose systems have been live long enough to report on honestly, not a filtered selection of the best-performing ones. We have three published case studies because we have three engagements we can report on truthfully — not because we've hidden weaker results.",
+      "They're the complete list of clients whose systems have been live long enough to report on honestly, not a filtered selection of the best-performing ones. We have three published case studies because we have three engagements we can report on truthfully, not because we've hidden weaker results.",
   },
   {
     question: "Why don't you have case studies in trades or the other industries you list?",
     answer:
-      "Our published portfolio reflects where our earliest client relationships happened to be, which skewed toward health & wellness, hospitality, and food & beverage. Our current focus has shifted toward trades and service businesses, and we expect that portfolio gap to close as those engagements mature enough to report on — we won't publish a trades case study until we have a real one.",
+      "Our published portfolio reflects where our earliest client relationships happened to be, which skewed toward health & wellness, hospitality, and food & beverage. Our current focus has shifted toward trades and service businesses, and we expect that portfolio gap to close as those engagements mature enough to report on. We won't publish a trades case study until we have a real one.",
   },
   {
     question: "How do you decide what result to publish for a client?",
     answer:
-      "Whatever metric the client themselves considers meaningful and can confirm — a reduction in missed enquiries, coverage hours, or a similar concrete measure — rather than a metric we've chosen because it sounds impressive. If a result can't be measured honestly yet, we don't publish one.",
+      "Whatever metric the client themselves considers meaningful and can confirm, such as a reduction in missed enquiries or coverage hours, rather than a metric we've chosen because it sounds impressive. If a result can't be measured honestly yet, we don't publish one.",
   },
   {
     question: "Can I speak to a current client as a reference?",
@@ -43,7 +43,7 @@ export default function CaseStudiesPage() {
       <PageHero
         eyebrow="Case Studies"
         title="Businesses already running smarter."
-        dek="No invented numbers, no composite examples — every case study here is a real client."
+        dek="No invented numbers, no composite examples: every case study here is a real client."
         breadcrumbs={[{ name: "Case Studies", href: "/case-studies" }]}
       />
 
@@ -56,25 +56,25 @@ export default function CaseStudiesPage() {
               Most consultancies in this space fill a case studies page with composite examples,
               projected numbers, or clients who agreed to be named but not quoted with any real
               detail. We&apos;d rather have three genuine examples than a dozen padded-out ones,
-              so what&apos;s below is a complete list — not a curated highlight reel with the
+              so what&apos;s below is a complete list, not a curated highlight reel with the
               underwhelming results left out.
             </p>
             <p>
-              Each entry reflects a real engagement: a real business, a real problem, and — where
-              the system has been live long enough to measure — a real result. Where a project is
+              Each entry reflects a real engagement: a real business, a real problem, and, where
+              the system has been live long enough to measure, a real result. Where a project is
               still in build or too recent to report on honestly, we say so, rather than
               publishing a number that hasn&apos;t actually been earned yet.
             </p>
             <p>
               We work across health &amp; wellness, hospitality, and food &amp; beverage
               already, and we&apos;re actively building out results in trades and other service
-              businesses — the current focus of{" "}
+              businesses, the current focus of{" "}
               <Link href="/industries" className="text-gold hover:underline">
                 the industries we serve
               </Link>
               . If your business isn&apos;t reflected in the list below yet, that&apos;s a gap in
               our published portfolio, not a sign we haven&apos;t thought about how the same
-              systems would apply to you — see{" "}
+              systems would apply to you. See{" "}
               <Link href="/how-it-works" className="text-gold hover:underline">
                 how it works
               </Link>{" "}
@@ -85,7 +85,7 @@ export default function CaseStudiesPage() {
               the specific challenge this business faced, what we actually built, and what it
               means more broadly for businesses facing a similar gap between demand and capacity.
               We&apos;ve tried to write these so they&apos;re useful even if your business is
-              nothing like the ones featured — the underlying pattern usually travels better than
+              nothing like the ones featured. The underlying pattern usually travels better than
               the specifics do.
             </p>
           </div>
@@ -139,21 +139,21 @@ export default function CaseStudiesPage() {
               A Belfast health clinic, a multi-property hospitality group, and a growing wholesale
               coffee roaster don&apos;t look like the same kind of business on the surface. But
               the underlying problem in each case was recognisably similar: real demand arriving
-              faster, or more repetitively, than a busy team could handle by hand — not because of
+              faster, or more repetitively, than a busy team could handle by hand, not because of
               a lack of skill or effort, but because of a structural gap between how much attention
               a task needed and how much was realistically available for it.
             </p>
             <p>
               In each case, the fix wasn&apos;t to add headcount or hope the team would somehow
               find more hours in the day. It was to build a system specifically around where that
-              gap actually was — enquiry timing for the clinic, round-the-clock consistency for
-              the hospitality group, repetitive ordering admin for the coffee roaster — and let it
+              gap actually was: enquiry timing for the clinic, round-the-clock consistency for
+              the hospitality group, repetitive ordering admin for the coffee roaster, and let it
               close that gap automatically, every time, rather than depending on someone catching
               it manually.
             </p>
             <p>
               That&apos;s the same underlying approach we&apos;d bring to a trades business, a
-              salon, or a professional services firm — see{" "}
+              salon, or a professional services firm. See{" "}
               <Link href="/industries" className="text-gold hover:underline">
                 industries
               </Link>{" "}

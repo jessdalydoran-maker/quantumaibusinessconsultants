@@ -22,13 +22,13 @@ export const services: Service[] = [
   {
     slug: "enquiries-and-leads",
     name: "Enquiries & Leads",
-    dek: "Every call, message, and web enquiry answered the moment it arrives — not whenever you next get a free minute.",
+    dek: "Every call, message, and web enquiry answered the moment it arrives, not whenever you next get a free minute.",
     summary:
       "An AI system that picks up the phone, replies to web chat, and responds to messages in real time, so a missed call never becomes a missed job.",
     intro: [
-      "Independent businesses lose work not because they're bad at it, but because they're busy doing it. A call goes unanswered mid-job, a web enquiry sits for a day, and the customer books with whoever replied first. It's rarely a competence problem — it's a timing problem, and timing is exactly what an unattended phone or inbox gets wrong.",
-      "Think about what actually happens on a normal Tuesday. You're up a ladder, under a sink, or mid-consultation with a customer in front of you, and the phone rings. You can't answer it — not because you don't want the work, but because you're physically doing the work someone else is calling about. That caller doesn't know that. They just hear it ring out, and more often than not, they call the next name on the list.",
-      "An enquiries and leads system removes the timing problem entirely. It doesn't get busy, it doesn't clock off, and it doesn't need a break — so the business doesn't lose the enquiry just because the person running it was doing exactly what they should have been doing.",
+      "Independent businesses lose work not because they're bad at it, but because they're busy doing it. A call goes unanswered mid-job, a web enquiry sits for a day, and the customer books with whoever replied first. It's rarely a competence problem. It's a timing problem, and timing is exactly what an unattended phone or inbox gets wrong.",
+      "Think about what actually happens on a normal Tuesday. You're up a ladder, under a sink, or mid-consultation with a customer in front of you, and the phone rings. You can't answer it, not because you don't want the work, but because you're physically doing the work someone else is calling about. That caller doesn't know that. They just hear it ring out, and more often than not, they call the next name on the list.",
+      "An enquiries and leads system removes the timing problem entirely. It doesn't get busy, it doesn't clock off, and it doesn't need a break, so the business doesn't lose the enquiry just because the person running it was doing exactly what they should have been doing.",
     ],
     signs: [
       "You regularly notice missed calls on your phone that you never got round to returning",
@@ -40,15 +40,15 @@ export const services: Service[] = [
     howItWorks: [
       {
         title: "It answers the way your business would",
-        body: "The system is trained on your actual services, coverage area, and how you talk to customers — not a generic script. It can explain what you do, roughly how you work, and what happens next, in a way that sounds like your business rather than a call centre.",
+        body: "The system is trained on your actual services, coverage area, and how you talk to customers, not a generic script. It can explain what you do, roughly how you work, and what happens next, in a way that sounds like your business rather than a call centre.",
       },
       {
         title: "It captures what actually matters",
-        body: "Rather than just taking a message, it asks the right follow-up questions for your trade — what the job is, roughly where, how urgent it is — so what lands with you is a usable lead, not a vague voicemail you have to call back to make sense of.",
+        body: "Rather than just taking a message, it asks the right follow-up questions for your trade: what the job is, roughly where, how urgent it is, so what lands with you is a usable lead, not a vague voicemail you have to call back to make sense of.",
       },
       {
         title: "It routes and escalates properly",
-        body: "Routine enquiries get handled directly. Anything unusual, urgent, or outside what it's confident about gets flagged and handed to you or a team member — with the context already captured, so you're not starting from scratch.",
+        body: "Routine enquiries get handled directly. Anything unusual, urgent, or outside what it's confident about gets flagged and handed to you or a team member, with the context already captured, so you're not starting from scratch.",
       },
     ],
     whatItCovers: [
@@ -60,7 +60,7 @@ export const services: Service[] = [
       {
         title: "24/7 AI receptionist",
         description:
-          "Trained specifically on your business, it answers by phone or on your website around the clock, capturing and qualifying every enquiry without needing a redesign — not a generic chat widget bolted on top.",
+          "Trained specifically on your business, it answers by phone or on your website around the clock, capturing and qualifying every enquiry without needing a redesign, not a generic chat widget bolted on top.",
       },
       {
         title: "Missed-call text-back",
@@ -76,19 +76,19 @@ export const services: Service[] = [
     quickWin: {
       title: "Missed-call text-back",
       description:
-        "The simplest version: every missed call gets an instant, on-brand text reply within seconds. No build required beyond connecting your existing number — usually live within days, and the first place most businesses start.",
+        "The simplest version: every missed call gets an instant, on-brand text reply within seconds. No build required beyond connecting your existing number, usually live within days, and the first place most businesses start.",
     },
     bespoke: {
       title: "Full AI voice receptionist",
       description:
-        "A phone system that can hold a real conversation, understand what the caller needs, check availability, and book the job — built around your specific services and how you actually price and schedule work, and integrated with your calendar and CRM if you have one.",
+        "A phone system that can hold a real conversation, understand what the caller needs, check availability, and book the job. It's built around your specific services and how you actually price and schedule work, and integrated with your calendar and CRM if you have one.",
     },
     relatedIndustries: ["trades", "home-and-property-services", "automotive-services"],
     faqs: [
       {
         question: "Will callers know they're talking to an AI?",
         answer:
-          "We're upfront about it where it matters — most systems introduce themselves clearly, and every caller can ask for a human at any point. We design the handoff rules with you, not around you.",
+          "We're upfront about it where it matters. Most systems introduce themselves clearly, and every caller can ask for a human at any point. We design the handoff rules with you, not around you.",
       },
       {
         question: "What happens if the AI can't answer a question?",
@@ -103,7 +103,7 @@ export const services: Service[] = [
       {
         question: "Can it handle more than one enquiry at once?",
         answer:
-          "Yes — unlike a person, it can hold multiple conversations simultaneously, which matters most during your busiest periods, when a human receptionist would otherwise be stacking calls.",
+          "Yes, unlike a person, it can hold multiple conversations simultaneously, which matters most during your busiest periods, when a human receptionist would otherwise be stacking calls.",
       },
       {
         question: "What if my services are quite technical to explain?",
@@ -118,12 +118,12 @@ export const services: Service[] = [
       {
         question: "How quickly can this be live?",
         answer:
-          "The quick-win version — missed-call text-back — can often be live within days. A full voice receptionist with calendar and CRM integration takes longer, depending on how much needs connecting together.",
+          "The quick-win version, missed-call text-back, can often be live within days. A full voice receptionist with calendar and CRM integration takes longer, depending on how much needs connecting together.",
       },
       {
         question: "Can it speak to customers in more than one language?",
         answer:
-          "This can be scoped where it's genuinely useful for your customer base — during the discovery call we'll ask whether this matters for your business rather than assuming it's needed by default.",
+          "This can be scoped where it's genuinely useful for your customer base. During the discovery call we'll ask whether this matters for your business rather than assuming it's needed by default.",
       },
     ],
   },
@@ -134,9 +134,9 @@ export const services: Service[] = [
     summary:
       "Automated booking and reminders that sit on top of how you already schedule work, cutting no-shows and the back-and-forth of finding a time that suits everyone.",
     intro: [
-      "Booking by phone tag or text thread works fine when things are quiet. The moment you're busy, it's the first thing to slip — a full afternoon of back-and-forth trying to find a time that suits both of you, for a job that might only take an hour once it's actually booked in.",
+      "Booking by phone tag or text thread works fine when things are quiet. The moment you're busy, it's the first thing to slip, a full afternoon of back-and-forth trying to find a time that suits both of you, for a job that might only take an hour once it's actually booked in.",
       "Multiply that friction across every new enquiry in a week, and it's easy to see where hours disappear. Worse, a slow or clunky booking process is often the exact moment a customer decides to try somewhere else, even after you've already done the hard part of winning the enquiry.",
-      "A bookings and scheduling system removes the back-and-forth. The customer sees real availability, picks a time, and it's confirmed — no chasing required from either side, and a reminder sent automatically so the appointment actually happens.",
+      "A bookings and scheduling system removes the back-and-forth. The customer sees real availability, picks a time, and it's confirmed. No chasing is required from either side, and a reminder is sent automatically so the appointment actually happens.",
       "This matters just as much for the second and third booking as it does for the first. A calendar that fills itself correctly, without double-bookings or gaps caused by miscommunication, compounds over a busy month into hours you'd otherwise have spent untangling scheduling mistakes instead of doing the work itself.",
     ],
     signs: [
@@ -150,11 +150,11 @@ export const services: Service[] = [
     howItWorks: [
       {
         title: "It reflects your real availability",
-        body: "Not a generic calendar widget — the system is set up around how you actually work: which days, which services, how long each job realistically takes, and any buffer time you need between them.",
+        body: "Not a generic calendar widget. The system is set up around how you actually work: which days, which services, how long each job realistically takes, and any buffer time you need between them.",
       },
       {
         title: "It confirms and reminds automatically",
-        body: "Once booked, confirmation and reminder messages go out without anyone having to remember to send them — timed to measurably reduce no-shows rather than firing off a single generic text.",
+        body: "Once booked, confirmation and reminder messages go out without anyone having to remember to send them, timed to measurably reduce no-shows rather than firing off a single generic text.",
       },
       {
         title: "It handles changes without a phone call",
@@ -164,7 +164,7 @@ export const services: Service[] = [
     whatItCovers: [
       {
         title: "Online booking",
-        description: "Reflects your real availability, staff, and service durations — not a generic 30-minute-slot template.",
+        description: "Reflects your real availability, staff, and service durations, not a generic 30-minute-slot template.",
       },
       {
         title: "Automated reminders",
@@ -182,19 +182,19 @@ export const services: Service[] = [
     quickWin: {
       title: "Automated reminders",
       description:
-        "Confirmation and reminder texts added to your existing booking process — a same-week change that reduces no-shows immediately, without touching how you currently take bookings.",
+        "Confirmation and reminder texts added to your existing booking process, a same-week change that reduces no-shows immediately, without touching how you currently take bookings.",
     },
     bespoke: {
       title: "End-to-end booking system",
       description:
-        "A booking flow built around your actual services — different durations, different staff, different locations — with rules that match how the job really works, connected to reminders and rescheduling from day one.",
+        "A booking flow built around your actual services: different durations, different staff, different locations, with rules that match how the job really works, connected to reminders and rescheduling from day one.",
     },
     relatedIndustries: ["salons-and-personal-care", "automotive-services", "home-and-property-services"],
     faqs: [
       {
         question: "Can it handle different appointment types and durations?",
         answer:
-          "Yes — this is exactly what \"bespoke\" means here. We build the logic around your real service list, not a generic 30-minute-slot template.",
+          "Yes, this is exactly what \"bespoke\" means here. We build the logic around your real service list, not a generic 30-minute-slot template.",
       },
       {
         question: "What if I already use a booking tool?",
@@ -209,12 +209,12 @@ export const services: Service[] = [
       {
         question: "How much do reminders actually reduce no-shows?",
         answer:
-          "It varies by business and how bookings were being confirmed before, so we won't quote you a generic industry statistic — we'll look at your current no-show pattern during scoping and set expectations based on that, not a marketing number.",
+          "It varies by business and how bookings were being confirmed before, so we won't quote you a generic industry statistic. We'll look at your current no-show pattern during scoping and set expectations based on that, not a marketing number.",
       },
       {
         question: "Can customers cancel as well as reschedule?",
         answer:
-          "Yes, within whatever cancellation policy you want enforced — including any notice period or fee rules you already apply.",
+          "Yes, within whatever cancellation policy you want enforced, including any notice period or fee rules you already apply.",
       },
       {
         question: "Will this work if I take bookings across multiple locations?",
@@ -224,30 +224,30 @@ export const services: Service[] = [
       {
         question: "What happens if two customers try to book the exact same slot?",
         answer:
-          "The system checks real-time availability before confirming, so a slot that's just been taken shows as unavailable immediately — the same protection a well-run manual diary gives you, just without depending on someone updating it fast enough by hand.",
+          "The system checks real-time availability before confirming, so a slot that's just been taken shows as unavailable immediately. That's the same protection a well-run manual diary gives you, just without depending on someone updating it fast enough by hand.",
       },
       {
         question: "Can customers book on the day, or only in advance?",
         answer:
-          "Both, depending on how you want it configured. Same-day availability can be shown if you have capacity, or you can set a minimum notice period — the rules reflect how you actually want to work, not a fixed default.",
+          "Both, depending on how you want it configured. Same-day availability can be shown if you have capacity, or you can set a minimum notice period. The rules reflect how you actually want to work, not a fixed default.",
       },
       {
         question: "Does it work for both online booking and phone bookings?",
         answer:
-          "Yes — the underlying availability is the same whether a customer books through a web form or over the phone via our enquiries and leads service, so the two never conflict with each other.",
+          "Yes, the underlying availability is the same whether a customer books through a web form or over the phone via our enquiries and leads service, so the two never conflict with each other.",
       },
     ],
   },
   {
     slug: "follow-ups-and-nurture",
     name: "Follow-Ups & Nurture",
-    dek: "The quote that never got chased, the review that was never asked for — handled automatically, every time.",
+    dek: "The quote that never got chased, the review that was never asked for: handled automatically, every time.",
     summary:
       "Automated follow-up across email, SMS, and WhatsApp that keeps warm enquiries warm and turns finished jobs into reviews, without you having to remember to do it.",
     intro: [
-      "Following up takes discipline and time — two things in short supply after a full day of actual work. A quote goes out on Monday, and by Friday it's forgotten, not because the customer wasn't interested, but because nobody circled back before they went with someone who did.",
+      "Following up takes discipline and time, two things in short supply after a full day of actual work. A quote goes out on Monday, and by Friday it's forgotten, not because the customer wasn't interested, but because nobody circled back before they went with someone who did.",
       "The same pattern shows up after the job's done. A happy customer would gladly leave a review or book again, but the moment passes, nobody asks, and the goodwill from a job well done never turns into anything you can point new customers to.",
-      "A follow-ups and nurture system closes that gap. It doesn't forget, it doesn't get busy, and it follows up at sensible, well-timed intervals — so quotes get chased and good jobs get turned into reviews, without it depending on anyone remembering to do it manually.",
+      "A follow-ups and nurture system closes that gap. It doesn't forget, it doesn't get busy, and it follows up at sensible, well-timed intervals, so quotes get chased and good jobs get turned into reviews, without it depending on anyone remembering to do it manually.",
       "The value compounds over time in a way that's easy to underestimate month to month. A handful of extra quotes converted and a steady trickle of extra reviews might not feel dramatic in any single week, but across a year they add up to meaningfully more booked work and a stronger reputation than leaving both to chance.",
     ],
     signs: [
@@ -320,17 +320,17 @@ export const services: Service[] = [
       {
         question: "Can I see which quotes are still being followed up on?",
         answer:
-          "Yes — this connects to the same record-keeping covered under admin and back-office, so you have a simple view of what's outstanding rather than having to ask.",
+          "Yes, this connects to the same record-keeping covered under admin and back-office, so you have a simple view of what's outstanding rather than having to ask.",
       },
       {
         question: "Will it ask for a review even if the job didn't go perfectly?",
         answer:
-          "No — review requests are only ever sent in line with rules you set, and we'll talk through how you want that judged during scoping, rather than firing a request off regardless of outcome.",
+          "No, review requests are only ever sent in line with rules you set, and we'll talk through how you want that judged during scoping, rather than firing a request off regardless of outcome.",
       },
       {
         question: "Can follow-up sequences differ between new enquiries and existing customers?",
         answer:
-          "Yes — a first-time enquiry chase and a repeat customer's rebooking prompt usually need different tones and timing, and we build separate sequences for each rather than treating every contact the same way.",
+          "Yes, a first-time enquiry chase and a repeat customer's rebooking prompt usually need different tones and timing, and we build separate sequences for each rather than treating every contact the same way.",
       },
       {
         question: "What if a customer replies asking to stop being contacted?",
@@ -342,7 +342,7 @@ export const services: Service[] = [
   {
     slug: "admin-and-back-office",
     name: "Admin & Back-Office",
-    dek: "The admin you're personally stuck doing for hours can be automated with a bespoke build — saving considerable time and money, not just tidier records.",
+    dek: "The admin you're personally stuck doing for hours can be automated with a custom-built system. That saves considerable time and money, not just tidier records.",
     summary:
       "A system of record that captures every enquiry, call, and booking automatically, plus simple reporting so you can see what's actually happening in the business without digging for it.",
     intro: [
@@ -427,7 +427,7 @@ export const services: Service[] = [
       {
         question: "Is the reporting customisable to what actually matters to my business?",
         answer:
-          "Yes — this is the difference between the quick win and the bespoke build. The bespoke version is built around the specific metrics you care about, not a generic dashboard template.",
+          "Yes, this is the difference between the quick win and the bespoke build. The bespoke version is built around the specific metrics you care about, not a generic dashboard template.",
       },
       {
         question: "Does this integrate with accounting or invoicing software?",
@@ -437,7 +437,7 @@ export const services: Service[] = [
       {
         question: "Can this generate reports for more than one person, like a business partner or accountant?",
         answer:
-          "Yes — reporting can be shared with whoever needs visibility into the business, in whatever format is genuinely useful to them, rather than being locked to a single view only you can see.",
+          "Yes, reporting can be shared with whoever needs visibility into the business, in whatever format is genuinely useful to them, rather than being locked to a single view only you can see.",
       },
     ],
   },
