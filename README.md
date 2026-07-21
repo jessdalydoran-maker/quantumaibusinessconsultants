@@ -15,7 +15,7 @@ npm run dev
 See `.env.example` for the full list. Required before launch:
 
 - `ANTHROPIC_API_KEY` — powers the AI receptionist chat widget (`/api/chat`). Without it, the widget replies with a graceful fallback message instead of chatting.
-- `RESEND_API_KEY` — sends contact form submissions and AI-captured leads to `jess@` and `mark@aibusinessconsultants.co.uk` (`/api/contact` and the chat widget's lead capture tool).
+- `RESEND_API_KEY` — sends contact form submissions and AI-captured leads to `hello@quantumbusinessconsultants.com` (`/api/contact` and the chat widget's lead capture tool).
 - `NEXT_PUBLIC_GA_ID` — Google Analytics 4 measurement ID. Leave blank to disable analytics.
 - `NEXT_PUBLIC_BOOKING_URL` — discovery call booking link (e.g. Calendly). Falls back to `/contact` until set.
 
