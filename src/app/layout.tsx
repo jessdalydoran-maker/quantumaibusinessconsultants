@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Work_Sans } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { ChatWidget } from "@/components/ChatWidget";
+import { SiteChrome } from "@/components/SiteChrome";
 import { site } from "@/lib/site";
 import { organizationSchema, jsonLdScript } from "@/lib/schema";
 
@@ -65,12 +63,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <ChatWidget />
+        <SiteChrome>{children}</SiteChrome>
         {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
