@@ -24,8 +24,10 @@ export default async function CrmLayout({ children }: { children: React.ReactNod
 
   const navItems = [
     { href: "/app", label: "Dashboard" },
+    { href: "/app/inbox", label: "Inbox" },
     { href: "/app/contacts", label: "Contacts" },
     { href: "/app/deals", label: "Deals" },
+    { href: "/app/settings/widget", label: "Settings" },
     ...(profile.is_platform_admin ? [{ href: "/app/admin", label: "Admin" }] : []),
   ];
 
