@@ -21,9 +21,13 @@ export async function sendConversationEmail(params: {
   subject: string;
   text: string;
 }) {
-  const apiKey = process.env.RESEND_API_KEY;
+  // Deliberately a separate key/account from RESEND_API_KEY (used by the AI
+  // receptionist and contact form) — the inbound domain lives on a different
+  // Resend account, and there was no reason to force consolidating them onto
+  // one paid account just for this.
+  const apiKey = process.env.INBOX_RESEND_API_KEY;
   if (!apiKey) {
-    throw new Error("RESEND_API_KEY is not configured.");
+    throw new Error("INBOX_RESEND_API_KEY is not configured.");
   }
 
   const replyAddress = conversationReplyAddress(params.conversationId);

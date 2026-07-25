@@ -50,10 +50,15 @@ Steps:
 ```
 INBOUND_EMAIL_DOMAIN=inbound.quantumbusinessconsultants.com
 RESEND_WEBHOOK_SECRET=whsec_...
+INBOX_RESEND_API_KEY=re_...
 ```
 
-(`RESEND_API_KEY` already exists from the AI receptionist setup — reused here for both outbound
-sends and fetching full inbound email content.)
+**`INBOX_RESEND_API_KEY` is deliberately a separate key from `RESEND_API_KEY`** — the inbound
+domain was verified on a different Resend account than the one already sending the AI
+receptionist's lead-capture and contact-form emails, and there was no reason to force both onto
+one paid account. `RESEND_API_KEY` is untouched and keeps doing exactly what it did before; the
+inbox (outbound replies in `src/lib/resend-email.ts` and the inbound webhook's
+`emails.receiving.get()` call) uses `INBOX_RESEND_API_KEY` only.
 
 ## How inbound routing actually decides where a message goes
 

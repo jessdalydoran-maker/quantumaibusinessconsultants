@@ -20,10 +20,12 @@ type ResendReceivedEvent = {
 
 export async function POST(request: NextRequest) {
   const webhookSecret = process.env.RESEND_WEBHOOK_SECRET;
-  const apiKey = process.env.RESEND_API_KEY;
+  // Same account as INBOX_RESEND_API_KEY (see src/lib/resend-email.ts) — the
+  // inbound domain lives on a separate Resend account from RESEND_API_KEY.
+  const apiKey = process.env.INBOX_RESEND_API_KEY;
 
   if (!webhookSecret || !apiKey) {
-    console.error("RESEND_WEBHOOK_SECRET or RESEND_API_KEY not configured.");
+    console.error("RESEND_WEBHOOK_SECRET or INBOX_RESEND_API_KEY not configured.");
     return NextResponse.json({ error: "Not configured." }, { status: 500 });
   }
 
