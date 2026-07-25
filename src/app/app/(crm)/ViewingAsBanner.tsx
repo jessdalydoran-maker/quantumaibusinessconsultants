@@ -8,7 +8,7 @@ export function ViewingAsBanner({
   hasAccount: boolean;
 }) {
   return (
-    <div className="border-b border-gold/40 bg-gold/10 px-4 py-2 text-center text-xs text-gold">
+    <div className="border-b border-gold/30 bg-gold/[0.07] px-4 py-2 text-center text-xs text-gold sm:px-6 lg:px-10">
       {hasAccount ? (
         <>
           Platform admin view — viewing as <strong>{accountName ?? "unknown account"}</strong>.{" "}

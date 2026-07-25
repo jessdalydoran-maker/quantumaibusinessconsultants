@@ -3,6 +3,12 @@ import { requireProfile, getEffectiveAccountId } from "@/lib/supabase/session";
 import { createClient } from "@/lib/supabase/server";
 import { NoAccountSelected } from "../NoAccountSelected";
 import { createTagAction } from "./actions";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { ButtonLink } from "@/components/crm/ui/Button";
+import { Input, Select, Label } from "@/components/crm/ui/Field";
+import { Table, THead, Th, TBody, Tr, Td } from "@/components/crm/ui/Table";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconContacts, IconSearch, IconPlus } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -52,112 +58,96 @@ export default async function ContactsPage({
 
   return (
     <div>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="font-display text-3xl text-text">Contacts</h1>
-        <div className="flex gap-3">
-          <Link
-            href="/app/contacts/find"
-            className="rounded-sm border border-gold px-4 py-2 text-sm font-medium text-gold hover:bg-gold hover:text-bg"
-          >
-            Find Contacts
-          </Link>
-          <Link
-            href="/app/contacts/new"
-            className="rounded-sm bg-gold px-4 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-          >
-            New Contact
-          </Link>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="CRM"
+        title="Contacts"
+        description="Every person and business you're in touch with."
+        action={
+          <>
+            <ButtonLink href="/app/contacts/find" variant="outline" icon={<IconSearch width={16} height={16} />}>
+              Find Contacts
+            </ButtonLink>
+            <ButtonLink href="/app/contacts/new" icon={<IconPlus width={16} height={16} />}>
+              New Contact
+            </ButtonLink>
+          </>
+        }
+      />
 
       <form method="get" className="mt-6 flex flex-wrap gap-3">
-        <input
-          type="search"
-          name="q"
-          defaultValue={q}
-          placeholder="Search name, email, company…"
-          className="min-w-[16rem] flex-1 rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-        />
-        <select
-          name="tag"
-          defaultValue={tag || ""}
-          className="rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-        >
+        <Input type="search" name="q" defaultValue={q} placeholder="Search name, email, company…" className="min-w-[16rem] flex-1" />
+        <Select name="tag" defaultValue={tag || ""} className="w-auto">
           <option value="">All tags</option>
           {(tags ?? []).map((t) => (
             <option key={t.id} value={t.id}>
               {t.name}
             </option>
           ))}
-        </select>
+        </Select>
         <button
           type="submit"
-          className="rounded-sm border border-border px-4 py-2 text-sm text-text-muted hover:border-gold hover:text-gold"
+          className="rounded-lg border border-border bg-bg-raised px-4 py-2 text-sm text-text hover:border-border-strong"
         >
           Filter
         </button>
       </form>
 
-      <div className="mt-6 overflow-x-auto rounded-sm border border-border">
-        <table className="w-full min-w-[640px] text-left text-sm">
-          <thead className="bg-bg-alt text-text-muted">
-            <tr>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Company</th>
-              <th className="px-4 py-3">Email</th>
-              <th className="px-4 py-3">Phone</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(contacts ?? []).map((contact) => (
-              <tr key={contact.id} className="border-t border-border hover:bg-bg-alt">
-                <td className="px-4 py-3">
-                  <Link href={`/app/contacts/${contact.id}`} className="text-text hover:text-gold">
-                    {contact.first_name} {contact.last_name || ""}
-                  </Link>
-                </td>
-                <td className="px-4 py-3 text-text-muted">{contact.company || "—"}</td>
-                <td className="px-4 py-3 text-text-muted">{contact.email || "—"}</td>
-                <td className="px-4 py-3 text-text-muted">{contact.phone || "—"}</td>
-              </tr>
-            ))}
-            {(!contacts || contacts.length === 0) && (
-              <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-text-muted">
-                  No contacts yet.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <div className="mt-6">
+        {contacts && contacts.length > 0 ? (
+          <Table>
+            <THead>
+              <Th>Name</Th>
+              <Th>Company</Th>
+              <Th>Email</Th>
+              <Th>Phone</Th>
+            </THead>
+            <TBody>
+              {contacts.map((contact) => (
+                <Tr key={contact.id}>
+                  <Td className="text-text">
+                    <Link href={`/app/contacts/${contact.id}`} className="font-medium text-text hover:text-gold">
+                      {contact.first_name} {contact.last_name || ""}
+                    </Link>
+                  </Td>
+                  <Td>{contact.company || "—"}</Td>
+                  <Td>{contact.email || "—"}</Td>
+                  <Td>{contact.phone || "—"}</Td>
+                </Tr>
+              ))}
+            </TBody>
+          </Table>
+        ) : (
+          <EmptyState
+            icon={<IconContacts width={20} height={20} />}
+            title="No contacts yet"
+            description="Add one manually, or use Find Contacts to search local businesses."
+          />
+        )}
       </div>
 
-      <details className="mt-8 rounded-sm border border-border bg-bg-alt p-4">
+      <details className="mt-8 rounded-xl border border-border bg-bg-alt/50 p-4">
         <summary className="cursor-pointer text-sm text-text-muted">
           Manage tags · <Link href="/app/contacts/fields" className="text-gold hover:underline">Manage custom fields</Link>
         </summary>
         <form action={createTagAction} className="mt-4 flex flex-wrap items-end gap-3">
           <input type="hidden" name="returnTo" value="/app/contacts" />
           <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">Tag name</label>
-            <input
-              name="name"
-              required
-              className="mt-1 rounded-sm border border-border bg-bg px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
+            <Label htmlFor="tag-name">Tag name</Label>
+            <Input id="tag-name" name="name" required className="w-auto" />
           </div>
           <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">Color</label>
+            <Label htmlFor="tag-color">Color</Label>
             <input
+              id="tag-color"
               name="color"
               type="color"
               defaultValue="#d5b054"
-              className="mt-1 h-9 w-16 rounded-sm border border-border bg-bg"
+              className="mt-1 h-10 w-16 rounded-lg border border-border bg-bg"
             />
           </div>
           <button
             type="submit"
-            className="rounded-sm border border-border px-4 py-2 text-sm text-text-muted hover:border-gold hover:text-gold"
+            className="rounded-lg border border-border px-4 py-2.5 text-sm text-text-muted hover:border-gold hover:text-gold"
           >
             Add Tag
           </button>
@@ -166,7 +156,7 @@ export default async function ContactsPage({
           {(tags ?? []).map((t) => (
             <span
               key={t.id}
-              className="rounded-full px-3 py-1 text-xs text-bg"
+              className="rounded-full px-3 py-1 text-xs font-medium text-bg"
               style={{ backgroundColor: t.color }}
             >
               {t.name}

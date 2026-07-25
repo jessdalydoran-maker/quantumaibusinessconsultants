@@ -14,6 +14,10 @@ import {
 } from "../actions";
 import { isWithinWhatsAppWindow } from "@/lib/twilio";
 import { ThreadAutoRefresh } from "./ThreadAutoRefresh";
+import { Card } from "@/components/crm/ui/Card";
+import { Button } from "@/components/crm/ui/Button";
+import { Textarea, Select } from "@/components/crm/ui/Field";
+import { Badge } from "@/components/crm/ui/Badge";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -90,17 +94,17 @@ export default async function ConversationDetailPage({
         ← Back to Inbox
       </Link>
 
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-5">
         <div>
           <h1 className="font-display text-2xl text-text">
             {contact ? `${contact.first_name} ${contact.last_name || ""}`.trim() : "Unknown contact"}
           </h1>
-          <p className="mt-1 text-xs uppercase tracking-wide text-text-muted">
-            {CHANNEL_LABEL[conversation.channel] ?? conversation.channel}
-            {contact?.email ? ` · ${contact.email}` : ""}
+          <p className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-text-muted">
+            <Badge tone="gold">{CHANNEL_LABEL[conversation.channel] ?? conversation.channel}</Badge>
+            {contact?.email ? <span>{contact.email}</span> : null}
             {contact?.id && (
               <>
-                {" · "}
+                <span>·</span>
                 <Link href={`/app/contacts/${contact.id}`} className="text-gold hover:underline">
                   View contact
                 </Link>
@@ -111,23 +115,20 @@ export default async function ConversationDetailPage({
         <form action={setConversationStatusAction}>
           <input type="hidden" name="conversationId" value={conversation.id} />
           <input type="hidden" name="status" value={conversation.status === "open" ? "closed" : "open"} />
-          <button
-            type="submit"
-            className="rounded-sm border border-border px-4 py-2 text-sm text-text-muted hover:border-gold hover:text-gold"
-          >
+          <Button type="submit" variant="secondary" size="sm">
             {conversation.status === "open" ? "Close Conversation" : "Reopen Conversation"}
-          </button>
+          </Button>
         </form>
       </div>
 
-      <div className="mt-6 space-y-3 rounded-sm border border-border bg-bg-alt p-4">
+      <Card className="mt-6 space-y-3 p-4">
         {(messages ?? []).map((message) => (
           <div
             key={message.id}
-            className={`max-w-[80%] rounded-sm p-3 text-sm ${
+            className={`max-w-[80%] rounded-xl p-3 text-sm shadow-sm ${
               message.direction === "inbound"
-                ? "ml-auto bg-gold text-bg"
-                : "bg-bg text-text"
+                ? "ml-auto bg-gradient-to-b from-gold-soft to-gold text-bg"
+                : "bg-bg-raised/70 text-text"
             }`}
           >
             {message.sender_type === "ai" && (
@@ -150,29 +151,18 @@ export default async function ConversationDetailPage({
         {(!messages || messages.length === 0) && (
           <p className="text-center text-sm text-text-muted">No messages yet.</p>
         )}
-      </div>
+      </Card>
 
       {draft && (
-        <div className="mt-4 rounded-sm border border-gold/40 bg-gold/10 p-4">
+        <Card className="mt-4 border-gold/30 bg-gold/[0.06] p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-gold">
             AI Draft {draft.reason === "escalated" ? "(escalated — review before sending)" : ""}
           </p>
           <form action={sendAiDraftAction} className="mt-3">
             <input type="hidden" name="conversationId" value={conversation.id} />
-            <textarea
-              name="body"
-              required
-              rows={4}
-              defaultValue={draft.body}
-              className="w-full rounded-sm border border-border bg-bg px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
+            <Textarea name="body" required rows={4} defaultValue={draft.body} />
             <div className="mt-2 flex gap-3">
-              <button
-                type="submit"
-                className="rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-              >
-                Approve &amp; Send
-              </button>
+              <Button type="submit">Approve &amp; Send</Button>
             </div>
           </form>
           <form action={discardAiDraftAction} className="mt-2">
@@ -181,11 +171,11 @@ export default async function ConversationDetailPage({
               Discard draft
             </button>
           </form>
-        </div>
+        </Card>
       )}
 
       {outsideWhatsAppWindow ? (
-        <div className="mt-4 rounded-sm border border-gold/40 bg-gold/10 p-4">
+        <Card className="mt-4 border-gold/30 bg-gold/[0.06] p-4">
           <p className="text-sm text-gold">
             It&apos;s been more than 24 hours since this contact last messaged. WhatsApp requires
             an approved template to start a new business-initiated message.
@@ -193,23 +183,14 @@ export default async function ConversationDetailPage({
           {approvedTemplates.length > 0 ? (
             <form action={sendWhatsAppTemplateAction} className="mt-3 flex flex-wrap gap-3">
               <input type="hidden" name="conversationId" value={conversation.id} />
-              <select
-                name="templateId"
-                required
-                className="rounded-sm border border-border bg-bg px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-              >
+              <Select name="templateId" required className="w-auto">
                 {approvedTemplates.map((t) => (
                   <option key={t.id} value={t.id}>
                     {t.name}
                   </option>
                 ))}
-              </select>
-              <button
-                type="submit"
-                className="rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-              >
-                Send Template
-              </button>
+              </Select>
+              <Button type="submit">Send Template</Button>
             </form>
           ) : (
             <p className="mt-2 text-sm text-text-muted">
@@ -220,25 +201,19 @@ export default async function ConversationDetailPage({
               .
             </p>
           )}
-        </div>
+        </Card>
       ) : (
         <form action={replyToConversationAction} className="mt-4">
           <input type="hidden" name="conversationId" value={conversation.id} />
-          <textarea
+          <Textarea
             name="body"
             required
             rows={3}
-            placeholder={
-              conversation.channel === "email" ? "Write your reply email…" : "Write a reply…"
-            }
-            className="w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
+            placeholder={conversation.channel === "email" ? "Write your reply email…" : "Write a reply…"}
           />
-          <button
-            type="submit"
-            className="mt-2 rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-          >
+          <Button type="submit" className="mt-2">
             {conversation.channel === "email" ? "Send Email" : "Send Reply"}
-          </button>
+          </Button>
         </form>
       )}
     </div>

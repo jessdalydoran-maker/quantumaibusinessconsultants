@@ -12,8 +12,21 @@ import {
   scheduleCampaignAction,
   deleteCampaignAction,
 } from "../actions";
+import { Card, CardHeader, CardBody } from "@/components/crm/ui/Card";
+import { Input, Textarea, Select, Label } from "@/components/crm/ui/Field";
+import { Button } from "@/components/crm/ui/Button";
+import { Badge } from "@/components/crm/ui/Badge";
+import { Table, THead, Th, TBody, Tr, Td } from "@/components/crm/ui/Table";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconCampaigns } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
+
+const STATUS_TONE: Record<string, "green" | "gold" | "neutral"> = {
+  sent: "green",
+  scheduled: "gold",
+  draft: "neutral",
+};
 
 export default async function CampaignDetailPage({
   params,
@@ -65,136 +78,93 @@ export default async function CampaignDetailPage({
       <Link href="/app/campaigns" className="text-sm text-text-muted hover:text-gold">
         ← Back to Campaigns
       </Link>
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
-        <h1 className="font-display text-2xl text-text">{campaign.name}</h1>
-        <span className="rounded-full border border-border px-3 py-1 text-xs uppercase text-text-muted">
-          {campaign.status}
-        </span>
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-4 border-b border-border pb-6">
+        <h1 className="font-display text-2xl text-text sm:text-3xl">{campaign.name}</h1>
+        <Badge tone={STATUS_TONE[campaign.status] ?? "neutral"}>{campaign.status}</Badge>
       </div>
 
       {isDraft ? (
         <>
-          <section className="mt-8">
-            <h2 className="font-display text-lg text-text">Audience</h2>
-            <form method="get" className="mt-3 grid gap-4 sm:grid-cols-2">
-              <div>
-                <label className="block text-xs uppercase tracking-wide text-text-muted">
-                  Include contacts tagged
-                </label>
-                <select
-                  name="includeTags"
-                  multiple
-                  defaultValue={includeTags}
-                  className="mt-1 h-24 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-                >
-                  {(allTags ?? []).map((t) => (
-                    <option key={t.name} value={t.name}>
-                      {t.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs uppercase tracking-wide text-text-muted">
-                  Exclude contacts tagged
-                </label>
-                <select
-                  name="excludeTags"
-                  multiple
-                  defaultValue={excludeTags}
-                  className="mt-1 h-24 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-                >
-                  {(allTags ?? []).map((t) => (
-                    <option key={t.name} value={t.name}>
-                      {t.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <p className="text-xs text-text-muted sm:col-span-2">
-                Leave &quot;include&quot; empty to target every subscribed contact with an email
-                address. Multi-select: cmd/ctrl-click to pick more than one tag.
+          <Card className="mt-8">
+            <CardHeader title="Audience" />
+            <CardBody>
+              <form method="get" className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <Label>Include contacts tagged</Label>
+                  <Select name="includeTags" multiple defaultValue={includeTags} className="h-24">
+                    {(allTags ?? []).map((t) => (
+                      <option key={t.name} value={t.name}>
+                        {t.name}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+                <div>
+                  <Label>Exclude contacts tagged</Label>
+                  <Select name="excludeTags" multiple defaultValue={excludeTags} className="h-24">
+                    {(allTags ?? []).map((t) => (
+                      <option key={t.name} value={t.name}>
+                        {t.name}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+                <p className="text-xs text-text-muted sm:col-span-2">
+                  Leave &quot;include&quot; empty to target every subscribed contact with an email
+                  address. Multi-select: cmd/ctrl-click to pick more than one tag.
+                </p>
+                <Button type="submit" variant="secondary" className="w-fit sm:col-span-2">
+                  Preview Count
+                </Button>
+              </form>
+              <p className="mt-3 text-sm text-text">
+                <strong className="text-gold">{matching.length}</strong> matching, subscribed
+                contact{matching.length === 1 ? "" : "s"} with an email address.
               </p>
-              <button
-                type="submit"
-                className="w-fit rounded-sm border border-border px-4 py-2 text-sm text-text-muted hover:border-gold hover:text-gold sm:col-span-2"
-              >
-                Preview Count
-              </button>
-            </form>
-            <p className="mt-3 text-sm text-text">
-              <strong className="text-gold">{matching.length}</strong> matching, subscribed
-              contact{matching.length === 1 ? "" : "s"} with an email address.
-            </p>
-          </section>
+            </CardBody>
+          </Card>
 
-          <form action={updateCampaignAction} className="mt-8 grid max-w-2xl gap-4">
-            <input type="hidden" name="campaignId" value={campaign.id} />
-            <input type="hidden" name="includeTags" value={includeTags.join(",")} />
-            <input type="hidden" name="excludeTags" value={excludeTags.join(",")} />
-            <div>
-              <label className="block text-xs uppercase tracking-wide text-text-muted">Subject</label>
-              <input
-                name="subject"
-                required
-                defaultValue={campaign.subject}
-                className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-xs uppercase tracking-wide text-text-muted">
-                Body (HTML)
-              </label>
-              <textarea
-                name="body"
-                required
-                rows={10}
-                defaultValue={campaign.body}
-                className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 font-mono text-xs text-text focus:border-gold focus:outline-none"
-              />
-              <p className="mt-1 text-xs text-text-muted">
-                An unsubscribe footer is added automatically to every send — don&apos;t include
-                your own.
-              </p>
-            </div>
-            <button
-              type="submit"
-              className="w-fit rounded-sm border border-gold px-5 py-2 text-sm font-medium text-gold hover:bg-gold hover:text-bg"
-            >
-              Save Draft
-            </button>
-          </form>
+          <Card className="mt-6 max-w-2xl">
+            <CardBody>
+              <form action={updateCampaignAction} className="grid gap-4">
+                <input type="hidden" name="campaignId" value={campaign.id} />
+                <input type="hidden" name="includeTags" value={includeTags.join(",")} />
+                <input type="hidden" name="excludeTags" value={excludeTags.join(",")} />
+                <div>
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input id="subject" name="subject" required defaultValue={campaign.subject} />
+                </div>
+                <div>
+                  <Label htmlFor="body">Body (HTML)</Label>
+                  <Textarea id="body" name="body" required rows={10} defaultValue={campaign.body} className="font-mono text-xs" />
+                  <p className="mt-1 text-xs text-text-muted">
+                    An unsubscribe footer is added automatically to every send — don&apos;t include
+                    your own.
+                  </p>
+                </div>
+                <Button type="submit" variant="outline" className="w-fit">
+                  Save Draft
+                </Button>
+              </form>
+            </CardBody>
+          </Card>
 
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-6 flex flex-wrap gap-4">
             <form action={sendCampaignNowAction}>
               <input type="hidden" name="campaignId" value={campaign.id} />
-              <button
-                type="submit"
-                className="rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-              >
-                Send Now
-              </button>
+              <Button type="submit">Send Now</Button>
             </form>
             <form action={scheduleCampaignAction} className="flex items-end gap-2">
               <input type="hidden" name="campaignId" value={campaign.id} />
               <div>
-                <label className="block text-xs uppercase tracking-wide text-text-muted">
-                  Schedule for
-                </label>
-                <input
-                  type="datetime-local"
-                  name="scheduledFor"
-                  className="mt-1 rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-                />
+                <Label htmlFor="scheduledFor">Schedule for</Label>
+                <Input id="scheduledFor" type="datetime-local" name="scheduledFor" />
               </div>
-              <button
-                type="submit"
-                className="rounded-sm border border-border px-4 py-2 text-sm text-text-muted hover:border-gold hover:text-gold"
-              >
+              <Button type="submit" variant="secondary">
                 Schedule
-              </button>
+              </Button>
             </form>
-            <form action={deleteCampaignAction}>
+            <form action={deleteCampaignAction} className="flex items-end">
               <input type="hidden" name="campaignId" value={campaign.id} />
               <button type="submit" className="text-sm text-text-muted hover:text-red-400">
                 Delete Draft
@@ -215,39 +185,34 @@ export default async function CampaignDetailPage({
             </p>
           )}
           <h2 className="mt-6 font-display text-lg text-text">Recipients</h2>
-          <div className="mt-3 overflow-x-auto rounded-sm border border-border">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-bg-alt text-text-muted">
-                <tr>
-                  <th className="px-4 py-3">Contact</th>
-                  <th className="px-4 py-3">Email</th>
-                  <th className="px-4 py-3">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(recipients ?? []).map((r, i) => {
-                  const contact = r.contacts as unknown as
-                    | { first_name: string; last_name: string | null; email: string }
-                    | null;
-                  return (
-                    <tr key={i} className="border-t border-border">
-                      <td className="px-4 py-3 text-text">
-                        {contact ? `${contact.first_name} ${contact.last_name || ""}`.trim() : "—"}
-                      </td>
-                      <td className="px-4 py-3 text-text-muted">{contact?.email ?? "—"}</td>
-                      <td className="px-4 py-3 capitalize text-text-muted">{r.status}</td>
-                    </tr>
-                  );
-                })}
-                {(!recipients || recipients.length === 0) && (
-                  <tr>
-                    <td colSpan={3} className="px-4 py-6 text-center text-text-muted">
-                      No recipients recorded.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+          <div className="mt-3">
+            {recipients && recipients.length > 0 ? (
+              <Table>
+                <THead>
+                  <Th>Contact</Th>
+                  <Th>Email</Th>
+                  <Th>Status</Th>
+                </THead>
+                <TBody>
+                  {recipients.map((r, i) => {
+                    const contact = r.contacts as unknown as
+                      | { first_name: string; last_name: string | null; email: string }
+                      | null;
+                    return (
+                      <Tr key={i}>
+                        <Td className="text-text">
+                          {contact ? `${contact.first_name} ${contact.last_name || ""}`.trim() : "—"}
+                        </Td>
+                        <Td>{contact?.email ?? "—"}</Td>
+                        <Td className="capitalize">{r.status}</Td>
+                      </Tr>
+                    );
+                  })}
+                </TBody>
+              </Table>
+            ) : (
+              <EmptyState icon={<IconCampaigns width={20} height={20} />} title="No recipients recorded" />
+            )}
           </div>
         </div>
       )}

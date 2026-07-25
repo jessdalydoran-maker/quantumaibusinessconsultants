@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { requireProfile, getEffectiveAccountId } from "@/lib/supabase/session";
 import { createClient } from "@/lib/supabase/server";
 import { logoutAction } from "@/lib/supabase/auth-actions";
 import { getAccountFeatureSet, type FeatureKey } from "@/lib/features";
 import { ViewingAsBanner } from "./ViewingAsBanner";
+import { CrmShell, IconLogout, type NavItem } from "./CrmShell";
 
 // Every page under this route group is server-rendered behind requireProfile(),
 // which re-checks the Supabase session itself (defense in depth behind the
@@ -29,72 +29,57 @@ export default async function CrmLayout({ children }: { children: React.ReactNod
   // server-side on the routes themselves — this hides sections the account
   // can't use, but is a convenience, not the enforcement (each route/action
   // re-checks itself, since a hidden link is not a security boundary).
-  type NavItem = { href: string; label: string; feature?: FeatureKey };
-  const navItems: NavItem[] = (
-    [
-      { href: "/app", label: "Dashboard" },
-      { href: "/app/inbox", label: "Inbox", feature: "inbox" },
-      { href: "/app/contacts", label: "Contacts", feature: "contacts" },
-      { href: "/app/deals", label: "Deals", feature: "deals" },
-      { href: "/app/calls", label: "Calls", feature: "voice_ai" },
-      { href: "/app/campaigns", label: "Campaigns", feature: "broadcast_email" },
-      { href: "/app/settings/widget", label: "Settings" },
-      { href: "/app/settings/sms", label: "SMS/WhatsApp", feature: "sms_whatsapp" },
-      { href: "/app/settings/ai", label: "AI Settings", feature: "conversation_ai" },
-      { href: "/app/settings/voice", label: "Voice Settings", feature: "voice_ai" },
-      ...(profile.is_platform_admin ? [{ href: "/app/admin", label: "Admin" }] : []),
-    ] as NavItem[]
-  ).filter((item) => !item.feature || features.has(item.feature));
+  type RawNavItem = NavItem & { feature?: FeatureKey };
+
+  const workspaceRaw: RawNavItem[] = [
+    { href: "/app", label: "Dashboard", icon: "dashboard" },
+    { href: "/app/inbox", label: "Inbox", icon: "inbox", feature: "inbox" },
+    { href: "/app/contacts", label: "Contacts", icon: "contacts", feature: "contacts" },
+    { href: "/app/deals", label: "Deals", icon: "deals", feature: "deals" },
+    { href: "/app/calls", label: "Calls", icon: "calls", feature: "voice_ai" },
+    { href: "/app/campaigns", label: "Campaigns", icon: "campaigns", feature: "broadcast_email" },
+  ];
+
+  const settingsRaw: RawNavItem[] = [
+    { href: "/app/settings/widget", label: "Widget", icon: "settings" },
+    { href: "/app/settings/sms", label: "SMS/WhatsApp", icon: "sms", feature: "sms_whatsapp" },
+    { href: "/app/settings/templates", label: "Templates", icon: "templates", feature: "sms_whatsapp" },
+    { href: "/app/settings/ai", label: "AI Settings", icon: "ai", feature: "conversation_ai" },
+    { href: "/app/settings/voice", label: "Voice Settings", icon: "voice", feature: "voice_ai" },
+  ];
+
+  const adminRaw: RawNavItem[] = profile.is_platform_admin
+    ? [{ href: "/app/admin", label: "Admin", icon: "admin" }]
+    : [];
+
+  const filterByFeature = (items: RawNavItem[]) =>
+    items.filter((item) => !item.feature || features.has(item.feature));
 
   return (
-    <div className="min-h-screen bg-bg text-text">
-      <header className="border-b border-border bg-bg-alt">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-8">
-            <Link href="/app" className="font-display text-lg text-gold">
-              Quantum CRM
-            </Link>
-            <nav className="hidden items-center gap-6 sm:flex">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-sm text-text-muted hover:text-gold"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="hidden text-xs text-text-muted sm:inline">
-              {profile.full_name || profile.email}
-              {profile.is_platform_admin ? " · Platform Admin" : ""}
-            </span>
-            <form action={logoutAction}>
-              <button
-                type="submit"
-                className="rounded-sm border border-border px-3 py-1.5 text-xs text-text-muted hover:border-gold hover:text-gold"
-              >
-                Log Out
-              </button>
-            </form>
-          </div>
-        </div>
-        <nav className="flex items-center gap-4 overflow-x-auto border-t border-border px-4 py-2 sm:hidden">
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="text-sm text-text-muted hover:text-gold">
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-      </header>
-
-      {profile.is_platform_admin && (
-        <ViewingAsBanner accountName={accountName} hasAccount={!!effectiveAccountId} />
-      )}
-
-      <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
-    </div>
+    <CrmShell
+      workspaceNav={filterByFeature(workspaceRaw)}
+      settingsNav={filterByFeature(settingsRaw)}
+      adminNav={adminRaw}
+      userLabel={profile.full_name || profile.email}
+      isPlatformAdmin={profile.is_platform_admin}
+      logoutSlot={
+        <form action={logoutAction}>
+          <button
+            type="submit"
+            aria-label="Log out"
+            className="rounded-md p-1.5 text-text-muted hover:text-gold"
+          >
+            <IconLogout width={16} height={16} />
+          </button>
+        </form>
+      }
+      banner={
+        profile.is_platform_admin && (
+          <ViewingAsBanner accountName={accountName} hasAccount={!!effectiveAccountId} />
+        )
+      }
+    >
+      {children}
+    </CrmShell>
   );
 }

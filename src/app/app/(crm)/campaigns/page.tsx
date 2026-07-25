@@ -5,8 +5,21 @@ import { NoAccountSelected } from "../NoAccountSelected";
 import { FeatureLocked } from "../FeatureLocked";
 import { accountHasFeature } from "@/lib/features";
 import { createCampaignAction } from "./actions";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Input, Label } from "@/components/crm/ui/Field";
+import { Button } from "@/components/crm/ui/Button";
+import { Table, THead, Th, TBody, Tr, Td } from "@/components/crm/ui/Table";
+import { Badge } from "@/components/crm/ui/Badge";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconCampaigns } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
+
+const STATUS_TONE: Record<string, "green" | "gold" | "neutral"> = {
+  sent: "green",
+  scheduled: "gold",
+  draft: "neutral",
+};
 
 export default async function CampaignsPage() {
   const profile = await requireProfile();
@@ -38,71 +51,54 @@ export default async function CampaignsPage() {
 
   return (
     <div>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="font-display text-3xl text-text">Campaigns</h1>
-      </div>
+      <PageHeader eyebrow="Email" title="Campaigns" description="Broadcast emails sent to segments of your contacts." />
 
-      <details className="mt-6 rounded-sm border border-border bg-bg-alt p-4">
+      <details className="mt-6 rounded-xl border border-border bg-bg-alt/50 p-4">
         <summary className="cursor-pointer text-sm text-text-muted">New Campaign</summary>
         <form action={createCampaignAction} className="mt-4 flex flex-wrap items-end gap-3">
           <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">
-              Campaign Name
-            </label>
-            <input
-              name="name"
-              required
-              placeholder="July newsletter"
-              className="mt-1 w-64 rounded-sm border border-border bg-bg px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
+            <Label htmlFor="name">Campaign Name</Label>
+            <Input id="name" name="name" required placeholder="July newsletter" className="w-64" />
           </div>
-          <button
-            type="submit"
-            className="rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-          >
-            Create Draft
-          </button>
+          <Button type="submit">Create Draft</Button>
         </form>
       </details>
 
-      <div className="mt-6 overflow-x-auto rounded-sm border border-border">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-bg-alt text-text-muted">
-            <tr>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Sent</th>
-              <th className="px-4 py-3">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(campaigns ?? []).map((c) => (
-              <tr key={c.id} className="border-t border-border hover:bg-bg-alt">
-                <td className="px-4 py-3">
-                  <Link href={`/app/campaigns/${c.id}`} className="text-text hover:text-gold">
-                    {c.name}
-                  </Link>
-                </td>
-                <td className="px-4 py-3 text-text-muted capitalize">{c.status}</td>
-                <td className="px-4 py-3 text-text-muted">{sentCountByCampaign.get(c.id) ?? "—"}</td>
-                <td className="px-4 py-3 text-text-muted">
-                  {c.sent_at
-                    ? new Date(c.sent_at).toLocaleDateString("en-GB")
-                    : c.scheduled_for
-                      ? `Scheduled: ${new Date(c.scheduled_for).toLocaleString("en-GB")}`
-                      : new Date(c.created_at).toLocaleDateString("en-GB")}
-                </td>
-              </tr>
-            ))}
-            {(!campaigns || campaigns.length === 0) && (
-              <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-text-muted">
-                  No campaigns yet.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <div className="mt-6">
+        {campaigns && campaigns.length > 0 ? (
+          <Table>
+            <THead>
+              <Th>Name</Th>
+              <Th>Status</Th>
+              <Th>Sent</Th>
+              <Th>Date</Th>
+            </THead>
+            <TBody>
+              {campaigns.map((c) => (
+                <Tr key={c.id}>
+                  <Td>
+                    <Link href={`/app/campaigns/${c.id}`} className="font-medium text-text hover:text-gold">
+                      {c.name}
+                    </Link>
+                  </Td>
+                  <Td>
+                    <Badge tone={STATUS_TONE[c.status] ?? "neutral"}>{c.status}</Badge>
+                  </Td>
+                  <Td>{sentCountByCampaign.get(c.id) ?? "—"}</Td>
+                  <Td>
+                    {c.sent_at
+                      ? new Date(c.sent_at).toLocaleDateString("en-GB")
+                      : c.scheduled_for
+                        ? `Scheduled: ${new Date(c.scheduled_for).toLocaleString("en-GB")}`
+                        : new Date(c.created_at).toLocaleDateString("en-GB")}
+                  </Td>
+                </Tr>
+              ))}
+            </TBody>
+          </Table>
+        ) : (
+          <EmptyState icon={<IconCampaigns width={20} height={20} />} title="No campaigns yet" description="Create a draft above to start your first broadcast." />
+        )}
       </div>
     </div>
   );

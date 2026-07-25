@@ -8,6 +8,13 @@ import { searchPlaces } from "@/lib/google-places";
 import { extractContactFromWebsite } from "@/lib/site-contact-extractor";
 import { importPlacesAction, createContactFromExtractionAction } from "./actions";
 import { SelectAllCheckbox } from "./SelectAllCheckbox";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Input, Label } from "@/components/crm/ui/Field";
+import { Button } from "@/components/crm/ui/Button";
+import { Table, THead, Th, TBody, Tr, Td } from "@/components/crm/ui/Table";
+import { Card, CardBody } from "@/components/crm/ui/Card";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconSearch } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -33,18 +40,22 @@ export default async function FindContactsPage({
       <Link href="/app/contacts" className="text-sm text-text-muted hover:text-gold">
         ← Back to Contacts
       </Link>
-      <h1 className="mt-2 font-display text-3xl text-text">Find Contacts</h1>
+      <PageHeader eyebrow="Lead Generation" title="Find Contacts" />
 
-      <div className="mt-6 flex gap-4 border-b border-border text-sm">
+      <div className="mt-6 flex gap-2 border-b border-border text-sm">
         <Link
           href="/app/contacts/find"
-          className={`pb-2 ${tool === "search" ? "border-b-2 border-gold text-gold" : "text-text-muted"}`}
+          className={`-mb-px border-b-2 px-1 pb-3 transition-colors ${
+            tool === "search" ? "border-gold text-gold" : "border-transparent text-text-muted hover:text-text"
+          }`}
         >
           Business Search
         </Link>
         <Link
           href="/app/contacts/find?tool=website"
-          className={`pb-2 ${tool === "website" ? "border-b-2 border-gold text-gold" : "text-text-muted"}`}
+          className={`-mb-px border-b-2 px-1 pb-3 transition-colors ${
+            tool === "website" ? "border-gold text-gold" : "border-transparent text-text-muted hover:text-text"
+          }`}
         >
           Pull from a Website
         </Link>
@@ -104,27 +115,11 @@ async function BusinessSearchTool({
 
       <form method="get" className="mt-4 flex flex-wrap gap-3">
         <input type="hidden" name="tool" value="search" />
-        <input
-          type="text"
-          name="q"
-          required
-          defaultValue={query}
-          placeholder="e.g. plumbers"
-          className="min-w-[14rem] flex-1 rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-        />
-        <input
-          type="text"
-          name="location"
-          defaultValue={location}
-          placeholder="e.g. Stoke-on-Trent"
-          className="min-w-[12rem] rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-        />
-        <button
-          type="submit"
-          className="rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-        >
+        <Input type="text" name="q" required defaultValue={query} placeholder="e.g. plumbers" className="min-w-[14rem] flex-1" />
+        <Input type="text" name="location" defaultValue={location} placeholder="e.g. Stoke-on-Trent" className="min-w-[12rem]" />
+        <Button type="submit" icon={<IconSearch width={16} height={16} />}>
           Search
-        </button>
+        </Button>
       </form>
 
       {searchError && <p className="mt-4 text-sm text-red-400">{searchError}</p>}
@@ -134,60 +129,48 @@ async function BusinessSearchTool({
           <input type="hidden" name="query" value={location ? `${query} in ${location}` : query} />
           <input type="hidden" name="resultsJson" value={JSON.stringify(results)} />
 
-          <div className="overflow-x-auto rounded-sm border border-border">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-bg-alt text-text-muted">
-                <tr>
-                  <th className="px-4 py-3">
-                    {results.some((r) => !alreadyAdded.has(r.placeId)) && <SelectAllCheckbox />}
-                  </th>
-                  <th className="px-4 py-3">Name</th>
-                  <th className="px-4 py-3">Address</th>
-                  <th className="px-4 py-3">Phone</th>
-                  <th className="px-4 py-3">Email</th>
-                  <th className="px-4 py-3">Website</th>
-                  <th className="px-4 py-3">Rating</th>
-                </tr>
-              </thead>
-              <tbody>
+          {results.length > 0 ? (
+            <Table>
+              <THead>
+                <Th className="w-8">{results.some((r) => !alreadyAdded.has(r.placeId)) && <SelectAllCheckbox />}</Th>
+                <Th>Name</Th>
+                <Th>Address</Th>
+                <Th>Phone</Th>
+                <Th>Email</Th>
+                <Th>Website</Th>
+                <Th>Rating</Th>
+              </THead>
+              <TBody>
                 {results.map((r) => {
                   const added = alreadyAdded.has(r.placeId);
                   return (
-                    <tr key={r.placeId} className="border-t border-border">
-                      <td className="px-4 py-3">
+                    <Tr key={r.placeId}>
+                      <Td>
                         {added ? (
                           <span className="text-xs text-text-muted">Added</span>
                         ) : (
-                          <input type="checkbox" name="selectedPlaceIds" value={r.placeId} />
+                          <input type="checkbox" name="selectedPlaceIds" value={r.placeId} className="h-4 w-4 rounded border-border accent-[var(--color-gold)]" />
                         )}
-                      </td>
-                      <td className="px-4 py-3 text-text">{r.name}</td>
-                      <td className="px-4 py-3 text-text-muted">{r.address}</td>
-                      <td className="px-4 py-3 text-text-muted">{r.phone || "—"}</td>
-                      <td className="px-4 py-3 text-text-muted">{r.email || "—"}</td>
-                      <td className="px-4 py-3 text-text-muted">{r.website || "—"}</td>
-                      <td className="px-4 py-3 text-text-muted">{r.rating ?? "—"}</td>
-                    </tr>
+                      </Td>
+                      <Td className="text-text">{r.name}</Td>
+                      <Td>{r.address}</Td>
+                      <Td>{r.phone || "—"}</Td>
+                      <Td>{r.email || "—"}</Td>
+                      <Td>{r.website || "—"}</Td>
+                      <Td>{r.rating ?? "—"}</Td>
+                    </Tr>
                   );
                 })}
-                {results.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="px-4 py-6 text-center text-text-muted">
-                      No results.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+              </TBody>
+            </Table>
+          ) : (
+            <EmptyState icon={<IconSearch width={20} height={20} />} title="No results" description="Try a broader search term or a different location." />
+          )}
 
           {results.length > 0 && (
-            <button
-              type="submit"
-              className="mt-4 rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-            >
+            <Button type="submit" className="mt-4">
               Import Selected
-            </button>
+            </Button>
           )}
         </form>
       )}
@@ -217,69 +200,41 @@ async function WebsitePullTool({ url }: { url?: string }) {
 
       <form method="get" className="mt-4 flex flex-wrap gap-3">
         <input type="hidden" name="tool" value="website" />
-        <input
-          type="text"
-          name="url"
-          required
-          defaultValue={url}
-          placeholder="https://example-business.co.uk"
-          className="min-w-[18rem] flex-1 rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-        />
-        <button
-          type="submit"
-          className="rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-        >
-          Fetch
-        </button>
+        <Input type="text" name="url" required defaultValue={url} placeholder="https://example-business.co.uk" className="min-w-[18rem] flex-1" />
+        <Button type="submit">Fetch</Button>
       </form>
 
       {pullError && <p className="mt-4 text-sm text-red-400">{pullError}</p>}
 
       {extracted && !pullError && (
-        <>
-          <p className="mt-4 text-xs text-text-muted">
-            Review and correct before creating the contact — extraction accuracy varies by site.
-          </p>
-          <form action={createContactFromExtractionAction} className="mt-3 grid max-w-lg gap-4">
-            <input type="hidden" name="sourceUrl" value={extracted.sourceUrl} />
-            <div>
-              <label className="block text-xs uppercase tracking-wide text-text-muted">
-                Business Name
-              </label>
-              <input
-                name="businessName"
-                required
-                defaultValue={extracted.businessName ?? ""}
-                className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-xs uppercase tracking-wide text-text-muted">Email</label>
-              <input
-                name="email"
-                defaultValue={extracted.email ?? ""}
-                className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-xs uppercase tracking-wide text-text-muted">Phone</label>
-              <input
-                name="phone"
-                defaultValue={extracted.phone ?? ""}
-                className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-              />
-            </div>
-            {extracted.address && (
-              <p className="text-xs text-text-muted">Possible address found: {extracted.address}</p>
-            )}
-            <button
-              type="submit"
-              className="mt-2 w-fit rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-            >
-              Create Contact
-            </button>
-          </form>
-        </>
+        <Card className="mt-4 max-w-lg">
+          <CardBody>
+            <p className="text-xs text-text-muted">
+              Review and correct before creating the contact — extraction accuracy varies by site.
+            </p>
+            <form action={createContactFromExtractionAction} className="mt-3 grid gap-4">
+              <input type="hidden" name="sourceUrl" value={extracted.sourceUrl} />
+              <div>
+                <Label htmlFor="businessName">Business Name</Label>
+                <Input id="businessName" name="businessName" required defaultValue={extracted.businessName ?? ""} />
+              </div>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" name="email" defaultValue={extracted.email ?? ""} />
+              </div>
+              <div>
+                <Label htmlFor="phone">Phone</Label>
+                <Input id="phone" name="phone" defaultValue={extracted.phone ?? ""} />
+              </div>
+              {extracted.address && (
+                <p className="text-xs text-text-muted">Possible address found: {extracted.address}</p>
+              )}
+              <Button type="submit" className="mt-2 w-fit">
+                Create Contact
+              </Button>
+            </form>
+          </CardBody>
+        </Card>
       )}
     </div>
   );

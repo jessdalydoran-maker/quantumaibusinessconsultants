@@ -5,6 +5,12 @@ import { NoAccountSelected } from "../NoAccountSelected";
 import { FeatureLocked } from "../FeatureLocked";
 import { accountHasFeature } from "@/lib/features";
 import { isWithinWhatsAppWindow } from "@/lib/twilio";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Select } from "@/components/crm/ui/Field";
+import { Button } from "@/components/crm/ui/Button";
+import { Badge } from "@/components/crm/ui/Badge";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconInbox } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -68,38 +74,25 @@ export default async function InboxPage({
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-text">Inbox</h1>
+      <PageHeader eyebrow="Messaging" title="Inbox" description="Every conversation across web chat, email, SMS, and WhatsApp in one place." />
 
       <form method="get" className="mt-6 flex flex-wrap gap-3">
-        <select
-          name="channel"
-          defaultValue={channel || ""}
-          className="rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-        >
+        <Select name="channel" defaultValue={channel || ""} className="w-auto">
           <option value="">All channels</option>
           <option value="web_chat">Web Chat</option>
           <option value="email">Email</option>
           <option value="sms">SMS</option>
           <option value="whatsapp">WhatsApp</option>
-        </select>
-        <select
-          name="status"
-          defaultValue={status || ""}
-          className="rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-        >
+        </Select>
+        <Select name="status" defaultValue={status || ""} className="w-auto">
           <option value="">Open + Closed</option>
           <option value="open">Open</option>
           <option value="closed">Closed</option>
-        </select>
-        <button
-          type="submit"
-          className="rounded-sm border border-border px-4 py-2 text-sm text-text-muted hover:border-gold hover:text-gold"
-        >
-          Filter
-        </button>
+        </Select>
+        <Button type="submit" variant="secondary">Filter</Button>
       </form>
 
-      <div className="mt-6 divide-y divide-border rounded-sm border border-border">
+      <div className="mt-6 divide-y divide-border overflow-hidden rounded-xl border border-border bg-bg-alt/50">
         {(conversations ?? []).map((conversation) => {
           const contact = conversation.contacts as unknown as
             | { first_name: string; last_name: string | null }
@@ -114,25 +107,19 @@ export default async function InboxPage({
             <Link
               key={conversation.id}
               href={`/app/inbox/${conversation.id}`}
-              className="flex items-center gap-4 p-4 hover:bg-bg-alt"
+              className="flex items-center gap-4 p-4 transition-colors hover:bg-bg-raised/50"
             >
-              <span className="text-xl">{CHANNEL_ICON[conversation.channel] ?? "💬"}</span>
+              <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-border bg-bg text-lg">
+                {CHANNEL_ICON[conversation.channel] ?? "💬"}
+              </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <p className={`truncate text-sm ${isUnread ? "font-semibold text-text" : "text-text"}`}>
                     {contact ? `${contact.first_name} ${contact.last_name || ""}`.trim() : "Unknown contact"}
                   </p>
                   {isUnread && <span className="h-2 w-2 flex-shrink-0 rounded-full bg-gold" />}
-                  {conversation.status === "closed" && (
-                    <span className="flex-shrink-0 rounded-full border border-border px-2 py-0.5 text-[10px] uppercase text-text-muted">
-                      Closed
-                    </span>
-                  )}
-                  {templateRequired && (
-                    <span className="flex-shrink-0 rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] uppercase text-gold">
-                      Template required
-                    </span>
-                  )}
+                  {conversation.status === "closed" && <Badge tone="neutral">Closed</Badge>}
+                  {templateRequired && <Badge tone="gold">Template required</Badge>}
                 </div>
                 <p className="mt-0.5 truncate text-xs text-text-muted">{last?.body ?? "No messages yet"}</p>
               </div>
@@ -148,7 +135,9 @@ export default async function InboxPage({
           );
         })}
         {(!conversations || conversations.length === 0) && (
-          <p className="p-6 text-center text-sm text-text-muted">No conversations yet.</p>
+          <div className="p-2">
+            <EmptyState icon={<IconInbox width={20} height={20} />} title="No conversations yet" description="New messages from your website widget, email, SMS, or WhatsApp will land here." />
+          </div>
         )}
       </div>
     </div>

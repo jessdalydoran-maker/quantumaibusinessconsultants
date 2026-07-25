@@ -6,6 +6,9 @@ import { NoAccountSelected } from "../../NoAccountSelected";
 import { FeatureLocked } from "../../FeatureLocked";
 import { accountHasFeature } from "@/lib/features";
 import { regenerateWidgetKeyAction } from "./actions";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Card, CardHeader, CardBody } from "@/components/crm/ui/Card";
+import { Button } from "@/components/crm/ui/Button";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -35,33 +38,44 @@ export default async function WidgetSettingsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-text">Install Web Chat Widget</h1>
-      <p className="mt-2 max-w-2xl text-sm text-text-muted">
-        Paste this snippet before the closing <code>&lt;/body&gt;</code> tag on {account?.name}&apos;s
-        website. It works on any site — it doesn&apos;t need to be built with Next.js or hosted here.
-        Messages sent through it land in this account&apos;s{" "}
-        <Link href="/app/inbox" className="text-gold hover:underline">
-          Inbox
-        </Link>
-        .
-      </p>
+      <PageHeader
+        eyebrow="Settings"
+        title="Install Web Chat Widget"
+        description={
+          <>
+            Paste this snippet before the closing <code>&lt;/body&gt;</code> tag on {account?.name}
+            &apos;s website. It works on any site — it doesn&apos;t need to be built with Next.js or
+            hosted here. Messages sent through it land in this account&apos;s{" "}
+            <Link href="/app/inbox" className="text-gold hover:underline">
+              Inbox
+            </Link>
+            .
+          </>
+        }
+      />
 
-      <pre className="mt-6 max-w-2xl overflow-x-auto rounded-sm border border-border bg-bg-alt p-4 text-xs text-text">
-        <code>{snippet}</code>
-      </pre>
+      <Card className="mt-6 max-w-2xl">
+        <CardBody>
+          <pre className="overflow-x-auto rounded-lg border border-border bg-bg p-4 text-xs text-text">
+            <code>{snippet}</code>
+          </pre>
+        </CardBody>
+      </Card>
 
-      <form action={regenerateWidgetKeyAction} className="mt-6">
-        <p className="text-sm text-text-muted">
-          Rotating the key immediately breaks any already-installed script tag using the old one —
-          only do this if the key may have leaked somewhere it shouldn&apos;t have.
-        </p>
-        <button
-          type="submit"
-          className="mt-3 rounded-sm border border-border px-4 py-2 text-sm text-text-muted hover:border-red-400 hover:text-red-400"
-        >
-          Regenerate Widget Key
-        </button>
-      </form>
+      <Card className="mt-6 max-w-2xl border-red-500/20">
+        <CardHeader title="Danger Zone" />
+        <CardBody>
+          <form action={regenerateWidgetKeyAction}>
+            <p className="text-sm text-text-muted">
+              Rotating the key immediately breaks any already-installed script tag using the old one —
+              only do this if the key may have leaked somewhere it shouldn&apos;t have.
+            </p>
+            <Button type="submit" variant="danger" className="mt-3">
+              Regenerate Widget Key
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
     </div>
   );
 }

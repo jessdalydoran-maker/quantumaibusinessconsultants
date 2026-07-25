@@ -3,6 +3,12 @@ import { requirePlatformAdmin, getEffectiveAccountId } from "@/lib/supabase/sess
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createAccountAction, switchAccountAction, updatePlanTierAction, updateFeatureOverrideAction } from "./actions";
 import { FEATURE_LABELS, tierFeatures, type FeatureKey, type PlanTier } from "@/lib/features";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Card, CardHeader, CardBody } from "@/components/crm/ui/Card";
+import { Table, THead, Th, TBody, Tr, Td } from "@/components/crm/ui/Table";
+import { Input, Select, Label } from "@/components/crm/ui/Field";
+import { Button } from "@/components/crm/ui/Button";
+import { Badge } from "@/components/crm/ui/Badge";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -21,24 +27,23 @@ export default async function AdminPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-text">Platform Admin</h1>
-      <p className="mt-2 text-sm text-text-muted">
-        Onboard new client accounts and switch into any account&apos;s view for support.
-      </p>
+      <PageHeader
+        eyebrow="Platform"
+        title="Admin"
+        description="Onboard new client accounts and switch into any account's view for support."
+      />
 
-      <section className="mt-10">
-        <h2 className="font-display text-xl text-text">Accounts</h2>
-        <div className="mt-4 overflow-x-auto rounded-sm border border-border">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-bg-alt text-text-muted">
-              <tr>
-                <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3">Plan Tier</th>
-                <th className="px-4 py-3">Created</th>
-                <th className="px-4 py-3"></th>
-              </tr>
-            </thead>
-            <tbody>
+      <section className="mt-8">
+        <h2 className="font-display text-lg text-text">Accounts</h2>
+        <div className="mt-4">
+          <Table>
+            <THead>
+              <Th>Name</Th>
+              <Th>Plan Tier</Th>
+              <Th>Created</Th>
+              <Th></Th>
+            </THead>
+            <TBody>
               {(accounts ?? []).map((account) => {
                 const overrides = (account.features as Record<string, boolean> | null) ?? {};
                 const baseFeatures = tierFeatures(account.plan_tier as PlanTier);
@@ -49,59 +54,43 @@ export default async function AdminPage() {
 
                 return (
                   <Fragment key={account.id}>
-                    <tr className="border-t border-border">
-                      <td className="px-4 py-3 text-text">
+                    <Tr>
+                      <Td className="text-text">
                         {account.name}
-                        {account.is_platform_owner && (
-                          <span className="ml-2 text-xs text-gold">(platform)</span>
-                        )}
-                        {account.id === currentAccountId && (
-                          <span className="ml-2 text-xs text-gold">(viewing)</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-text-muted">
+                        {account.is_platform_owner && <Badge tone="gold" className="ml-2">Platform</Badge>}
+                        {account.id === currentAccountId && <Badge tone="green" className="ml-2">Viewing</Badge>}
+                      </Td>
+                      <Td>
                         {account.is_platform_owner ? (
                           "full_suite (always)"
                         ) : (
                           <form action={updatePlanTierAction} className="flex items-center gap-2">
                             <input type="hidden" name="accountId" value={account.id} />
-                            <select
-                              name="planTier"
-                              defaultValue={account.plan_tier}
-                              className="rounded-sm border border-border bg-bg px-2 py-1 text-xs text-text focus:border-gold focus:outline-none"
-                            >
+                            <Select name="planTier" defaultValue={account.plan_tier} className="w-auto py-1.5 text-xs">
                               {PLAN_TIERS.map((tier) => (
                                 <option key={tier} value={tier}>
                                   {tier}
                                 </option>
                               ))}
-                            </select>
-                            <button
-                              type="submit"
-                              className="rounded-sm border border-border px-2 py-1 text-xs text-text-muted hover:border-gold hover:text-gold"
-                            >
+                            </Select>
+                            <Button type="submit" variant="secondary" size="sm">
                               Save
-                            </button>
+                            </Button>
                           </form>
                         )}
-                      </td>
-                      <td className="px-4 py-3 text-text-muted">
-                        {new Date(account.created_at).toLocaleDateString("en-GB")}
-                      </td>
-                      <td className="px-4 py-3">
+                      </Td>
+                      <Td>{new Date(account.created_at).toLocaleDateString("en-GB")}</Td>
+                      <Td>
                         <form action={switchAccountAction}>
                           <input type="hidden" name="accountId" value={account.id} />
-                          <button
-                            type="submit"
-                            className="rounded-sm border border-border px-3 py-1 text-xs text-text-muted hover:border-gold hover:text-gold"
-                          >
+                          <Button type="submit" variant="secondary" size="sm">
                             Switch into view
-                          </button>
+                          </Button>
                         </form>
-                      </td>
-                    </tr>
+                      </Td>
+                    </Tr>
                     {!account.is_platform_owner && (
-                      <tr className="border-t border-border bg-bg">
+                      <tr className="border-t border-border bg-bg/40">
                         <td colSpan={4} className="px-4 py-3">
                           <details>
                             <summary className="cursor-pointer text-xs text-text-muted">
@@ -119,7 +108,7 @@ export default async function AdminPage() {
                                   <form
                                     key={feature}
                                     action={updateFeatureOverrideAction}
-                                    className="flex items-center justify-between gap-2 rounded-sm border border-border p-2"
+                                    className="flex items-center justify-between gap-2 rounded-lg border border-border bg-bg-alt/40 p-2"
                                   >
                                     <input type="hidden" name="accountId" value={account.id} />
                                     <input type="hidden" name="featureKey" value={feature} />
@@ -130,7 +119,7 @@ export default async function AdminPage() {
                                       <select
                                         name="value"
                                         defaultValue={overrideValue}
-                                        className="rounded-sm border border-border bg-bg-alt px-1 py-0.5 text-xs text-text focus:border-gold focus:outline-none"
+                                        className="rounded-md border border-border bg-bg px-1 py-0.5 text-xs text-text focus:border-gold focus:outline-none"
                                       >
                                         <option value="default">Default</option>
                                         <option value="true">On</option>
@@ -138,7 +127,7 @@ export default async function AdminPage() {
                                       </select>
                                       <button
                                         type="submit"
-                                        className="rounded-sm border border-border px-1.5 py-0.5 text-xs text-text-muted hover:border-gold hover:text-gold"
+                                        className="rounded-md border border-border px-1.5 py-0.5 text-xs text-text-muted hover:border-gold hover:text-gold"
                                       >
                                         Save
                                       </button>
@@ -154,10 +143,11 @@ export default async function AdminPage() {
                   </Fragment>
                 );
               })}
-            </tbody>
-          </table>
+            </TBody>
+          </Table>
         </div>
         {currentAccountId && (
+
           <form action={switchAccountAction} className="mt-3">
             <input type="hidden" name="accountId" value="" />
             <button type="submit" className="text-xs text-text-muted underline hover:text-gold">
@@ -167,65 +157,33 @@ export default async function AdminPage() {
         )}
       </section>
 
-      <section className="mt-12">
-        <h2 className="font-display text-xl text-text">Create Account + Owner</h2>
-        <p className="mt-2 text-sm text-text-muted">
-          This is how a new client is onboarded. There is no public sign-up — you set the owner&apos;s
-          initial password directly here, then share it with them securely.
-        </p>
-        <form action={createAccountAction} className="mt-6 grid max-w-lg gap-4">
-          <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">
-              Account / Business Name
-            </label>
-            <input
-              name="accountName"
-              required
-              className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">
-              Owner Full Name
-            </label>
-            <input
-              name="ownerName"
-              required
-              className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">
-              Owner Email
-            </label>
-            <input
-              name="ownerEmail"
-              type="email"
-              required
-              className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">
-              Owner Initial Password
-            </label>
-            <input
-              name="ownerPassword"
-              type="text"
-              required
-              minLength={8}
-              className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
-            <p className="mt-1 text-xs text-text-muted">At least 8 characters.</p>
-          </div>
-          <button
-            type="submit"
-            className="mt-2 w-fit rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-          >
-            Create Account
-          </button>
-        </form>
-      </section>
+      <Card className="mt-10 max-w-lg">
+        <CardHeader title="Create Account + Owner" subtitle="This is how a new client is onboarded. There is no public sign-up — you set the owner's initial password directly here, then share it with them securely." />
+        <CardBody>
+          <form action={createAccountAction} className="grid gap-4">
+            <div>
+              <Label htmlFor="accountName">Account / Business Name</Label>
+              <Input id="accountName" name="accountName" required />
+            </div>
+            <div>
+              <Label htmlFor="ownerName">Owner Full Name</Label>
+              <Input id="ownerName" name="ownerName" required />
+            </div>
+            <div>
+              <Label htmlFor="ownerEmail">Owner Email</Label>
+              <Input id="ownerEmail" name="ownerEmail" type="email" required />
+            </div>
+            <div>
+              <Label htmlFor="ownerPassword">Owner Initial Password</Label>
+              <Input id="ownerPassword" name="ownerPassword" type="text" required minLength={8} />
+              <p className="mt-1 text-xs text-text-muted">At least 8 characters.</p>
+            </div>
+            <Button type="submit" className="mt-2 w-fit">
+              Create Account
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
     </div>
   );
 }

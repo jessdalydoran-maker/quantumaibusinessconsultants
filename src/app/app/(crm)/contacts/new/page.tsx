@@ -1,6 +1,10 @@
 import { requireProfile, getEffectiveAccountId } from "@/lib/supabase/session";
 import { NoAccountSelected } from "../../NoAccountSelected";
 import { createContactAction } from "../actions";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Card, CardBody } from "@/components/crm/ui/Card";
+import { Input, Label } from "@/components/crm/ui/Field";
+import { Button } from "@/components/crm/ui/Button";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -11,54 +15,38 @@ export default async function NewContactPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-text">New Contact</h1>
-      <form action={createContactAction} className="mt-8 grid max-w-lg gap-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">First Name</label>
-            <input
-              name="firstName"
-              required
-              className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-xs uppercase tracking-wide text-text-muted">Last Name</label>
-            <input
-              name="lastName"
-              className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-            />
-          </div>
-        </div>
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">Email</label>
-          <input
-            name="email"
-            type="email"
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">Phone</label>
-          <input
-            name="phone"
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">Company</label>
-          <input
-            name="company"
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          />
-        </div>
-        <button
-          type="submit"
-          className="mt-2 w-fit rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-        >
-          Create Contact
-        </button>
-      </form>
+      <PageHeader eyebrow="CRM" title="New Contact" description="Add a person or business manually." />
+      <Card className="mt-6 max-w-lg">
+        <CardBody>
+          <form action={createContactAction} className="grid gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="firstName">First Name</Label>
+                <Input id="firstName" name="firstName" required />
+              </div>
+              <div>
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input id="lastName" name="lastName" />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" name="email" type="email" />
+            </div>
+            <div>
+              <Label htmlFor="phone">Phone</Label>
+              <Input id="phone" name="phone" />
+            </div>
+            <div>
+              <Label htmlFor="company">Company</Label>
+              <Input id="company" name="company" />
+            </div>
+            <Button type="submit" className="mt-2 w-fit">
+              Create Contact
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
     </div>
   );
 }

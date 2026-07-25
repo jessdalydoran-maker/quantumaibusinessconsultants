@@ -2,6 +2,13 @@ import { requireProfile, getEffectiveAccountId } from "@/lib/supabase/session";
 import { createClient } from "@/lib/supabase/server";
 import { NoAccountSelected } from "../../NoAccountSelected";
 import { createCustomFieldAction } from "../actions";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Card, CardBody } from "@/components/crm/ui/Card";
+import { Table, THead, Th, TBody, Tr, Td } from "@/components/crm/ui/Table";
+import { Input, Select, Label } from "@/components/crm/ui/Field";
+import { Button } from "@/components/crm/ui/Button";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconTemplates } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -19,80 +26,58 @@ export default async function CustomFieldsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-text">Custom Fields</h1>
-      <p className="mt-2 text-sm text-text-muted">
-        Define extra fields to track on contacts, specific to your business.
-      </p>
+      <PageHeader eyebrow="CRM" title="Custom Fields" description="Define extra fields to track on contacts, specific to your business." />
 
-      <div className="mt-6 overflow-x-auto rounded-sm border border-border">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-bg-alt text-text-muted">
-            <tr>
-              <th className="px-4 py-3">Field Name</th>
-              <th className="px-4 py-3">Type</th>
-              <th className="px-4 py-3">Options</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(fields ?? []).map((f) => (
-              <tr key={f.id} className="border-t border-border">
-                <td className="px-4 py-3 text-text">{f.field_name}</td>
-                <td className="px-4 py-3 text-text-muted">{f.field_type}</td>
-                <td className="px-4 py-3 text-text-muted">
-                  {Array.isArray(f.options) ? f.options.join(", ") : "—"}
-                </td>
-              </tr>
-            ))}
-            {(!fields || fields.length === 0) && (
-              <tr>
-                <td colSpan={3} className="px-4 py-6 text-center text-text-muted">
-                  No custom fields yet.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <div className="mt-6">
+        {fields && fields.length > 0 ? (
+          <Table>
+            <THead>
+              <Th>Field Name</Th>
+              <Th>Type</Th>
+              <Th>Options</Th>
+            </THead>
+            <TBody>
+              {fields.map((f) => (
+                <Tr key={f.id}>
+                  <Td className="text-text">{f.field_name}</Td>
+                  <Td>{f.field_type}</Td>
+                  <Td>{Array.isArray(f.options) ? f.options.join(", ") : "—"}</Td>
+                </Tr>
+              ))}
+            </TBody>
+          </Table>
+        ) : (
+          <EmptyState icon={<IconTemplates width={20} height={20} />} title="No custom fields yet" />
+        )}
       </div>
 
-      <form action={createCustomFieldAction} className="mt-8 grid max-w-lg gap-4">
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">Field Name</label>
-          <input
-            name="fieldName"
-            required
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">Type</label>
-          <select
-            name="fieldType"
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          >
-            <option value="text">Text</option>
-            <option value="number">Number</option>
-            <option value="date">Date</option>
-            <option value="boolean">Yes / No</option>
-            <option value="select">Select (dropdown)</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">
-            Options (for Select type only, comma-separated)
-          </label>
-          <input
-            name="options"
-            placeholder="e.g. Hot, Warm, Cold"
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          />
-        </div>
-        <button
-          type="submit"
-          className="mt-2 w-fit rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-        >
-          Add Field
-        </button>
-      </form>
+      <Card className="mt-8 max-w-lg">
+        <CardBody>
+          <form action={createCustomFieldAction} className="grid gap-4">
+            <div>
+              <Label htmlFor="fieldName">Field Name</Label>
+              <Input id="fieldName" name="fieldName" required />
+            </div>
+            <div>
+              <Label htmlFor="fieldType">Type</Label>
+              <Select id="fieldType" name="fieldType">
+                <option value="text">Text</option>
+                <option value="number">Number</option>
+                <option value="date">Date</option>
+                <option value="boolean">Yes / No</option>
+                <option value="select">Select (dropdown)</option>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="options">Options (for Select type only, comma-separated)</Label>
+              <Input id="options" name="options" placeholder="e.g. Hot, Warm, Cold" />
+            </div>
+            <Button type="submit" className="mt-2 w-fit">
+              Add Field
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
     </div>
   );
 }

@@ -4,8 +4,22 @@ import { NoAccountSelected } from "../../NoAccountSelected";
 import { FeatureLocked } from "../../FeatureLocked";
 import { accountHasFeature } from "@/lib/features";
 import { createTemplateAction, deleteTemplateAction } from "./actions";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Card, CardBody } from "@/components/crm/ui/Card";
+import { Input, Textarea, Select, Label } from "@/components/crm/ui/Field";
+import { Button } from "@/components/crm/ui/Button";
+import { Table, THead, Th, TBody, Tr, Td } from "@/components/crm/ui/Table";
+import { Badge } from "@/components/crm/ui/Badge";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconTemplates } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
+
+const STATUS_TONE: Record<string, "green" | "red" | "neutral"> = {
+  approved: "green",
+  rejected: "red",
+  pending: "neutral",
+};
 
 export default async function TemplatesPage() {
   const profile = await requireProfile();
@@ -25,121 +39,77 @@ export default async function TemplatesPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-text">WhatsApp Message Templates</h1>
-      <p className="mt-2 max-w-2xl text-sm text-text-muted">
-        WhatsApp requires a pre-approved template for any business-initiated message sent more
-        than 24 hours after a contact&apos;s last message. Submit and approve templates through
-        Meta Business Manager or Twilio&apos;s Content Editor first, then record the approved
-        template and its Content SID here so the inbox can send it.
-      </p>
+      <PageHeader
+        eyebrow="Settings"
+        title="WhatsApp Message Templates"
+        description="WhatsApp requires a pre-approved template for any business-initiated message sent more than 24 hours after a contact's last message. Submit and approve templates through Meta Business Manager or Twilio's Content Editor first, then record the approved template and its Content SID here so the inbox can send it."
+      />
 
-      <div className="mt-6 overflow-x-auto rounded-sm border border-border">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-bg-alt text-text-muted">
-            <tr>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Body</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Content SID</th>
-              <th className="px-4 py-3"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {(templates ?? []).map((t) => (
-              <tr key={t.id} className="border-t border-border">
-                <td className="px-4 py-3 text-text">{t.name}</td>
-                <td className="max-w-xs truncate px-4 py-3 text-text-muted">{t.body}</td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-xs ${
-                      t.approved_status === "approved"
-                        ? "bg-green-500/20 text-green-400"
-                        : t.approved_status === "rejected"
-                          ? "bg-red-500/20 text-red-400"
-                          : "bg-bg-alt text-text-muted"
-                    }`}
-                  >
-                    {t.approved_status}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-text-muted">{t.provider_content_sid || "—"}</td>
-                <td className="px-4 py-3">
-                  <form action={deleteTemplateAction}>
-                    <input type="hidden" name="templateId" value={t.id} />
-                    <button
-                      type="submit"
-                      className="text-xs text-text-muted hover:text-red-400"
-                    >
-                      Delete
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            ))}
-            {(!templates || templates.length === 0) && (
-              <tr>
-                <td colSpan={5} className="px-4 py-6 text-center text-text-muted">
-                  No templates yet.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <div className="mt-6">
+        {templates && templates.length > 0 ? (
+          <Table>
+            <THead>
+              <Th>Name</Th>
+              <Th>Body</Th>
+              <Th>Status</Th>
+              <Th>Content SID</Th>
+              <Th></Th>
+            </THead>
+            <TBody>
+              {templates.map((t) => (
+                <Tr key={t.id}>
+                  <Td className="text-text">{t.name}</Td>
+                  <Td className="max-w-xs truncate">{t.body}</Td>
+                  <Td>
+                    <Badge tone={STATUS_TONE[t.approved_status] ?? "neutral"}>{t.approved_status}</Badge>
+                  </Td>
+                  <Td>{t.provider_content_sid || "—"}</Td>
+                  <Td>
+                    <form action={deleteTemplateAction}>
+                      <input type="hidden" name="templateId" value={t.id} />
+                      <button type="submit" className="text-xs text-text-muted hover:text-red-400">
+                        Delete
+                      </button>
+                    </form>
+                  </Td>
+                </Tr>
+              ))}
+            </TBody>
+          </Table>
+        ) : (
+          <EmptyState icon={<IconTemplates width={20} height={20} />} title="No templates yet" />
+        )}
       </div>
 
-      <form action={createTemplateAction} className="mt-8 grid max-w-lg gap-4">
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">
-            Template Name
-          </label>
-          <input
-            name="name"
-            required
-            placeholder="appointment_reminder"
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">
-            Body (for reference — the actual send uses the Content SID)
-          </label>
-          <textarea
-            name="body"
-            required
-            rows={3}
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">
-            Approval Status
-          </label>
-          <select
-            name="approvedStatus"
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          >
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs uppercase tracking-wide text-text-muted">
-            Twilio/Meta Content SID (required to actually send)
-          </label>
-          <input
-            name="providerContentSid"
-            placeholder="HXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-            className="mt-1 w-full rounded-sm border border-border bg-bg-alt px-3 py-2 text-sm text-text focus:border-gold focus:outline-none"
-          />
-        </div>
-        <button
-          type="submit"
-          className="mt-2 w-fit rounded-sm bg-gold px-5 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-        >
-          Add Template
-        </button>
-      </form>
+      <Card className="mt-8 max-w-lg">
+        <CardBody>
+          <form action={createTemplateAction} className="grid gap-4">
+            <div>
+              <Label htmlFor="name">Template Name</Label>
+              <Input id="name" name="name" required placeholder="appointment_reminder" />
+            </div>
+            <div>
+              <Label htmlFor="body">Body (for reference — the actual send uses the Content SID)</Label>
+              <Textarea id="body" name="body" required rows={3} />
+            </div>
+            <div>
+              <Label htmlFor="approvedStatus">Approval Status</Label>
+              <Select id="approvedStatus" name="approvedStatus">
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="providerContentSid">Twilio/Meta Content SID (required to actually send)</Label>
+              <Input id="providerContentSid" name="providerContentSid" placeholder="HXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
+            </div>
+            <Button type="submit" className="mt-2 w-fit">
+              Add Template
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
     </div>
   );
 }

@@ -1,7 +1,11 @@
-import Link from "next/link";
 import { requireProfile, getEffectiveAccountId } from "@/lib/supabase/session";
 import { createClient } from "@/lib/supabase/server";
 import { NoAccountSelected } from "./NoAccountSelected";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { StatCard } from "@/components/crm/ui/StatCard";
+import { Card, CardHeader, CardBody } from "@/components/crm/ui/Card";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconContacts, IconDeals, IconDashboard } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -36,39 +40,30 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-text">Dashboard</h1>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <Link
-          href="/app/contacts"
-          className="rounded-sm border border-border bg-bg-alt p-6 hover:border-gold"
-        >
-          <p className="text-sm text-text-muted">Contacts</p>
-          <p className="mt-2 font-display text-3xl text-gold">{contactCount ?? 0}</p>
-        </Link>
-        <Link
-          href="/app/deals"
-          className="rounded-sm border border-border bg-bg-alt p-6 hover:border-gold"
-        >
-          <p className="text-sm text-text-muted">Open Deals</p>
-          <p className="mt-2 font-display text-3xl text-gold">{openDealCount ?? 0}</p>
-        </Link>
+      <PageHeader eyebrow="Overview" title="Dashboard" description="A snapshot of your pipeline and recent activity." />
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <StatCard label="Contacts" value={contactCount ?? 0} icon={<IconContacts width={18} height={18} />} href="/app/contacts" />
+        <StatCard label="Open Deals" value={openDealCount ?? 0} icon={<IconDeals width={18} height={18} />} href="/app/deals" />
       </div>
 
-      <h2 className="mt-10 font-display text-xl text-text">Recent Activity</h2>
-      <div className="mt-4 space-y-3">
-        {recentActivity && recentActivity.length > 0 ? (
-          recentActivity.map((activity) => (
-            <div key={activity.id} className="rounded-sm border border-border bg-bg-alt p-4 text-sm">
-              <p className="text-text">{activity.content}</p>
-              <p className="mt-1 text-xs text-text-muted">
-                {new Date(activity.created_at).toLocaleString("en-GB")}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p className="text-sm text-text-muted">No activity yet.</p>
-        )}
-      </div>
+      <Card className="mt-8">
+        <CardHeader title="Recent Activity" subtitle="Last 8 events across your account" />
+        <CardBody className="space-y-3">
+          {recentActivity && recentActivity.length > 0 ? (
+            recentActivity.map((activity) => (
+              <div key={activity.id} className="rounded-lg border border-border bg-bg/60 p-4 text-sm">
+                <p className="text-text">{activity.content}</p>
+                <p className="mt-1 text-xs text-text-muted">
+                  {new Date(activity.created_at).toLocaleString("en-GB")}
+                </p>
+              </div>
+            ))
+          ) : (
+            <EmptyState icon={<IconDashboard width={20} height={20} />} title="No activity yet" description="Activity from contacts, deals, and messages will show up here." />
+          )}
+        </CardBody>
+      </Card>
     </div>
   );
 }

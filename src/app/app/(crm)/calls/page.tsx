@@ -3,8 +3,18 @@ import { createClient } from "@/lib/supabase/server";
 import { NoAccountSelected } from "../NoAccountSelected";
 import { FeatureLocked } from "../FeatureLocked";
 import { accountHasFeature } from "@/lib/features";
+import { PageHeader } from "@/components/crm/ui/PageHeader";
+import { Badge } from "@/components/crm/ui/Badge";
+import { EmptyState } from "@/components/crm/ui/EmptyState";
+import { IconCalls } from "@/components/crm/ui/icons";
 
 export const metadata = { robots: { index: false, follow: false } };
+
+const STATUS_TONE: Record<string, "green" | "red" | "gold" | "neutral"> = {
+  completed: "green",
+  failed: "red",
+  in_progress: "gold",
+};
 
 export default async function CallsPage() {
   const profile = await requireProfile();
@@ -25,48 +35,51 @@ export default async function CallsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-text">Calls</h1>
+      <PageHeader eyebrow="Voice AI" title="Calls" description="Inbound phone calls handled by your voice agent." />
 
-      <div className="mt-6 divide-y divide-border rounded-sm border border-border">
-        {(calls ?? []).map((call) => {
-          const contact = call.contacts as unknown as { first_name: string; last_name: string | null } | null;
-          return (
-            <details key={call.id} className="p-4">
-              <summary className="flex cursor-pointer flex-wrap items-center justify-between gap-2 text-sm">
-                <span className="text-text">
-                  {contact ? `${contact.first_name} ${contact.last_name || ""}`.trim() : call.from_number || "Unknown caller"}
-                </span>
-                <span className="flex items-center gap-3 text-xs text-text-muted">
-                  <span className="capitalize">{call.status.replace("_", " ")}</span>
-                  <span>{call.duration_seconds ? `${Math.round(call.duration_seconds / 60)} min` : "—"}</span>
-                  <span>{new Date(call.created_at).toLocaleString("en-GB")}</span>
-                </span>
-              </summary>
-              <div className="mt-3 space-y-3 text-sm">
-                {call.summary && (
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-text-muted">Summary</p>
-                    <p className="mt-1 text-text">{call.summary}</p>
+      <div className="mt-6">
+        {calls && calls.length > 0 ? (
+          <div className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-bg-alt/50">
+            {calls.map((call) => {
+              const contact = call.contacts as unknown as { first_name: string; last_name: string | null } | null;
+              return (
+                <details key={call.id} className="group p-4">
+                  <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-2 text-sm">
+                    <span className="font-medium text-text">
+                      {contact ? `${contact.first_name} ${contact.last_name || ""}`.trim() : call.from_number || "Unknown caller"}
+                    </span>
+                    <span className="flex items-center gap-3 text-xs text-text-muted">
+                      <Badge tone={STATUS_TONE[call.status] ?? "neutral"}>{call.status.replace("_", " ")}</Badge>
+                      <span>{call.duration_seconds ? `${Math.round(call.duration_seconds / 60)} min` : "—"}</span>
+                      <span>{new Date(call.created_at).toLocaleString("en-GB")}</span>
+                    </span>
+                  </summary>
+                  <div className="mt-4 space-y-3 border-t border-border pt-4 text-sm">
+                    {call.summary && (
+                      <div>
+                        <p className="text-xs uppercase tracking-wide text-text-muted">Summary</p>
+                        <p className="mt-1 text-text">{call.summary}</p>
+                      </div>
+                    )}
+                    {call.transcript && (
+                      <div>
+                        <p className="text-xs uppercase tracking-wide text-text-muted">Transcript</p>
+                        <p className="mt-1 whitespace-pre-wrap text-text-muted">{call.transcript}</p>
+                      </div>
+                    )}
+                    {call.recording_url && (
+                      <audio controls src={call.recording_url} className="w-full max-w-md" />
+                    )}
+                    {!call.summary && !call.transcript && !call.recording_url && (
+                      <p className="text-text-muted">No further detail recorded for this call.</p>
+                    )}
                   </div>
-                )}
-                {call.transcript && (
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-text-muted">Transcript</p>
-                    <p className="mt-1 whitespace-pre-wrap text-text-muted">{call.transcript}</p>
-                  </div>
-                )}
-                {call.recording_url && (
-                  <audio controls src={call.recording_url} className="w-full max-w-md" />
-                )}
-                {!call.summary && !call.transcript && !call.recording_url && (
-                  <p className="text-text-muted">No further detail recorded for this call.</p>
-                )}
-              </div>
-            </details>
-          );
-        })}
-        {(!calls || calls.length === 0) && (
-          <p className="p-6 text-center text-sm text-text-muted">No calls yet.</p>
+                </details>
+              );
+            })}
+          </div>
+        ) : (
+          <EmptyState icon={<IconCalls width={20} height={20} />} title="No calls yet" description="Inbound calls to your voice agent's number will show up here." />
         )}
       </div>
     </div>
