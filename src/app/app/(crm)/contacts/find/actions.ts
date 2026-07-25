@@ -48,6 +48,7 @@ export async function importPlacesAction(formData: FormData) {
       first_name: r.name,
       company: r.name,
       phone: r.phone,
+      email: r.email,
       website: r.website,
       source: "lead_search",
       source_detail: `Google Places search: ${query}`,

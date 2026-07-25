@@ -7,6 +7,7 @@ import { accountHasFeature } from "@/lib/features";
 import { searchPlaces } from "@/lib/google-places";
 import { extractContactFromWebsite } from "@/lib/site-contact-extractor";
 import { importPlacesAction, createContactFromExtractionAction } from "./actions";
+import { SelectAllCheckbox } from "./SelectAllCheckbox";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -96,7 +97,9 @@ async function BusinessSearchTool({
       <p className="max-w-2xl text-sm text-text-muted">
         Searches local businesses via the Google Places API — not a scraper, and ToS-compliant.
         Each search costs a small, real amount against your Google Cloud billing, so it only runs
-        when you submit the form below.
+        when you submit the form below. Email addresses aren&apos;t part of Google&apos;s data —
+        where shown, they were pulled from the business&apos;s own website and may be missing or
+        wrong for some results.
       </p>
 
       <form method="get" className="mt-4 flex flex-wrap gap-3">
@@ -135,10 +138,13 @@ async function BusinessSearchTool({
             <table className="w-full text-left text-sm">
               <thead className="bg-bg-alt text-text-muted">
                 <tr>
-                  <th className="px-4 py-3"></th>
+                  <th className="px-4 py-3">
+                    {results.some((r) => !alreadyAdded.has(r.placeId)) && <SelectAllCheckbox />}
+                  </th>
                   <th className="px-4 py-3">Name</th>
                   <th className="px-4 py-3">Address</th>
                   <th className="px-4 py-3">Phone</th>
+                  <th className="px-4 py-3">Email</th>
                   <th className="px-4 py-3">Website</th>
                   <th className="px-4 py-3">Rating</th>
                 </tr>
@@ -158,6 +164,7 @@ async function BusinessSearchTool({
                       <td className="px-4 py-3 text-text">{r.name}</td>
                       <td className="px-4 py-3 text-text-muted">{r.address}</td>
                       <td className="px-4 py-3 text-text-muted">{r.phone || "—"}</td>
+                      <td className="px-4 py-3 text-text-muted">{r.email || "—"}</td>
                       <td className="px-4 py-3 text-text-muted">{r.website || "—"}</td>
                       <td className="px-4 py-3 text-text-muted">{r.rating ?? "—"}</td>
                     </tr>
@@ -165,7 +172,7 @@ async function BusinessSearchTool({
                 })}
                 {results.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="px-4 py-6 text-center text-text-muted">
+                    <td colSpan={7} className="px-4 py-6 text-center text-text-muted">
                       No results.
                     </td>
                   </tr>

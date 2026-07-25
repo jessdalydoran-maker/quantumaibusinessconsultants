@@ -1,4 +1,5 @@
 import "server-only";
+import { extractEmailFromWebsite } from "@/lib/site-contact-extractor";
 
 export type PlaceResult = {
   placeId: string;
@@ -7,6 +8,7 @@ export type PlaceResult = {
   phone: string | null;
   website: string | null;
   rating: number | null;
+  email: string | null;
 };
 
 type SearchTextResponse = {
@@ -49,12 +51,26 @@ export async function searchPlaces(query: string, locationBias?: string): Promis
 
   const data = (await res.json()) as SearchTextResponse;
 
-  return (data.places ?? []).map((p) => ({
+  const results: PlaceResult[] = (data.places ?? []).map((p) => ({
     placeId: p.id,
     name: p.displayName?.text ?? "Unnamed business",
     address: p.formattedAddress ?? "",
     phone: p.nationalPhoneNumber ?? null,
     website: p.websiteUri ?? null,
     rating: p.rating ?? null,
+    email: null,
   }));
+
+  // Places never returns an email address at all — best-effort enrich from
+  // each result's own website (mailto:/regex, homepage only). Run in
+  // parallel; a slow or email-less site just comes back null, it doesn't
+  // hold up the rest of the search.
+  await Promise.all(
+    results.map(async (r) => {
+      if (!r.website) return;
+      r.email = await extractEmailFromWebsite(r.website).catch(() => null);
+    })
+  );
+
+  return results;
 }
