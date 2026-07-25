@@ -40,6 +40,7 @@ export async function createContactAction(formData: FormData) {
   const email = String(formData.get("email") || "").trim();
   const phone = String(formData.get("phone") || "").trim();
   const company = String(formData.get("company") || "").trim();
+  const website = String(formData.get("website") || "").trim();
 
   if (!firstName) {
     throw new Error("First name is required.");
@@ -54,6 +55,7 @@ export async function createContactAction(formData: FormData) {
       email: email || null,
       phone: phone || null,
       company: company || null,
+      website: website || null,
       source: "manual",
     })
     .select("id")
@@ -84,6 +86,7 @@ export async function updateContactAction(formData: FormData) {
   const email = String(formData.get("email") || "").trim();
   const phone = String(formData.get("phone") || "").trim();
   const company = String(formData.get("company") || "").trim();
+  const website = String(formData.get("website") || "").trim();
 
   if (!contactId || !firstName) {
     throw new Error("First name is required.");
@@ -97,6 +100,7 @@ export async function updateContactAction(formData: FormData) {
       email: email || null,
       phone: phone || null,
       company: company || null,
+      website: website || null,
     })
     .eq("id", contactId)
     .eq("account_id", accountId);

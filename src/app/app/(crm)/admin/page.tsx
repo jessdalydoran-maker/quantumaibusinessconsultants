@@ -1,7 +1,13 @@
 import { Fragment } from "react";
 import { requirePlatformAdmin, getEffectiveAccountId } from "@/lib/supabase/session";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { createAccountAction, switchAccountAction, updatePlanTierAction, updateFeatureOverrideAction } from "./actions";
+import {
+  createAccountAction,
+  switchAccountAction,
+  updatePlanTierAction,
+  updateFeatureOverrideAction,
+  addTeamMemberAction,
+} from "./actions";
 import { FEATURE_LABELS, tierFeatures, type FeatureKey, type PlanTier } from "@/lib/features";
 import { PageHeader } from "@/components/crm/ui/PageHeader";
 import { Card, CardHeader, CardBody } from "@/components/crm/ui/Card";
@@ -158,6 +164,51 @@ export default async function AdminPage() {
       </section>
 
       <Card className="mt-10 max-w-lg">
+        <CardHeader title="Add Team Member" subtitle="Add another login to an existing account (e.g. a colleague at your own business) — this doesn't create a new tenant account, just a new user on one that already exists." />
+        <CardBody>
+          <form action={addTeamMemberAction} className="grid gap-4">
+            <div>
+              <Label htmlFor="tmAccountId">Account</Label>
+              <Select id="tmAccountId" name="accountId" required defaultValue={(accounts ?? []).find((a) => a.is_platform_owner)?.id ?? ""}>
+                {(accounts ?? []).map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.name}
+                  </option>
+                ))}
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="tmFullName">Full Name</Label>
+              <Input id="tmFullName" name="fullName" required />
+            </div>
+            <div>
+              <Label htmlFor="tmEmail">Email</Label>
+              <Input id="tmEmail" name="email" type="email" required />
+            </div>
+            <div>
+              <Label htmlFor="tmPassword">Initial Password</Label>
+              <Input id="tmPassword" name="password" type="text" required minLength={8} />
+              <p className="mt-1 text-xs text-text-muted">At least 8 characters.</p>
+            </div>
+            <div>
+              <Label htmlFor="tmRole">Role</Label>
+              <Select id="tmRole" name="role" defaultValue="owner" className="max-w-xs">
+                <option value="owner">Owner</option>
+                <option value="member">Member</option>
+              </Select>
+            </div>
+            <label className="flex items-center gap-2 text-sm text-text-muted">
+              <input type="checkbox" name="isPlatformAdmin" className="h-4 w-4 rounded border-border accent-[var(--color-gold)]" />
+              Platform admin (full access to every account, including this Admin console)
+            </label>
+            <Button type="submit" className="mt-2 w-fit">
+              Create Login
+            </Button>
+          </form>
+        </CardBody>
+      </Card>
+
+      <Card className="mt-6 max-w-lg">
         <CardHeader title="Create Account + Owner" subtitle="This is how a new client is onboarded. There is no public sign-up — you set the owner's initial password directly here, then share it with them securely." />
         <CardBody>
           <form action={createAccountAction} className="grid gap-4">

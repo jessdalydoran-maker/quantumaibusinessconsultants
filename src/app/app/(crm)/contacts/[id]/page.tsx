@@ -113,6 +113,10 @@ export default async function ContactDetailPage({
                   <Label htmlFor="company">Company</Label>
                   <Input id="company" name="company" defaultValue={contact.company ?? ""} />
                 </div>
+                <div>
+                  <Label htmlFor="website">Website</Label>
+                  <Input id="website" name="website" defaultValue={contact.website ?? ""} placeholder="https://example.com" />
+                </div>
                 <Button type="submit" className="w-fit">
                   Save Changes
                 </Button>

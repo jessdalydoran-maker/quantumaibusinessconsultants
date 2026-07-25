@@ -41,6 +41,10 @@ export default async function NewContactPage() {
               <Label htmlFor="company">Company</Label>
               <Input id="company" name="company" />
             </div>
+            <div>
+              <Label htmlFor="website">Website</Label>
+              <Input id="website" name="website" placeholder="https://example.com" />
+            </div>
             <Button type="submit" className="mt-2 w-fit">
               Create Contact
             </Button>

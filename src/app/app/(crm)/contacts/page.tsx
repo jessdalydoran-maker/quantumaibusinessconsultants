@@ -41,7 +41,7 @@ export default async function ContactsPage({
 
   let query = supabase
     .from("contacts")
-    .select("id, first_name, last_name, email, phone, company, created_at")
+    .select("id, first_name, last_name, email, phone, company, website, created_at")
     .eq("account_id", accountId)
     .order("created_at", { ascending: false });
 
@@ -100,6 +100,7 @@ export default async function ContactsPage({
               <Th>Company</Th>
               <Th>Email</Th>
               <Th>Phone</Th>
+              <Th>Website</Th>
             </THead>
             <TBody>
               {contacts.map((contact) => (
@@ -112,6 +113,20 @@ export default async function ContactsPage({
                   <Td>{contact.company || "—"}</Td>
                   <Td>{contact.email || "—"}</Td>
                   <Td>{contact.phone || "—"}</Td>
+                  <Td>
+                    {contact.website ? (
+                      <a
+                        href={contact.website.startsWith("http") ? contact.website : `https://${contact.website}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gold hover:underline"
+                      >
+                        {contact.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </Td>
                 </Tr>
               ))}
             </TBody>

@@ -82,6 +82,49 @@ export async function createAccountAction(formData: FormData) {
   revalidatePath("/app/admin");
 }
 
+export async function addTeamMemberAction(formData: FormData) {
+  await requirePlatformAdmin();
+
+  const accountId = String(formData.get("accountId") || "");
+  const fullName = String(formData.get("fullName") || "").trim();
+  const email = String(formData.get("email") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "");
+  const role = String(formData.get("role") || "member") as "owner" | "member";
+  const isPlatformAdmin = formData.get("isPlatformAdmin") === "on";
+
+  if (!accountId || !fullName || !email || password.length < 8) {
+    throw new Error("Account, name, email, and an 8+ character password are all required.");
+  }
+
+  const admin = createAdminClient();
+
+  const { data: authUser, error: authError } = await admin.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: true,
+  });
+
+  if (authError || !authUser.user) {
+    throw new Error(authError?.message || "Could not create the user.");
+  }
+
+  const { error: profileError } = await admin.from("users").insert({
+    id: authUser.user.id,
+    account_id: accountId,
+    role,
+    is_platform_admin: isPlatformAdmin,
+    full_name: fullName,
+    email,
+  });
+
+  if (profileError) {
+    await admin.auth.admin.deleteUser(authUser.user.id);
+    throw new Error(profileError.message);
+  }
+
+  revalidatePath("/app/admin");
+}
+
 export async function updatePlanTierAction(formData: FormData) {
   await requirePlatformAdmin();
   const accountId = String(formData.get("accountId") || "");
