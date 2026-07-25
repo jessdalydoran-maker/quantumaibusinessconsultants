@@ -2,22 +2,34 @@ import "server-only";
 import crypto from "node:crypto";
 import Retell from "retell-sdk";
 
-// FLAGGED (see docs/build-log.md, Prompt 9): Retell's own docs describe
-// verifying webhooks via a bundled `Retell.verify(rawBody, apiKey, signature)`
-// SDK helper, but the currently-installed `retell-sdk` (5.48.0) does not
-// export any such function — it's a modern auto-generated API client with no
-// webhook-verification helper in it. This is a best-effort HMAC-SHA256
-// implementation (raw body signed with the API key, hex digest, compared to
-// the `x-retell-signature` header) based on their documented description,
-// NOT confirmed against a real webhook delivery. Test this against an actual
-// Retell account before relying on it, and re-check Retell's current docs —
-// this is exactly the kind of integration detail likely to have moved.
-export function verifyRetellSignature(rawBody: string, signature: string | null): boolean {
+// FIXED in Prompt 11 (live verification) — the original best-effort guess
+// here was wrong on two counts, confirmed against Retell's current live docs
+// (docs.retellai.com/features/secure-webhook), not the stale `Retell.verify()`
+// SDK-helper example their own webhook overview page still shows (that
+// helper doesn't exist in the installed retell-sdk 5.48.0 — confirmed by
+// grepping the package, no `webhooks` resource, no `verify`/`sign` export
+// anywhere):
+//   1. The header isn't a bare hex digest — it's `v={timestamp},d={hex_digest}`.
+//   2. The signed payload is `rawBody + timestamp` concatenated, not rawBody alone.
+// There's also a 5-minute replay-protection window that must be enforced.
+// Algorithm: HMAC-SHA256, secret is the Retell API key, hex-encoded, compared
+// via constant-time equality.
+export function verifyRetellSignature(rawBody: string, signatureHeader: string | null): boolean {
   const apiKey = process.env.RETELL_API_KEY;
-  if (!apiKey || !signature) return false;
-  const expected = crypto.createHmac("sha256", apiKey).update(rawBody).digest("hex");
+  if (!apiKey || !signatureHeader) return false;
+
+  const match = signatureHeader.match(/^v=(\d+),d=(.+)$/);
+  if (!match) return false;
+  const [, timestampStr, digest] = match;
+
+  const timestamp = Number(timestampStr);
+  if (!Number.isFinite(timestamp)) return false;
+  if (Date.now() - timestamp > 5 * 60 * 1000) return false; // reject stale/replayed requests
+
+  const expected = crypto.createHmac("sha256", apiKey).update(rawBody + timestampStr).digest("hex");
+
   try {
-    return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+    return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(digest));
   } catch {
     return false;
   }
@@ -79,6 +91,11 @@ ${params.businessContext || "(no business context configured yet)"}
             name: "transfer_to_human",
             description: "Transfer the call to a human team member when you can't help.",
             transfer_destination: { type: "predefined" as const, number: params.fallbackPhoneNumber },
+            // FIXED in Prompt 11 (live verification): transfer_option is
+            // required — confirmed against the live API, which rejected the
+            // tool entirely without it. cold_transfer is the simplest option
+            // (no warm hand-off/introduction to the human).
+            transfer_option: { type: "cold_transfer" as const },
           },
         ]
       : []),

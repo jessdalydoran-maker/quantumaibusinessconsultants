@@ -6,6 +6,55 @@ after the build, not during — nothing here was blocked on confirmation.
 
 ---
 
+## Prompt 11 — Live verification fixes
+
+Two real bugs found and fixed by testing against Retell's actual live API and current docs,
+exactly the point of this prompt — both were flagged in the Prompt 9 entry above as
+unconfirmed, and both turned out to be wrong as originally written:
+
+**Fix 1 — webhook signature verification was checking the wrong thing entirely.**
+`src/lib/retell.ts`, `verifyRetellSignature`. The original best-effort version HMAC'd the raw
+body alone and compared it directly against the signature header as a bare hex string. Retell's
+actual current docs (`docs.retellai.com/features/secure-webhook`, not the stale
+`Retell.verify()` SDK-helper example their webhook-overview page still shows — that helper does
+not exist in the installed `retell-sdk` 5.48.0, confirmed by grepping the entire package for any
+`webhooks`/`verify`/`sign` export) specify: the header format is `v={timestamp},d={hex_digest}`,
+the signed payload is `rawBody + timestamp` concatenated (not rawBody alone), and there's a
+5-minute replay-protection window to enforce. Every previous call to this webhook would have
+been rejected as invalid — a fail-safe outcome (nothing gets through unverified), but nothing
+would have worked either. Fixed and self-tested against 5 cases (valid signature, tampered body,
+wrong signature, stale timestamp, malformed header) — all 5 behave correctly now.
+
+**Fix 2 — the `transfer_call` tool shape was missing a required field.**
+`src/lib/retell.ts`, `createOrUpdateRetellAgent`. Tested live against the real Retell API:
+the `custom` tool (`book_appointment`) was accepted as originally written — that part of Prompt
+9's guess was correct. The `transfer_call` tool was rejected outright (400) because it was missing
+a required `transfer_option` field alongside `transfer_destination` — confirmed against the
+SDK's own TypeScript types (`resources/llm.d.ts`) once the live API's error pointed at it. Added
+`transfer_option: { type: "cold_transfer" }` (the simplest option — no warm hand-off/introduction
+to the human before connecting). Re-tested live after the fix: accepted.
+
+**Also confirmed working, unchanged**: `client.llm.create()` / `client.agent.create()` with
+`general_prompt`, `voice_id: "11labs-Adrian"`, `response_engine: { type: "retell-llm", llm_id }`
+— created a real agent and LLM against the live API on the first attempt, no changes needed.
+Tested the full conversation flow via Retell's free `playground.completion()` API (text-based,
+no phone number needed): the agent answered from `business_context` with no invented facts, and
+correctly called `book_appointment` with well-formed ISO 8601 arguments once the caller confirmed
+a specific time — exactly the tool-calling behavior Prompt 7/9 intended. Test agent/LLM deleted
+after verification.
+
+**Deployment gap found, unrelated to the code**: while testing the `book_appointment` webhook
+end-to-end, the real HTTP call to `quantumbusinessconsultants.com/api/webhooks/retell-function`
+returned a genuine Vercel 404 (`X-Matched-Path: /404`), not our route. Investigation (checking a
+spread of old vs. new routes, then the Vercel deployments list directly) found that production
+had been pinned to an old commit (`bf61c1d`, two commits behind `main`'s actual tip) by repeated
+manual "Redeploy" clicks on that specific old deployment — so every route added across Prompts
+5–10 had never actually gone live, despite passing build/lint locally every time. Not a code
+defect; flagged here because it's exactly the kind of gap "compiles clean" can't catch, which is
+the whole reason this verification prompt exists.
+
+---
+
 ## Prompt 4 — Fix stale site.url
 
 **Status: already completed in an earlier session**, verified again at the start of this run —
