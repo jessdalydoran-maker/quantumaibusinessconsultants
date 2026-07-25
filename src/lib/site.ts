@@ -2,7 +2,7 @@ export const site = {
   name: "Quantum AI Business Consultants",
   shortName: "Quantum AI",
   legacyDomain: "aibusinessconsultants.co.uk",
-  url: "https://aibusinessconsultants.co.uk",
+  url: "https://www.quantumbusinessconsultants.com",
   description:
     "We build bespoke AI systems that handle enquiries, bookings, follow-ups, and admin for independent trades and service businesses, so owners reclaim their time.",
   founders: [
