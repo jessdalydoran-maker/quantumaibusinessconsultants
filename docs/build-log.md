@@ -72,6 +72,23 @@ contact-matching-by-phone-number during an actual call — both require a real p
 minimum a real Retell phone number), which wasn't provisioned in this session (see the live chat
 transcript for the cost/decision context).
 
+**Part C — Google Places Lead Finder: fully verified, real browser session.** Confirmed
+`GOOGLE_PLACES_API_KEY` is valid and "Places API (New)" + billing are active (a real 200 with
+real business data, not a billing/auth error). Logged into the actual deployed site with a real
+browser, ran a real search ("plumbers" / Belfast) through the genuine `/app/contacts/find` UI —
+14 real local plumbing businesses returned with name/address/phone/website/rating. Selected two,
+clicked the real "Import Selected" button, confirmed both landed in `/app/contacts` with correct
+data. Re-ran the identical search: both previously-imported businesses correctly showed "Added"
+with no checkbox — `place_id` dedup confirmed working end-to-end through the real UI, not just
+the underlying logic. All test contacts (34 total — some created by parallel testing outside this
+session) deleted afterward; `lead_searches` audit log entries left in place, since persisting is
+the intended behavior of that table.
+
+**Twilio (Part A) remains blocked**, unrelated to any of this code — the Twilio trial account is
+under identity/compliance review, so no phone number could be provisioned to test against. Nothing
+found in this session suggests the SMS/WhatsApp code itself has a problem; it simply hasn't been
+exercised against a live number yet.
+
 ---
 
 ## Prompt 4 — Fix stale site.url
