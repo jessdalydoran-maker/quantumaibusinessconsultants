@@ -125,6 +125,22 @@ export async function addTeamMemberAction(formData: FormData) {
   revalidatePath("/app/admin");
 }
 
+export async function removeUserAction(formData: FormData) {
+  const profile = await requirePlatformAdmin();
+  const userId = String(formData.get("userId") || "");
+
+  if (!userId) throw new Error("Missing user.");
+  if (userId === profile.id) throw new Error("You can't remove your own login.");
+
+  const admin = createAdminClient();
+  const { error } = await admin.from("users").delete().eq("id", userId);
+  if (error) throw new Error(error.message);
+
+  await admin.auth.admin.deleteUser(userId);
+
+  revalidatePath("/app/admin");
+}
+
 export async function updatePlanTierAction(formData: FormData) {
   await requirePlatformAdmin();
   const accountId = String(formData.get("accountId") || "");

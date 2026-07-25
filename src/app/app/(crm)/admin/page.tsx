@@ -7,6 +7,7 @@ import {
   updatePlanTierAction,
   updateFeatureOverrideAction,
   addTeamMemberAction,
+  removeUserAction,
 } from "./actions";
 import { FEATURE_LABELS, tierFeatures, type FeatureKey, type PlanTier } from "@/lib/features";
 import { PageHeader } from "@/components/crm/ui/PageHeader";
@@ -30,6 +31,13 @@ export default async function AdminPage() {
     .from("accounts")
     .select("id, name, plan, plan_tier, features, is_platform_owner, created_at")
     .order("created_at", { ascending: false });
+
+  const { data: users } = await admin
+    .from("users")
+    .select("id, full_name, email, role, is_platform_admin, account_id, created_at")
+    .order("created_at", { ascending: false });
+
+  const accountNameById = new Map((accounts ?? []).map((a) => [a.id, a.name]));
 
   return (
     <div>
@@ -161,6 +169,47 @@ export default async function AdminPage() {
             </button>
           </form>
         )}
+      </section>
+
+      <section className="mt-10">
+        <h2 className="font-display text-lg text-text">Users</h2>
+        <div className="mt-4">
+          <Table>
+            <THead>
+              <Th>Name</Th>
+              <Th>Email</Th>
+              <Th>Account</Th>
+              <Th>Role</Th>
+              <Th></Th>
+            </THead>
+            <TBody>
+              {(users ?? []).map((u) => (
+                <Tr key={u.id}>
+                  <Td className="text-text">
+                    {u.full_name}
+                    {u.id === profile.id && <Badge tone="green" className="ml-2">You</Badge>}
+                  </Td>
+                  <Td>{u.email}</Td>
+                  <Td>{accountNameById.get(u.account_id) ?? "—"}</Td>
+                  <Td>
+                    <span className="capitalize">{u.role}</span>
+                    {u.is_platform_admin && <Badge tone="gold" className="ml-2">Platform Admin</Badge>}
+                  </Td>
+                  <Td>
+                    {u.id !== profile.id && (
+                      <form action={removeUserAction}>
+                        <input type="hidden" name="userId" value={u.id} />
+                        <button type="submit" className="text-xs text-text-muted hover:text-red-400">
+                          Remove
+                        </button>
+                      </form>
+                    )}
+                  </Td>
+                </Tr>
+              ))}
+            </TBody>
+          </Table>
+        </div>
       </section>
 
       <Card className="mt-10 max-w-lg">
