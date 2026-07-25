@@ -59,6 +59,19 @@ send once a day rather than checking every 15 minutes, an accepted degradation u
 Vercel plan is upgraded to Pro. This one thing being wrong is why production had silently been
 running code from before Prompt 6 for the entire second half of this session.
 
+**Full end-to-end pass, once the deployment gap was fixed**: re-ran the same
+`book_appointment` conversation via `playground.completion()` against the real deployed
+`/api/webhooks/retell-function` — the tool call succeeded (`"successful": true`), and a real
+`appointments` row plus a real `ai_actions_log` row were created with correct data, confirmed
+directly in Supabase. `contact_id` was correctly `null` (Retell's playground test has no real
+phone number attached, so no contact to match — expected, not a bug), and `activities` was
+correctly NOT logged for the same reason (that log only fires when a contact exists). Both test
+resources (agent, LLM, the two DB rows) deleted after verification. **What remains genuinely
+unverified**: the `calls` table population from a real `call_ended`/`call_analyzed` webhook, and
+contact-matching-by-phone-number during an actual call — both require a real phone call (or at
+minimum a real Retell phone number), which wasn't provisioned in this session (see the live chat
+transcript for the cost/decision context).
+
 ---
 
 ## Prompt 4 — Fix stale site.url
