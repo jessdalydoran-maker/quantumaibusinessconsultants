@@ -43,15 +43,21 @@ correctly called `book_appointment` with well-formed ISO 8601 arguments once the
 a specific time — exactly the tool-calling behavior Prompt 7/9 intended. Test agent/LLM deleted
 after verification.
 
-**Deployment gap found, unrelated to the code**: while testing the `book_appointment` webhook
-end-to-end, the real HTTP call to `quantumbusinessconsultants.com/api/webhooks/retell-function`
-returned a genuine Vercel 404 (`X-Matched-Path: /404`), not our route. Investigation (checking a
-spread of old vs. new routes, then the Vercel deployments list directly) found that production
-had been pinned to an old commit (`bf61c1d`, two commits behind `main`'s actual tip) by repeated
-manual "Redeploy" clicks on that specific old deployment — so every route added across Prompts
-5–10 had never actually gone live, despite passing build/lint locally every time. Not a code
-defect; flagged here because it's exactly the kind of gap "compiles clean" can't catch, which is
-the whole reason this verification prompt exists.
+**Deployment gap found, and this one WAS a code defect**: while testing the `book_appointment`
+webhook end-to-end, the real HTTP call to
+`quantumbusinessconsultants.com/api/webhooks/retell-function` returned a genuine Vercel 404
+(`X-Matched-Path: /404`), not our route. Every route added across Prompts 5–10 had never
+actually gone live. Root cause, confirmed directly in the Vercel UI when attempting a manual
+deploy: **every deployment since `vercel.json`'s cron config was added (Prompt 8) had been
+rejected outright** — "Hobby accounts are limited to daily cron jobs. This cron expression
+(`*/15 * * * *`) would run more than once per day. Upgrade to the Pro plan..." This is the exact
+risk flagged in the Prompt 8 log entry above, except worse than described there: I'd only
+anticipated the cron itself silently degrading to once-daily on Hobby, not that Vercel would
+refuse the entire deployment over it, taking every other route down with it. Fixed by changing
+`vercel.json`'s schedule to `0 8 * * *` (once daily, Hobby-compatible) — scheduled campaigns now
+send once a day rather than checking every 15 minutes, an accepted degradation until/unless the
+Vercel plan is upgraded to Pro. This one thing being wrong is why production had silently been
+running code from before Prompt 6 for the entire second half of this session.
 
 ---
 
