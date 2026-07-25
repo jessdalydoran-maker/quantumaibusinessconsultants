@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireProfile, getEffectiveAccountId } from "@/lib/supabase/session";
 import { createClient } from "@/lib/supabase/server";
 import { logoutAction } from "@/lib/supabase/auth-actions";
+import { getAccountFeatureSet, type FeatureKey } from "@/lib/features";
 import { ViewingAsBanner } from "./ViewingAsBanner";
 
 // Every page under this route group is server-rendered behind requireProfile(),
@@ -12,6 +13,7 @@ export default async function CrmLayout({ children }: { children: React.ReactNod
   const effectiveAccountId = await getEffectiveAccountId(profile);
 
   let accountName: string | null = null;
+  let features = new Set<FeatureKey>();
   if (effectiveAccountId) {
     const supabase = await createClient();
     const { data: account } = await supabase
@@ -20,16 +22,29 @@ export default async function CrmLayout({ children }: { children: React.ReactNod
       .eq("id", effectiveAccountId)
       .single();
     accountName = account?.name ?? null;
+    features = await getAccountFeatureSet(supabase, effectiveAccountId);
   }
 
-  const navItems = [
-    { href: "/app", label: "Dashboard" },
-    { href: "/app/inbox", label: "Inbox" },
-    { href: "/app/contacts", label: "Contacts" },
-    { href: "/app/deals", label: "Deals" },
-    { href: "/app/settings/widget", label: "Settings" },
-    ...(profile.is_platform_admin ? [{ href: "/app/admin", label: "Admin" }] : []),
-  ];
+  // Nav items are gated by the same accountHasFeature source of truth used
+  // server-side on the routes themselves — this hides sections the account
+  // can't use, but is a convenience, not the enforcement (each route/action
+  // re-checks itself, since a hidden link is not a security boundary).
+  type NavItem = { href: string; label: string; feature?: FeatureKey };
+  const navItems: NavItem[] = (
+    [
+      { href: "/app", label: "Dashboard" },
+      { href: "/app/inbox", label: "Inbox", feature: "inbox" },
+      { href: "/app/contacts", label: "Contacts", feature: "contacts" },
+      { href: "/app/deals", label: "Deals", feature: "deals" },
+      { href: "/app/calls", label: "Calls", feature: "voice_ai" },
+      { href: "/app/campaigns", label: "Campaigns", feature: "broadcast_email" },
+      { href: "/app/settings/widget", label: "Settings" },
+      { href: "/app/settings/sms", label: "SMS/WhatsApp", feature: "sms_whatsapp" },
+      { href: "/app/settings/ai", label: "AI Settings", feature: "conversation_ai" },
+      { href: "/app/settings/voice", label: "Voice Settings", feature: "voice_ai" },
+      ...(profile.is_platform_admin ? [{ href: "/app/admin", label: "Admin" }] : []),
+    ] as NavItem[]
+  ).filter((item) => !item.feature || features.has(item.feature));
 
   return (
     <div className="min-h-screen bg-bg text-text">

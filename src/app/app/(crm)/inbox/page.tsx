@@ -2,6 +2,9 @@ import Link from "next/link";
 import { requireProfile, getEffectiveAccountId } from "@/lib/supabase/session";
 import { createClient } from "@/lib/supabase/server";
 import { NoAccountSelected } from "../NoAccountSelected";
+import { FeatureLocked } from "../FeatureLocked";
+import { accountHasFeature } from "@/lib/features";
+import { isWithinWhatsAppWindow } from "@/lib/twilio";
 
 export const metadata = { robots: { index: false, follow: false } };
 
@@ -23,6 +26,10 @@ export default async function InboxPage({
 
   const { channel, status } = await searchParams;
   const supabase = await createClient();
+
+  if (!(await accountHasFeature(supabase, accountId, "inbox"))) {
+    return <FeatureLocked feature="inbox" />;
+  }
 
   let query = supabase
     .from("conversations")
@@ -49,9 +56,13 @@ export default async function InboxPage({
     string,
     { body: string; direction: string }
   >();
+  const lastInboundAtByConversation = new Map<string, string>();
   (recentMessages ?? []).forEach((m) => {
     if (!lastMessageByConversation.has(m.conversation_id)) {
       lastMessageByConversation.set(m.conversation_id, { body: m.body, direction: m.direction });
+    }
+    if (m.direction === "inbound" && !lastInboundAtByConversation.has(m.conversation_id)) {
+      lastInboundAtByConversation.set(m.conversation_id, m.created_at);
     }
   });
 
@@ -95,6 +106,9 @@ export default async function InboxPage({
             | null;
           const last = lastMessageByConversation.get(conversation.id);
           const isUnread = last?.direction === "inbound";
+          const templateRequired =
+            conversation.channel === "whatsapp" &&
+            !isWithinWhatsAppWindow(lastInboundAtByConversation.get(conversation.id) ?? null);
 
           return (
             <Link
@@ -112,6 +126,11 @@ export default async function InboxPage({
                   {conversation.status === "closed" && (
                     <span className="flex-shrink-0 rounded-full border border-border px-2 py-0.5 text-[10px] uppercase text-text-muted">
                       Closed
+                    </span>
+                  )}
+                  {templateRequired && (
+                    <span className="flex-shrink-0 rounded-full border border-gold/40 bg-gold/10 px-2 py-0.5 text-[10px] uppercase text-gold">
+                      Template required
                     </span>
                   )}
                 </div>

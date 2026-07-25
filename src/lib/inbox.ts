@@ -1,5 +1,6 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { maybeTriggerAiReply } from "@/lib/conversation-ai";
 
 // Shared by both unauthenticated entry points into the inbox — the public
 // widget API routes and the inbound-email webhook — since both need the same
@@ -130,17 +131,18 @@ export async function findOrCreateWebChatConversation(
   return { conversationId: conversation.id, contactId, isNew: true };
 }
 
-export async function findOrCreateEmailConversation(
+export async function findOrCreateChannelConversation(
   admin: SupabaseClient,
   accountId: string,
-  contactId: string
+  contactId: string,
+  channel: "email" | "sms" | "whatsapp"
 ): Promise<{ conversationId: string; isNew: boolean }> {
   const { data: existing } = await admin
     .from("conversations")
     .select("id")
     .eq("account_id", accountId)
     .eq("contact_id", contactId)
-    .eq("channel", "email")
+    .eq("channel", channel)
     .eq("status", "open")
     .order("last_message_at", { ascending: false })
     .limit(1)
@@ -152,17 +154,64 @@ export async function findOrCreateEmailConversation(
 
   const { data: conversation, error } = await admin
     .from("conversations")
-    .insert({ account_id: accountId, contact_id: contactId, channel: "email" })
+    .insert({ account_id: accountId, contact_id: contactId, channel })
     .select("id")
     .single();
 
   if (error || !conversation) {
-    throw new Error(error?.message || "Could not start email conversation.");
+    throw new Error(error?.message || `Could not start ${channel} conversation.`);
   }
 
-  await logConversationStartActivity(admin, accountId, contactId, "New email conversation started.");
+  const channelLabel = channel === "email" ? "email" : channel === "sms" ? "SMS" : "WhatsApp";
+  await logConversationStartActivity(admin, accountId, contactId, `New ${channelLabel} conversation started.`);
 
   return { conversationId: conversation.id, isNew: true };
+}
+
+export async function findOrCreateEmailConversation(
+  admin: SupabaseClient,
+  accountId: string,
+  contactId: string
+): Promise<{ conversationId: string; isNew: boolean }> {
+  return findOrCreateChannelConversation(admin, accountId, contactId, "email");
+}
+
+export async function findOrCreateContactByPhone(
+  admin: SupabaseClient,
+  accountId: string,
+  phone: string,
+  fallbackName?: string
+): Promise<{ id: string; isNew: boolean }> {
+  const normalizedPhone = phone.trim();
+
+  const { data: existing } = await admin
+    .from("contacts")
+    .select("id")
+    .eq("account_id", accountId)
+    .eq("phone", normalizedPhone)
+    .limit(1)
+    .maybeSingle();
+
+  if (existing) {
+    return { id: existing.id, isNew: false };
+  }
+
+  const { data: created, error } = await admin
+    .from("contacts")
+    .insert({
+      account_id: accountId,
+      first_name: fallbackName?.trim() || normalizedPhone,
+      phone: normalizedPhone,
+      source: "sms",
+    })
+    .select("id")
+    .single();
+
+  if (error || !created) {
+    throw new Error(error?.message || "Could not create contact from inbound message.");
+  }
+
+  return { id: created.id, isNew: true };
 }
 
 export async function logConversationStartActivity(
@@ -207,4 +256,16 @@ export async function appendMessage(
     .from("conversations")
     .update({ last_message_at: new Date().toISOString() })
     .eq("id", params.conversationId);
+
+  // Every inbound-message entry point (widget, email webhook, Twilio webhook)
+  // funnels through this one function, so this is the single place Prompt 7's
+  // Conversation AI needs to hook in — none of those three callers had to
+  // change. Never let an AI failure break message ingestion itself.
+  if (params.direction === "inbound" && params.senderType === "contact") {
+    try {
+      await maybeTriggerAiReply(admin, params.accountId, params.conversationId);
+    } catch (error) {
+      console.error("Conversation AI failed", error);
+    }
+  }
 }

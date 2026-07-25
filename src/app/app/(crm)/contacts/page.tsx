@@ -54,12 +54,20 @@ export default async function ContactsPage({
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="font-display text-3xl text-text">Contacts</h1>
-        <Link
-          href="/app/contacts/new"
-          className="rounded-sm bg-gold px-4 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
-        >
-          New Contact
-        </Link>
+        <div className="flex gap-3">
+          <Link
+            href="/app/contacts/find"
+            className="rounded-sm border border-gold px-4 py-2 text-sm font-medium text-gold hover:bg-gold hover:text-bg"
+          >
+            Find Contacts
+          </Link>
+          <Link
+            href="/app/contacts/new"
+            className="rounded-sm bg-gold px-4 py-2 text-sm font-medium text-bg hover:bg-gold-soft"
+          >
+            New Contact
+          </Link>
+        </div>
       </div>
 
       <form method="get" className="mt-6 flex flex-wrap gap-3">

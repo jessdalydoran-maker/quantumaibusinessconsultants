@@ -3,6 +3,8 @@ import { headers } from "next/headers";
 import { requireProfile, getEffectiveAccountId } from "@/lib/supabase/session";
 import { createClient } from "@/lib/supabase/server";
 import { NoAccountSelected } from "../../NoAccountSelected";
+import { FeatureLocked } from "../../FeatureLocked";
+import { accountHasFeature } from "@/lib/features";
 import { regenerateWidgetKeyAction } from "./actions";
 
 export const metadata = { robots: { index: false, follow: false } };
@@ -13,6 +15,11 @@ export default async function WidgetSettingsPage() {
   if (!accountId) return <NoAccountSelected />;
 
   const supabase = await createClient();
+
+  if (!(await accountHasFeature(supabase, accountId, "inbox"))) {
+    return <FeatureLocked feature="inbox" />;
+  }
+
   const { data: account } = await supabase
     .from("accounts")
     .select("name, widget_key")

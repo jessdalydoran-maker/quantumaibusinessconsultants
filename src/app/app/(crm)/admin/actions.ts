@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { requirePlatformAdmin, VIEW_AS_ACCOUNT_COOKIE } from "@/lib/supabase/session";
 import { createAdminClient } from "@/lib/supabase/admin";
+import type { PlanTier, FeatureKey } from "@/lib/features";
 
 export async function createAccountAction(formData: FormData) {
   await requirePlatformAdmin();
@@ -77,6 +78,49 @@ export async function createAccountAction(formData: FormData) {
       { pipeline_id: pipeline.id, name: "Lost", sort_order: 4 },
     ]);
   }
+
+  revalidatePath("/app/admin");
+}
+
+export async function updatePlanTierAction(formData: FormData) {
+  await requirePlatformAdmin();
+  const accountId = String(formData.get("accountId") || "");
+  const planTier = String(formData.get("planTier") || "") as PlanTier;
+
+  if (!["crm_only", "crm_content", "full_suite"].includes(planTier)) {
+    throw new Error("Invalid plan tier.");
+  }
+
+  const admin = createAdminClient();
+  const { error } = await admin.from("accounts").update({ plan_tier: planTier }).eq("id", accountId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/app/admin");
+}
+
+export async function updateFeatureOverrideAction(formData: FormData) {
+  await requirePlatformAdmin();
+  const accountId = String(formData.get("accountId") || "");
+  const featureKey = String(formData.get("featureKey") || "") as FeatureKey;
+  const value = String(formData.get("value") || "default");
+
+  const admin = createAdminClient();
+  const { data: account } = await admin
+    .from("accounts")
+    .select("features")
+    .eq("id", accountId)
+    .single();
+
+  const features = { ...(account?.features as Record<string, boolean> | null) };
+
+  if (value === "default") {
+    delete features[featureKey];
+  } else {
+    features[featureKey] = value === "true";
+  }
+
+  const { error } = await admin.from("accounts").update({ features }).eq("id", accountId);
+  if (error) throw new Error(error.message);
 
   revalidatePath("/app/admin");
 }
