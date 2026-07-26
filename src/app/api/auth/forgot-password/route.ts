@@ -36,16 +36,22 @@ export async function POST(request: NextRequest) {
     return genericResponse;
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.error("RESEND_API_KEY is not configured — could not send password reset email.");
+  // Deliberately INBOX_RESEND_API_KEY, not RESEND_API_KEY: the latter's
+  // Resend account only has a domain verified for a different, unrelated
+  // product on the same account — sending from it 403s. INBOX_RESEND_API_KEY
+  // has inbound.quantumbusinessconsultants.com verified (used elsewhere for
+  // conversation emails), so reuse that for a real, deliverable sender.
+  const apiKey = process.env.INBOX_RESEND_API_KEY;
+  const inboundDomain = process.env.INBOUND_EMAIL_DOMAIN;
+  if (!apiKey || !inboundDomain) {
+    console.error("INBOX_RESEND_API_KEY/INBOUND_EMAIL_DOMAIN not configured — could not send password reset email.");
     return genericResponse;
   }
 
   try {
     const resend = new Resend(apiKey);
-    await resend.emails.send({
-      from: `${site.name} <noreply@${site.legacyDomain}>`,
+    const { error: sendResultError } = await resend.emails.send({
+      from: `${site.name} <noreply@${inboundDomain}>`,
       to: [email],
       subject: "Reset your Quantum CRM password",
       text: [
@@ -56,6 +62,9 @@ export async function POST(request: NextRequest) {
         "This link expires soon and can only be used once. If you didn't request this, you can ignore this email.",
       ].join("\n"),
     });
+    if (sendResultError) {
+      console.error("Resend rejected the password reset email:", sendResultError.message);
+    }
   } catch (sendError) {
     console.error("Failed to send password reset email:", sendError);
   }
