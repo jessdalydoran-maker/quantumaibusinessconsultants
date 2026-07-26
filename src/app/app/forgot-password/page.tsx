@@ -1,19 +1,13 @@
 import Link from "next/link";
-import { LoginForm } from "./LoginForm";
+import { ForgotPasswordForm } from "./ForgotPasswordForm";
 import { IconSparkle } from "@/components/crm/ui/icons";
 
 export const metadata = {
-  title: "Log In — Quantum CRM",
+  title: "Forgot Password — Quantum CRM",
   robots: { index: false, follow: false },
 };
 
-export default async function LoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ redirectedFrom?: string; error?: string }>;
-}) {
-  const { redirectedFrom, error } = await searchParams;
-
+export default function ForgotPasswordPage() {
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-bg px-4 text-text">
       <div
@@ -32,15 +26,12 @@ export default async function LoginPage({
             Quantum <span className="text-gold">CRM</span>
           </h1>
         </div>
-        <p className="mt-3 text-sm text-text-muted">Log in to continue.</p>
-        {error === "reset_link_invalid" && (
-          <p className="mt-3 text-sm text-red-400">
-            That reset link is invalid or has expired. Request a new one below.
-          </p>
-        )}
-        <LoginForm redirectTo={redirectedFrom && redirectedFrom !== "/app/login" ? redirectedFrom : "/app"} />
-        <Link href="/app/forgot-password" className="mt-4 inline-block text-xs text-text-muted hover:text-gold">
-          Forgot your password?
+        <p className="mt-3 text-sm text-text-muted">
+          Enter your email and we&apos;ll send you a link to reset your password.
+        </p>
+        <ForgotPasswordForm />
+        <Link href="/app/login" className="mt-6 inline-block text-xs text-text-muted hover:text-gold">
+          ← Back to log in
         </Link>
       </div>
     </div>

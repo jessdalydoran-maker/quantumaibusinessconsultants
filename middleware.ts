@@ -36,8 +36,13 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
   const isLoginRoute = pathname === "/app/login";
+  // Forgot-password must work for a signed-out visitor; reset-password is
+  // reached via the emailed link, which establishes its own (recovery)
+  // session before the browser ever lands here, so it doesn't need an
+  // exemption — by the time this middleware runs, `user` is already set.
+  const isPublicAuthRoute = isLoginRoute || pathname === "/app/forgot-password";
 
-  if (!user && !isLoginRoute) {
+  if (!user && !isPublicAuthRoute) {
     const loginUrl = new URL("/app/login", request.url);
     loginUrl.searchParams.set("redirectedFrom", pathname);
     return NextResponse.redirect(loginUrl);
