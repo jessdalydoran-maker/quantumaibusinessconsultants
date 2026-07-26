@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { Label, Input } from "@/components/crm/ui/Field";
 import { Button } from "@/components/crm/ui/Button";
 
@@ -16,17 +15,18 @@ export function ForgotPasswordForm() {
     setError(null);
     setLoading(true);
 
-    const supabase = createClient();
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/api/auth/confirm?next=/app/reset-password`,
-    });
-
-    setLoading(false);
-    if (error) {
+    try {
+      await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      setSent(true);
+    } catch {
       setError("Something went wrong. Please try again.");
-      return;
+    } finally {
+      setLoading(false);
     }
-    setSent(true);
   }
 
   if (sent) {
