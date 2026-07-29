@@ -69,6 +69,23 @@ export default function ContactPage() {
 
       <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(faqSchema(faqs))} />
 
+      <section className="border-b border-border py-10">
+        <Container>
+          <div className="flex flex-col items-start justify-between gap-4 rounded-sm border border-border bg-bg-alt p-6 md:flex-row md:items-center">
+            <div>
+              <h2 className="font-display text-lg text-text">Already a client?</h2>
+              <p className="mt-1 text-sm text-text-muted">
+                If you need something changed on your site or system, tell us what&apos;s going on
+                and it&apos;ll land directly with Jess.
+              </p>
+            </div>
+            <Button href="/request-change" variant="secondary" className="shrink-0">
+              Request a Change
+            </Button>
+          </div>
+        </Container>
+      </section>
+
       <section className="border-b border-border py-16 md:py-24">
         <Container>
           <div className="grid gap-16 md:grid-cols-[1fr_1.2fr]">
