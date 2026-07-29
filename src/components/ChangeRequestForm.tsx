@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -18,15 +19,45 @@ const urgencies = [
   "Urgent — something's broken",
 ] as const;
 
+const contentActions = [
+  { value: "update", label: "Change something that's already there" },
+  { value: "add", label: "Add something new" },
+] as const;
+
+const MAX_FILE_BYTES = 50 * 1024 * 1024;
+const ALLOWED_TYPES = [
+  "image/png",
+  "image/jpeg",
+  "image/gif",
+  "image/webp",
+  "video/mp4",
+  "video/quicktime",
+  "video/webm",
+];
+
+type Attachment = {
+  id: string;
+  name: string;
+  url: string;
+  status: "uploading" | "done" | "error";
+  error?: string;
+};
+
 type FormState = {
   name: string;
   email: string;
   company: string;
   website: string;
   changeType: (typeof changeTypes)[number] | "";
-  pages: string;
-  description: string;
+  pageLocation: string;
+  exactSpot: string;
+  contentAction: (typeof contentActions)[number]["value"] | "";
+  currentContent: string;
+  desiredContent: string;
+  newContent: string;
+  placement: string;
   urgency: (typeof urgencies)[number] | "";
+  notes: string;
 };
 
 const initialState: FormState = {
@@ -35,16 +66,23 @@ const initialState: FormState = {
   company: "",
   website: "",
   changeType: "",
-  pages: "",
-  description: "",
+  pageLocation: "",
+  exactSpot: "",
+  contentAction: "",
+  currentContent: "",
+  desiredContent: "",
+  newContent: "",
+  placement: "",
   urgency: "",
+  notes: "",
 };
 
-const steps = ["Who you are", "What's changing", "The details", "Review & send"];
+const steps = ["Who you are", "What's changing", "The specifics", "Priority", "Review & send"];
 
 export function ChangeRequestForm() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormState>(initialState);
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [honeypot, setHoneypot] = useState("");
@@ -60,14 +98,69 @@ export function ChangeRequestForm() {
       emailPattern.test(form.email) &&
       form.company.trim() !== "" &&
       form.website.trim() !== "",
-    form.changeType !== "",
-    form.description.trim() !== "" && form.urgency !== "",
+    form.changeType !== "" && form.pageLocation.trim() !== "" && form.exactSpot.trim() !== "",
+    form.contentAction === "update"
+      ? form.currentContent.trim() !== "" && form.desiredContent.trim() !== ""
+      : form.contentAction === "add"
+        ? form.newContent.trim() !== "" && form.placement.trim() !== ""
+        : false,
+    form.urgency !== "",
     true,
   ];
 
+  const uploading = attachments.some((a) => a.status === "uploading");
+
+  async function handleFiles(fileList: FileList | null) {
+    if (!fileList || fileList.length === 0) return;
+    const supabase = createClient();
+
+    const files = Array.from(fileList);
+    for (const file of files) {
+      const id = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+      if (file.size > MAX_FILE_BYTES) {
+        setAttachments((prev) => [
+          ...prev,
+          { id, name: file.name, url: "", status: "error", error: "File is larger than 50MB." },
+        ]);
+        continue;
+      }
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        setAttachments((prev) => [
+          ...prev,
+          { id, name: file.name, url: "", status: "error", error: "Unsupported file type." },
+        ]);
+        continue;
+      }
+
+      setAttachments((prev) => [...prev, { id, name: file.name, url: "", status: "uploading" }]);
+
+      const path = `${id}-${file.name}`;
+      const { error } = await supabase.storage
+        .from("change-request-attachments")
+        .upload(path, file);
+
+      if (error) {
+        setAttachments((prev) =>
+          prev.map((a) => (a.id === id ? { ...a, status: "error", error: error.message } : a))
+        );
+        continue;
+      }
+
+      const { data } = supabase.storage.from("change-request-attachments").getPublicUrl(path);
+      setAttachments((prev) =>
+        prev.map((a) => (a.id === id ? { ...a, status: "done", url: data.publicUrl } : a))
+      );
+    }
+  }
+
+  function removeAttachment(id: string) {
+    setAttachments((prev) => prev.filter((a) => a.id !== id));
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!stepValid[2]) return;
+    if (!stepValid[3] || uploading) return;
 
     setStatus("submitting");
     setErrorMessage("");
@@ -76,7 +169,13 @@ export function ChangeRequestForm() {
       const res = await fetch("/api/change-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, honeypot }),
+        body: JSON.stringify({
+          ...form,
+          attachments: attachments
+            .filter((a) => a.status === "done")
+            .map((a) => ({ name: a.name, url: a.url })),
+          honeypot,
+        }),
       });
 
       if (!res.ok) {
@@ -216,61 +315,216 @@ export function ChangeRequestForm() {
               ))}
             </div>
             <div>
-              <label htmlFor="pages" className="text-sm text-text-muted">
-                Which page(s) does this affect? (optional)
+              <label htmlFor="pageLocation" className="text-sm text-text-muted">
+                Which page is this on?
               </label>
               <input
-                id="pages"
+                id="pageLocation"
                 type="text"
-                value={form.pages}
-                onChange={(e) => update("pages", e.target.value)}
-                placeholder="E.g. Homepage, Contact page"
+                required
+                value={form.pageLocation}
+                onChange={(e) => update("pageLocation", e.target.value)}
+                placeholder="E.g. Homepage, or smithphysio.co.uk/services"
                 className="mt-2 w-full rounded-sm border border-border bg-bg px-4 py-3 text-text focus:border-gold"
               />
+              <p className="mt-1 text-xs text-text-muted">
+                The exact page name or URL — this is how we find it fast.
+              </p>
+            </div>
+            <div>
+              <label htmlFor="exactSpot" className="text-sm text-text-muted">
+                Whereabouts on that page?
+              </label>
+              <input
+                id="exactSpot"
+                type="text"
+                required
+                value={form.exactSpot}
+                onChange={(e) => update("exactSpot", e.target.value)}
+                placeholder="E.g. the hero banner, the third pricing card, the footer"
+                className="mt-2 w-full rounded-sm border border-border bg-bg px-4 py-3 text-text focus:border-gold"
+              />
+              <p className="mt-1 text-xs text-text-muted">
+                Be as specific as you can — the section, heading, or element.
+              </p>
             </div>
           </div>
         )}
 
         {step === 2 && (
           <div className="space-y-6">
-            <h3 className="font-display text-xl text-text">Tell us more</h3>
+            <h3 className="font-display text-xl text-text">Tell us exactly what to do</h3>
             <div>
-              <label htmlFor="description" className="text-sm text-text-muted">
-                What would you like us to do?
-              </label>
-              <textarea
-                id="description"
-                required
-                rows={5}
-                value={form.description}
-                onChange={(e) => update("description", e.target.value)}
-                placeholder="The more detail you can give us, the faster we can get it sorted."
-                className="mt-2 w-full rounded-sm border border-border bg-bg px-4 py-3 text-text focus:border-gold"
-              />
-            </div>
-            <div>
-              <p className="text-sm text-text-muted">How urgent is this?</p>
-              <div className="mt-2 grid gap-3 sm:grid-cols-3">
-                {urgencies.map((option) => (
+              <p className="text-sm text-text-muted">Is this an update, or something brand new?</p>
+              <div className="mt-2 grid gap-3 sm:grid-cols-2">
+                {contentActions.map((option) => (
                   <button
-                    key={option}
+                    key={option.value}
                     type="button"
-                    onClick={() => update("urgency", option)}
+                    onClick={() => update("contentAction", option.value)}
                     className={`rounded-sm border px-4 py-3 text-left text-sm transition-colors ${
-                      form.urgency === option
+                      form.contentAction === option.value
                         ? "border-gold bg-gold/10 text-text"
                         : "border-border text-text-muted hover:border-gold hover:text-text"
                     }`}
                   >
-                    {option}
+                    {option.label}
                   </button>
                 ))}
               </div>
+            </div>
+
+            {form.contentAction === "update" && (
+              <>
+                <div>
+                  <label htmlFor="currentContent" className="text-sm text-text-muted">
+                    What does it currently say or show?
+                  </label>
+                  <textarea
+                    id="currentContent"
+                    required
+                    rows={3}
+                    value={form.currentContent}
+                    onChange={(e) => update("currentContent", e.target.value)}
+                    placeholder="Copy and paste the current text, or describe what's there now"
+                    className="mt-2 w-full rounded-sm border border-border bg-bg px-4 py-3 text-text focus:border-gold"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="desiredContent" className="text-sm text-text-muted">
+                    What should it say or show instead?
+                  </label>
+                  <textarea
+                    id="desiredContent"
+                    required
+                    rows={3}
+                    value={form.desiredContent}
+                    onChange={(e) => update("desiredContent", e.target.value)}
+                    placeholder="Write out exactly what you'd like to replace it with"
+                    className="mt-2 w-full rounded-sm border border-border bg-bg px-4 py-3 text-text focus:border-gold"
+                  />
+                </div>
+              </>
+            )}
+
+            {form.contentAction === "add" && (
+              <>
+                <div>
+                  <label htmlFor="newContent" className="text-sm text-text-muted">
+                    What would you like added?
+                  </label>
+                  <textarea
+                    id="newContent"
+                    required
+                    rows={3}
+                    value={form.newContent}
+                    onChange={(e) => update("newContent", e.target.value)}
+                    placeholder="Describe or write out the new content, feature, or offer"
+                    className="mt-2 w-full rounded-sm border border-border bg-bg px-4 py-3 text-text focus:border-gold"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="placement" className="text-sm text-text-muted">
+                    Exactly where should it go?
+                  </label>
+                  <input
+                    id="placement"
+                    type="text"
+                    required
+                    value={form.placement}
+                    onChange={(e) => update("placement", e.target.value)}
+                    placeholder="E.g. above the pricing table, as a new section at the bottom"
+                    className="mt-2 w-full rounded-sm border border-border bg-bg px-4 py-3 text-text focus:border-gold"
+                  />
+                </div>
+              </>
+            )}
+
+            <div>
+              <p className="text-sm text-text-muted">
+                Screenshots or a short video (optional, but they really help)
+              </p>
+              <label
+                htmlFor="attachments"
+                className="mt-2 flex cursor-pointer items-center justify-center rounded-sm border border-dashed border-border bg-bg px-4 py-6 text-sm text-text-muted hover:border-gold hover:text-text"
+              >
+                Click to upload images or video (up to 50MB each)
+              </label>
+              <input
+                id="attachments"
+                type="file"
+                multiple
+                accept="image/png,image/jpeg,image/gif,image/webp,video/mp4,video/quicktime,video/webm"
+                onChange={(e) => {
+                  handleFiles(e.target.files);
+                  e.target.value = "";
+                }}
+                className="hidden"
+              />
+              {attachments.length > 0 && (
+                <ul className="mt-3 space-y-2">
+                  {attachments.map((a) => (
+                    <li
+                      key={a.id}
+                      className="flex items-center justify-between gap-3 rounded-sm border border-border bg-bg px-4 py-2 text-sm"
+                    >
+                      <span className="truncate text-text-muted">
+                        {a.name}
+                        {a.status === "uploading" && " — uploading…"}
+                        {a.status === "error" && ` — ${a.error}`}
+                        {a.status === "done" && " — uploaded"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => removeAttachment(a.id)}
+                        className="shrink-0 text-text-muted hover:text-text"
+                      >
+                        Remove
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         )}
 
         {step === 3 && (
+          <div className="space-y-6">
+            <h3 className="font-display text-xl text-text">How urgent is this?</h3>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {urgencies.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => update("urgency", option)}
+                  className={`rounded-sm border px-4 py-3 text-left text-sm transition-colors ${
+                    form.urgency === option
+                      ? "border-gold bg-gold/10 text-text"
+                      : "border-border text-text-muted hover:border-gold hover:text-text"
+                  }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+            <div>
+              <label htmlFor="notes" className="text-sm text-text-muted">
+                Anything else we should know? (optional)
+              </label>
+              <textarea
+                id="notes"
+                rows={3}
+                value={form.notes}
+                onChange={(e) => update("notes", e.target.value)}
+                placeholder="Deadlines, background, links to inspiration — anything that helps"
+                className="mt-2 w-full rounded-sm border border-border bg-bg px-4 py-3 text-text focus:border-gold"
+              />
+            </div>
+          </div>
+        )}
+
+        {step === 4 && (
           <div className="space-y-6">
             <h3 className="font-display text-xl text-text">Review &amp; send</h3>
             <p className="text-sm text-text-muted">
@@ -297,20 +551,58 @@ export function ChangeRequestForm() {
                 <dt className="text-text-muted">Type of change</dt>
                 <dd className="text-text">{form.changeType}</dd>
               </div>
-              {form.pages && (
-                <div className="flex justify-between gap-4">
-                  <dt className="text-text-muted">Page(s)</dt>
-                  <dd className="text-text">{form.pages}</dd>
+              <div className="flex justify-between gap-4">
+                <dt className="text-text-muted">Page</dt>
+                <dd className="text-text">{form.pageLocation}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-text-muted">Location on page</dt>
+                <dd className="text-text">{form.exactSpot}</dd>
+              </div>
+              {form.contentAction === "update" ? (
+                <>
+                  <div>
+                    <dt className="text-text-muted">Currently</dt>
+                    <dd className="mt-1 whitespace-pre-wrap text-text">{form.currentContent}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-text-muted">Change to</dt>
+                    <dd className="mt-1 whitespace-pre-wrap text-text">{form.desiredContent}</dd>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <dt className="text-text-muted">Add</dt>
+                    <dd className="mt-1 whitespace-pre-wrap text-text">{form.newContent}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-text-muted">Placement</dt>
+                    <dd className="mt-1 whitespace-pre-wrap text-text">{form.placement}</dd>
+                  </div>
+                </>
+              )}
+              {attachments.filter((a) => a.status === "done").length > 0 && (
+                <div>
+                  <dt className="text-text-muted">Attachments</dt>
+                  <dd className="mt-1 text-text">
+                    {attachments
+                      .filter((a) => a.status === "done")
+                      .map((a) => a.name)
+                      .join(", ")}
+                  </dd>
                 </div>
               )}
               <div className="flex justify-between gap-4">
                 <dt className="text-text-muted">Urgency</dt>
                 <dd className="text-text">{form.urgency}</dd>
               </div>
-              <div>
-                <dt className="text-text-muted">Details</dt>
-                <dd className="mt-1 whitespace-pre-wrap text-text">{form.description}</dd>
-              </div>
+              {form.notes && (
+                <div>
+                  <dt className="text-text-muted">Notes</dt>
+                  <dd className="mt-1 whitespace-pre-wrap text-text">{form.notes}</dd>
+                </div>
+              )}
             </dl>
           </div>
         )}
@@ -343,10 +635,10 @@ export function ChangeRequestForm() {
         ) : (
           <button
             type="submit"
-            disabled={status === "submitting"}
+            disabled={status === "submitting" || uploading}
             className="inline-flex items-center justify-center rounded-sm bg-gold px-8 py-3 text-sm font-medium text-bg transition-colors hover:bg-gold-soft disabled:opacity-60"
           >
-            {status === "submitting" ? "Sending…" : "Send Request"}
+            {status === "submitting" ? "Sending…" : uploading ? "Uploading files…" : "Send Request"}
           </button>
         )}
       </div>

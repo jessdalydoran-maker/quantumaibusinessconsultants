@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { site } from "@/lib/site";
 
+type Attachment = { name: string; url: string };
+
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
 
@@ -9,15 +11,55 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   }
 
-  const { name, email, company, website, changeType, pages, description, urgency, honeypot } =
-    body as Record<string, string>;
+  const {
+    name,
+    email,
+    company,
+    website,
+    changeType,
+    pageLocation,
+    exactSpot,
+    contentAction,
+    currentContent,
+    desiredContent,
+    newContent,
+    placement,
+    urgency,
+    notes,
+    attachments,
+    honeypot,
+  } = body as Record<string, string> & { attachments?: Attachment[] };
 
   if (honeypot) {
     return NextResponse.json({ ok: true });
   }
 
-  if (!name || !email || !company || !website || !changeType || !description || !urgency) {
+  if (
+    !name ||
+    !email ||
+    !company ||
+    !website ||
+    !changeType ||
+    !pageLocation ||
+    !exactSpot ||
+    !urgency ||
+    (contentAction !== "update" && contentAction !== "add")
+  ) {
     return NextResponse.json({ error: "Please fill in all the required fields." }, { status: 400 });
+  }
+
+  if (contentAction === "update" && (!currentContent || !desiredContent)) {
+    return NextResponse.json(
+      { error: "Please tell us what's there now and what it should change to." },
+      { status: 400 }
+    );
+  }
+
+  if (contentAction === "add" && (!newContent || !placement)) {
+    return NextResponse.json(
+      { error: "Please tell us what to add and exactly where it should go." },
+      { status: 400 }
+    );
   }
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -36,6 +78,11 @@ export async function POST(req: NextRequest) {
 
   const resend = new Resend(apiKey);
 
+  const attachmentLines =
+    Array.isArray(attachments) && attachments.length > 0
+      ? ["", "Attachments:", ...attachments.map((a) => `- ${a.name}: ${a.url}`)]
+      : [];
+
   try {
     await resend.emails.send({
       from: `${site.name} Website <enquiries@${site.legacyDomain}>`,
@@ -48,13 +95,19 @@ export async function POST(req: NextRequest) {
         `Company: ${company}`,
         `Website: ${website}`,
         `Type of change: ${changeType}`,
-        pages ? `Page(s) affected: ${pages}` : null,
-        `Urgency: ${urgency}`,
+        `Page: ${pageLocation}`,
+        `Location on page: ${exactSpot}`,
         "",
-        "Details:",
-        description,
+        contentAction === "update" ? "Currently:" : "Add:",
+        contentAction === "update" ? currentContent : newContent,
+        "",
+        contentAction === "update" ? "Change to:" : "Placement:",
+        contentAction === "update" ? desiredContent : placement,
+        `Urgency: ${urgency}`,
+        notes ? `\nNotes:\n${notes}` : null,
+        ...attachmentLines,
       ]
-        .filter(Boolean)
+        .filter((line) => line !== null)
         .join("\n"),
     });
 
