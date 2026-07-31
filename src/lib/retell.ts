@@ -53,7 +53,6 @@ export async function createOrUpdateRetellAgent(params: {
   existingAgentId?: string | null;
   existingLlmId?: string | null;
   businessContext: string;
-  fallbackPhoneNumber?: string | null;
   functionWebhookUrl: string;
 }): Promise<{ agentId: string; llmId: string }> {
   const client = getClient();
@@ -66,7 +65,7 @@ ${params.businessContext || "(no business context configured yet)"}
 ## What you can do
 - Answer questions from the business information above.
 - Book an appointment using the book_appointment function once the caller has agreed on a specific date/time — always confirm the details back to them first.
-- If you can't help, or the caller asks for something you're not confident about, transfer the call to a human.`;
+- There is no human to transfer to. If you can't help, or the caller asks for something you're not confident about, tell them the team will follow up after reviewing the call, and get their name and best contact detail if you don't already have it.`;
 
   const tools = [
     {
@@ -84,21 +83,6 @@ ${params.businessContext || "(no business context configured yet)"}
         required: ["title", "starts_at", "ends_at"],
       },
     },
-    ...(params.fallbackPhoneNumber
-      ? [
-          {
-            type: "transfer_call" as const,
-            name: "transfer_to_human",
-            description: "Transfer the call to a human team member when you can't help.",
-            transfer_destination: { type: "predefined" as const, number: params.fallbackPhoneNumber },
-            // FIXED in Prompt 11 (live verification): transfer_option is
-            // required — confirmed against the live API, which rejected the
-            // tool entirely without it. cold_transfer is the simplest option
-            // (no warm hand-off/introduction to the human).
-            transfer_option: { type: "cold_transfer" as const },
-          },
-        ]
-      : []),
   ];
 
   const llm = params.existingLlmId

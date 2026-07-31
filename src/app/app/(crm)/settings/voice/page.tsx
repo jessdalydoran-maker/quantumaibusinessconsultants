@@ -25,7 +25,7 @@ export default async function VoiceSettingsPage() {
   const [{ data: voiceAgent }, { data: aiSettings }] = await Promise.all([
     supabase
       .from("voice_agents")
-      .select("phone_number, business_context, fallback_phone_number, status")
+      .select("phone_number, business_context, notification_email, status")
       .eq("account_id", accountId)
       .maybeSingle(),
     supabase.from("ai_settings").select("business_context").eq("account_id", accountId).maybeSingle(),
@@ -36,7 +36,7 @@ export default async function VoiceSettingsPage() {
       <PageHeader
         eyebrow="Settings"
         title="Voice AI (Phone)"
-        description="An inbound phone agent that answers calls, handles common questions, books appointments, and transfers to a human when it can't help. Powered by Retell AI — most of the actual voice pipeline (speech-to-text, LLM, text-to-speech, telephony) is theirs, not built here."
+        description="An inbound phone agent that answers calls, handles common questions, and books appointments. It doesn't transfer to a human — instead, your client care team gets an email after every call with the transcript and a summary, flagged for follow-up if the AI couldn't fully resolve it. Powered by Retell AI — most of the actual voice pipeline (speech-to-text, LLM, text-to-speech, telephony) is theirs, not built here."
       />
 
       <div className="mt-6 flex items-center gap-3 rounded-xl border border-border bg-bg-alt/50 p-4 text-sm">
@@ -73,8 +73,16 @@ export default async function VoiceSettingsPage() {
               />
             </div>
             <div>
-              <Label htmlFor="fallbackPhoneNumber">Fallback / Forwarding Number (transferred to when the agent can&apos;t help)</Label>
-              <Input id="fallbackPhoneNumber" name="fallbackPhoneNumber" placeholder="+15551234567" defaultValue={voiceAgent?.fallback_phone_number ?? ""} className="max-w-xs" />
+              <Label htmlFor="notificationEmail">Client Care Team Email (gets a summary after every call — comma-separate for multiple)</Label>
+              <Input
+                id="notificationEmail"
+                name="notificationEmail"
+                type="text"
+                required
+                placeholder="care@client.com, owner@client.com"
+                defaultValue={voiceAgent?.notification_email ?? ""}
+                className="max-w-md"
+              />
             </div>
             <Button type="submit" className="mt-2 w-fit">
               Save &amp; Sync with Retell

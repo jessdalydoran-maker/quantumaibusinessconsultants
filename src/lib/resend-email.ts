@@ -15,6 +15,56 @@ export function conversationReplyAddress(conversationId: string): string {
   return `reply+${conversationId}@${INBOUND_DOMAIN}`;
 }
 
+export async function sendCallSummaryEmail(params: {
+  to: string[];
+  accountName: string;
+  callerName: string | null;
+  fromNumber: string | null;
+  durationSeconds: number | null;
+  summary: string | null;
+  transcript: string | null;
+  resolved: boolean | null;
+}) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not configured.");
+  }
+
+  const resend = new Resend(apiKey);
+  const needsFollowUp = params.resolved === false;
+  const caller = params.callerName || params.fromNumber || "Unknown caller";
+  const minutes = params.durationSeconds ? Math.round(params.durationSeconds / 60) : null;
+
+  const subject = `${needsFollowUp ? "[Needs follow-up] " : ""}Call summary — ${caller}`;
+
+  const text = [
+    `Account: ${params.accountName}`,
+    `Caller: ${caller}`,
+    params.fromNumber ? `From: ${params.fromNumber}` : null,
+    minutes !== null ? `Duration: ${minutes} min` : null,
+    `Resolved by AI: ${params.resolved === null ? "unknown" : params.resolved ? "yes" : "no — needs follow-up"}`,
+    "",
+    "Summary:",
+    params.summary || "(no summary available)",
+    "",
+    "Transcript:",
+    params.transcript || "(no transcript available)",
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
+
+  const { error } = await resend.emails.send({
+    from: `${site.name} Voice AI <voice@${site.legacyDomain}>`,
+    to: params.to,
+    subject,
+    text,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
 export async function sendConversationEmail(params: {
   conversationId: string;
   to: string;
