@@ -23,139 +23,137 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "pinnacle-health-ni",
-    client: "Pinnacle Health NI",
-    industry: "Health & Wellness",
-    location: "Belfast",
+    slug: "crookedstone-house",
+    client: "Crookedstone House",
+    industry: "Bed & Breakfast",
+    location: "Aldergrove, Co. Antrim",
     status: "live",
-    headline: "AI booking and follow-up cut missed enquiries by 40%",
+    headline: "A real website and a CRM, instead of relying on Booking.com and a personal inbox",
     summary:
-      "AI booking, automated patient follow-ups, and intelligent enquiry handling for a Belfast health and wellness clinic.",
+      "A new website and CRM for a B&B near Belfast International Airport, so every enquiry is captured and followed up rather than living only inside Booking.com or a personal email account.",
     context: [
-      "Health and wellness clinics face a specific version of the missed-enquiry problem: reception staff are, correctly, prioritising the patients physically in front of them, which means the phone and inbox are often unattended during exactly the hours enquiries are highest. A new patient calling to ask about availability doesn't know that, they just experience a call that isn't answered.",
-      "That's a harder problem to solve with \"just hire more reception staff,\" because clinic reception needs are peaky rather than constant, busy at certain hours, quiet at others, which makes a fixed headcount an expensive and imperfect fix for what's really a timing and coverage problem.",
-      "It's also a problem with a real cost attached to it in a clinic setting specifically. A missed enquiry from a new patient isn't just a lost booking. For a health and wellness practice, it can mean someone who needed care went without it, or found it somewhere else, simply because nobody was free to pick up the phone at the right moment.",
-      "This is why, for clinics generally, the most useful first step is often simply making the gap visible: understanding when enquiries actually arrive relative to when staff have capacity to handle them, before deciding what to build around it.",
+      "Independent B&Bs and small guesthouses are unusually dependent on third-party booking platforms. Booking.com and similar sites bring genuine, valuable traffic, but every booking made through them comes with a commission, and the guest relationship, their contact details, their questions, their history, largely stays inside that platform rather than becoming something the business actually owns.",
+      "The direct enquiries that do come in outside those platforms, a phone call, a message through social media, an email, usually have nowhere central to land. For a small, owner-run business, that typically means a personal inbox or a phone that's also being used for everything else in the day, which makes it easy for a genuine enquiry to sit unanswered longer than it should, not through any lack of care, but because there's no system making sure it's seen.",
+      "None of this requires an AI system to fix. It requires a proper website that gives the business a direct channel of its own, and somewhere central that every enquiry actually lands and can be tracked, so following up isn't dependent on remembering to check three different places.",
+      "That's a smaller, more contained problem than the coverage gaps we solve with AI-handled enquiries or bookings elsewhere in our work, and it's worth being upfront about that: not every engagement needs the same scope to be worth doing properly.",
     ],
     challenge:
-      "Pinnacle Health NI was losing enquiries to slow response times during busy clinic hours, when reception staff were correctly focused on the patients physically in front of them, leaving new enquiries, calls, messages, and booking requests, to queue behind in-person care with no dedicated capacity to catch them in real time.",
+      "Crookedstone House didn't have a dedicated website of its own to point guests to, and had no central place for direct enquiries, phone, email, or otherwise, to land. Bookings largely flowed through Booking.com, where the business pays a commission and has limited ownership over the guest relationship itself.",
     approach: [
       {
-        title: "AI-handled enquiry intake",
+        title: "A proper website",
         description:
-          "Every new message is responded to the moment it arrives, rather than queuing behind whatever reception is dealing with in person at that moment.",
+          "A dedicated site covering the rooms, breakfast, the grounds, and the property's genuine convenience for Belfast International Airport, with clear, direct ways to get in touch, rather than guests only finding the business through Booking.com.",
       },
       {
-        title: "Automated booking against real availability",
+        title: "A CRM behind it",
         description:
-          "Booking reflects actual practitioner availability rather than a generic calendar, so what's offered to a patient is genuinely bookable.",
-      },
-      {
-        title: "Automated patient follow-up",
-        description:
-          "Follow-up sequences reduced the amount of manual chasing that previously fell to front-of-house staff between patient appointments.",
+          "Every enquiry submitted through the site is logged as a contact automatically, so there's one place to see who has reached out, what they asked, and whether they've been followed up with, rather than that living only in a personal inbox.",
       },
     ],
     whatThisMeans:
-      "For a clinic — or any appointment-led business where staff attention is legitimately split between the person in the room and the phone — the lesson isn't that reception staff were doing a bad job. It's that no fixed number of staff can perfectly cover unpredictable peaks in enquiry volume. An AI system doesn't replace reception; it covers the gaps reception physically can't, at the moments those gaps matter most, and it does so consistently rather than depending on how busy any given hour happens to be.",
+      "Not every business that comes to us needs a fully AI-automated system to get real value out of working with us. For a business like Crookedstone House, the highest-value fix was simpler: a direct channel of its own, and one real place where every enquiry is visible and tracked, instead of scattered across a booking platform's inbox, a phone, and email. Getting the basics genuinely right is sometimes the whole job.",
     lessons: [
-      "Appointment-led businesses lose enquiries at predictable peak moments, not randomly, which makes the problem solvable rather than just unlucky.",
-      "Reception staff performing well in person can still mean enquiries go unanswered. The two aren't in conflict, they're competing for the same limited attention.",
-      "Automated booking only works if it reflects real, current availability. A system offering slots that aren't genuinely bookable does more harm than good.",
-      "Follow-up that used to depend on a quiet moment between patients now happens consistently, which compounds over months into fewer patients falling through the cracks.",
-      "Solving a coverage gap doesn't require a bigger team. It requires the right system covering the specific hours and moments the existing team genuinely can't.",
+      "Small hospitality businesses often lose the guest relationship, not the booking itself, when everything is routed through a third-party platform.",
+      "A CRM does real, useful work even without any AI layered on top of it: simply making sure every enquiry is visible in one place is a genuine improvement over a personal inbox.",
+      "A dedicated website gives an independent business a direct channel that doesn't depend on a platform's commission or rules, alongside whatever bookings still come through Booking.com or similar.",
+      "Scoping a project honestly, rather than building in AI automation a business doesn't yet need, is part of doing this properly. The right-sized fix is the right fix.",
     ],
     faqs: [
       {
-        question: "Did this replace Pinnacle Health NI's reception team?",
+        question: "Does Crookedstone House still take bookings through Booking.com?",
         answer:
-          "No. The system handles enquiries reception can't get to in the moment, and reception continues to manage patients on-site and anything the system escalates. It's additional coverage, not a replacement for the team.",
+          "Yes. Booking.com remains one channel for bookings. Direct enquiries through the new site now have somewhere proper to go too, rather than existing only inside Booking.com's own messaging system.",
       },
       {
-        question: "How is patient data handled given this is a health setting?",
+        question: "Is there an AI chat or automated booking system on the site?",
         answer:
-          "Data handling was scoped specifically for a clinical environment, including what's captured and who can access it. See our general privacy approach for the framework this builds on.",
+          "No. This project was scoped as a website and a CRM, not an AI-automated system. What we build depends on what a business actually needs, not a fixed package applied to every client.",
       },
       {
-        question: "How long did it take to see the 40% reduction?",
+        question: "Could an AI concierge or automated booking be added later?",
         answer:
-          "The figure reflects a sustained period after the system was live and bedded in, not an initial spike. We don't publish early, unrepresentative numbers as if they were the settled result.",
+          "Yes, if it made sense for the business down the line. The current build gives Crookedstone House a solid foundation, a direct site and a CRM, that any future automation would sit on top of rather than replace.",
       },
       {
-        question: "Could a smaller, single-practitioner clinic see similar results?",
+        question: "How does a CRM actually help if there's no automation involved?",
         answer:
-          "The specific figure is Pinnacle Health NI's, not a guaranteed outcome for every clinic, but the underlying dynamic, enquiries arriving faster than staff can catch them at peak hours, applies at any clinic size, so the general approach is relevant even if the exact number wouldn't be.",
+          "It gives one place to see every enquiry, its status, and the contact's history, which is genuinely useful admin work on its own, separate from anything AI-driven.",
       },
     ],
-    relatedServices: ["enquiries-and-leads", "bookings-and-scheduling", "follow-ups-and-nurture"],
-    result: { stat: "40%", label: "reduction in missed enquiries" },
+    relatedServices: ["enquiries-and-leads", "admin-and-back-office"],
   },
   {
-    slug: "the-warren-collection",
-    client: "The Warren Collection",
-    industry: "Hospitality",
+    slug: "feeney-flooring-and-blinds",
+    client: "Feeney Flooring and Blinds",
+    industry: "Trades",
     location: "Northern Ireland",
-    status: "live",
-    headline: "One AI concierge, multiple properties, enquiries handled around the clock",
-    summary: "An AI concierge system covering guest enquiries across multiple hotel properties.",
+    status: "launching",
+    headline: "An AI product specialist that also manages two separate booking calendars",
+    summary:
+      "A website with an AI flooring and blinds specialist, WhatsApp as a real channel, and two AI-managed booking calendars, backed by a CRM.",
     context: [
-      "Multi-property hospitality groups face a coordination problem on top of the usual missed-enquiry problem: guests expect a consistent standard of response whichever property they're contacting, at whatever hour they're contacting it, but staffing a dedicated, always-on reception desk at every property individually is rarely realistic for an independent group.",
-      "Guest enquiries also don't respect office hours. A question about late check-in, local recommendations, or availability can arrive at 11pm just as easily as 11am, and a guest getting no answer until the next morning has already formed an impression of the property before their stay has even started.",
-      "There's a reputational dimension too, specific to hospitality: guests increasingly review not just the stay itself but the booking and communication experience around it. A slow or inconsistent reply doesn't just risk losing that individual booking, it risks becoming part of the public record other prospective guests read before choosing where to stay.",
-      "For multi-property groups generally, the coordination challenge tends to grow faster than headcount can reasonably follow. Each additional property adds enquiry volume and its own local specifics to keep track of, without a proportional increase in staff available to manage it.",
+      "Trades businesses selling a physical product, flooring and blinds among them, get a specific kind of enquiry before a job is ever booked: genuine product questions. What materials are available, roughly what something costs, how long fitting takes. Answering those well takes real product knowledge, and a generic contact form or a slow reply doesn't give a browsing customer much reason to wait around for one.",
+      "Scheduling adds a second layer of complexity on top of that. A business handling more than one type of appointment, for instance needing two genuinely separate diaries rather than one shared calendar, is exactly the kind of thing that's easy to get wrong by hand: a customer booked into the wrong calendar, or two people accidentally double-booking the same slot from different channels.",
+      "Customers also increasingly expect to reach a business wherever they already are, which for a lot of trades customers is WhatsApp rather than email or a contact form. A business only offering the channels that suit it, rather than the ones customers actually use, is quietly turning some enquiries away before they even start.",
+      "Put together, that's three separate problems, product questions, calendar logic, and channel coverage, that don't have much in common on the surface but all sit in the same gap between a customer's first question and a job actually getting booked.",
     ],
     challenge:
-      "Guest enquiries arrived at all hours, across multiple properties, with no single reception desk able to cover every question at every hour, and with each property having its own specifics that a shared, generic response process couldn't reflect accurately. That risked guests receiving inconsistent or inaccurate answers depending on which property, or which hour, they happened to reach out during.",
+      "Feeney Flooring and Blinds needed to answer real product questions quickly, manage two genuinely separate booking calendars without double-booking across them, and meet customers on WhatsApp as well as more traditional channels, all without it becoming a full-time job on top of the fitting work itself.",
     approach: [
       {
-        title: "A unified concierge, trained per property",
+        title: "An AI flooring and blinds specialist",
         description:
-          "One underlying system trained on each property's specifics: amenities, policies, local recommendations, so guests get accurate, property-specific answers rather than generic hotel-chain responses.",
+          "Trained on the business's actual product range and general trade knowledge, so a website visitor gets a specific, useful answer about materials, options, and rough pricing immediately, rather than a generic contact form and a wait.",
       },
       {
-        title: "Genuine 24/7 coverage",
+        title: "WhatsApp as a real channel",
         description:
-          "An enquiry at 11pm gets the same quality of response as one at 11am, rather than guests learning to expect slower replies outside office hours.",
+          "Customers who'd rather message on WhatsApp than email or call get the same coverage as any other channel, folded into the same inbox as everything else rather than being a separate, easily-missed thing to check.",
       },
       {
-        title: "Clear escalation to real staff",
+        title: "Two AI-managed booking calendars",
         description:
-          "Anything requiring a human, a complaint, an unusual request, anything sensitive, is routed to a real member of staff rather than handled automatically regardless of complexity.",
+          "The AI books directly into whichever calendar a given enquiry actually needs, so the two stay genuinely separate without anyone having to manually check both before confirming a slot.",
+      },
+      {
+        title: "A CRM tying it together",
+        description:
+          "Every enquiry, WhatsApp conversation, and booking is tracked against one contact record, so nothing about a customer's history gets lost between channels.",
       },
     ],
     whatThisMeans:
-      "For any hospitality business managing more than one location, the takeaway is that consistency matters as much as speed. A single, well-trained system that knows the specifics of each property can deliver a more uniform guest experience than trying to staff every location to the same standard around the clock — while still handing off to a person the moment a situation genuinely needs one. That combination of breadth and specificity is difficult to achieve with staffing alone, at almost any budget.",
+      "For a trades business selling a physical product, the gap between a customer's first question and a booked job is often wider than it looks: it's not just about answering fast, it's about answering with real product knowledge, on the channel the customer actually prefers, and getting the booking into the right calendar without anyone double-checking by hand. Closing all three at once is what actually removes the admin, not just one piece of it.",
     lessons: [
-      "Multi-site businesses don't need a bigger team at every site. They need one system that genuinely knows the specifics of each one.",
-      "Guests judge responsiveness at all hours, not just during a property's staffed reception hours, so 24/7 coverage closes a gap that's easy to underestimate.",
-      "Escalation rules matter more, not less, at scale. The more properties covered, the more important it is that unusual situations reliably reach a real person.",
-      "Consistency across locations is itself a guest-facing quality signal, separate from how good any individual property's amenities are.",
-      "A well-trained system scales coordination in a way that hiring more staff at every location generally can't, both practically and financially, particularly for an independent group without chain-level resources.",
+      "Product-specific AI knowledge matters more in trades than a generic chatbot script. Customers ask specific product questions before they'll seriously consider booking.",
+      "WhatsApp is often where trades customers already are. Meeting them there, rather than only offering a contact form, removes real friction.",
+      "Two calendars handled by one AI system avoid the classic problem of two people juggling a shared diary and double-booking each other.",
+      "A CRM underneath ties every channel, chat, WhatsApp, and calendar bookings, back to one contact record, so a customer's history doesn't fragment across separate tools.",
     ],
     faqs: [
       {
-        question: "How does the system know the difference between the group's properties?",
+        question: "Why isn't Feeney Flooring and Blinds' site live yet?",
         answer:
-          "Each property's specifics, amenities, policies, local recommendations, are part of its individual training, so an enquiry about one property doesn't get answered with details from another.",
+          "It's built and working; the domain setup just isn't finished. This case study will be updated with real results once it's had time to run live.",
       },
       {
-        question: "What happens with a genuine emergency or complaint at 2am?",
+        question: "How does the AI know about specific flooring and blinds products?",
         answer:
-          "Escalation rules route anything serious to on-call staff rather than the system attempting to resolve it alone. The 24/7 coverage is about response time, not about replacing human judgement for anything that needs it.",
+          "It's trained on Feeney Flooring and Blinds' actual product range and general trade knowledge, not a generic chatbot script, so answers about materials, options, and rough pricing are specific to what the business actually offers.",
       },
       {
-        question: "Could this work for a single-property hotel, not just a group?",
+        question: "What happens if a customer wants to speak to a real person?",
         answer:
-          "Yes, the same principle of consistent, always-on coverage applies at any scale. A multi-property group simply makes the coordination problem more visible.",
+          "Anything the AI can't handle, or that a customer specifically asks for, is routed through to the team the same way any other enquiry would be.",
       },
       {
-        question: "How does the system stay up to date as property details change, like new amenities or seasonal offers?",
+        question: "Does the AI handle both calendars the same way?",
         answer:
-          "This is maintained as part of ongoing support, the same as any other client relationship. Updates to a property's details are reflected in what the system knows, rather than it working from information that gradually goes stale after launch.",
+          "It knows which calendar a given type of enquiry needs to go into, so bookings land in the right diary without a customer needing to know the difference themselves.",
       },
     ],
     relatedServices: ["enquiries-and-leads", "bookings-and-scheduling", "admin-and-back-office"],
-    result: { stat: "24/7", label: "guest enquiries handled automatically" },
+    launchNote: "This system is launching in 2026. Results will be published here once live.",
   },
   {
     slug: "thirty3coffee",
@@ -163,61 +161,50 @@ export const caseStudies: CaseStudy[] = [
     industry: "Food & Beverage",
     location: "Nutts Corner",
     status: "launching",
-    headline: "An AI-driven batch ordering platform for wholesale clients",
-    summary: "An AI batch ordering platform built for thirty3coffee's wholesale client base.",
+    headline: "A proper website for a coffee shop, no automation involved",
+    summary:
+      "A straightforward website for an independent coffee shop, built as a smaller add-on alongside another engagement rather than a stand-alone project.",
     context: [
-      "Wholesale relationships in food and beverage are usually built on repetition: the same client ordering broadly the same products on a broadly predictable cycle. That predictability is an advantage most ordering processes don't take advantage of. Orders still tend to be handled the same manual way whether they're a first-time order or the fortieth repeat of an identical one.",
-      "The cost of that isn't just time. Every manual reorder conversation is time not spent roasting, fulfilling, or growing the wholesale side of the business, and the more the client base grows, the more that repetitive admin scales alongside it, linearly, rather than getting more efficient with size.",
-      "There's also a customer-experience angle wholesale businesses sometimes overlook: a client who has to actively remember to place their usual order, on their own initiative, every time, is a client who could just as easily forget, delay, or start comparing other suppliers during that gap. Removing the friction from reordering isn't only about saving the supplier's time, it protects the relationship on the client's side too.",
-      "For a growing roaster specifically, this admin load scales with exactly the growth you want. More wholesale clients means more of the same repetitive ordering conversations, which makes automating the pattern early a way of growing without the admin overhead growing at the same rate.",
+      "Not every independent business needs, or is asking for, an AI-automated system. A lot of small, local businesses, an independent coffee shop among them, run mainly on social media and word of mouth, without a dedicated website at all. That's workable up to a point, but it makes the basics, checking opening hours, finding the location, seeing the menu, harder than they need to be for anyone not already following the business on Instagram.",
+      "thirty3coffee is a second business run by the same client behind Feeney Flooring and Blinds. Rather than scoping and pricing a separate project, building its website was included as part of that engagement, which is why the scope here is deliberately small: a real website, and nothing more.",
+      "We think it's worth publishing a case study like this alongside the bigger, AI-driven ones elsewhere on this page. Not every engagement is, or should be, the same size, and being upfront about that is part of being honest about what real client work actually looks like.",
     ],
     challenge:
-      "Wholesale ordering for a growing coffee business meant repetitive back-and-forth for the same recurring orders, taking time away from roasting and fulfilment. That admin scaled up in direct proportion to the wholesale client base growing, rather than becoming more efficient as the business got bigger.",
+      "thirty3coffee had no dedicated website to point customers to, relying on social media for basics like opening hours, menu, and location, which made the business harder to find for anyone not already following it online.",
     approach: [
       {
-        title: "A batch-ordering system, not a generic cart",
+        title: "A clean, simple website",
         description:
-          "Built specifically around how wholesale batch ordering actually works, rather than adapting a standard e-commerce checkout not designed for recurring bulk orders.",
-      },
-      {
-        title: "Reordering prompts on each client's real cycle",
-        description:
-          "Automated prompts timed to each client's typical reorder pattern, rather than a one-size-fits-all reminder schedule.",
+          "Hours, menu, and location, done properly and built to actually be found, with no chat widget, ordering system, or automation layered on top, because none was part of the brief.",
       },
     ],
     whatThisMeans:
-      "For wholesale and B2B businesses generally, the opportunity is different from a consumer-facing enquiry problem — it's less about catching a call in real time and more about removing recurring admin from a relationship that's already predictable. The more repetitive and pattern-based a business relationship is, the more there usually is to gain from automating the ordering process around it, and the earlier in a business's growth that automation is introduced, the less admin overhead accumulates as the client base expands.",
+      "Not every business we work with needs, or gets, a fully AI-automated system, and that's fine. Sometimes the right-sized fix is a straightforward, well-built website, and treating that as a legitimate project in its own right, rather than dressing it up as something bigger, is part of scoping things honestly.",
     lessons: [
-      "Predictable, repeat B2B relationships are often the easiest place to find automation value, precisely because the pattern is already known rather than needing to be guessed at.",
-      "A generic e-commerce cart usually isn't built for wholesale batch ordering, and forcing one to fit tends to create as much friction as it removes.",
-      "Reordering friction is a two-sided cost, affecting the client's convenience as much as the supplier's admin time.",
-      "Automation that scales with the client base, rather than adding proportional admin as the business grows, changes the economics of taking on new wholesale relationships.",
-      "Being transparent about a project that's still in progress, rather than only ever publishing finished success stories, is itself part of being honest about what real client work looks like.",
+      "Not every engagement needs to be an AI-automated system to be worth doing properly. Sometimes a straightforward website is the right-sized fix.",
+      "A basic web presence still matters for a small, local business that mostly gets found through social media or word of mouth.",
+      "Being upfront about scope, that this was a smaller, website-only project bundled alongside another build, is part of being honest about what real client work looks like, not every case study needs to be the biggest example we have.",
     ],
     faqs: [
       {
-        question: "Why publish a case study before the system has launched?",
+        question: "Why doesn't this case study mention any AI features?",
         answer:
-          "Because it's a real, currently in-progress engagement, and we'd rather be transparent about work that's underway than only ever show finished results. We'll update this page with genuine outcomes once the system has been live long enough to report on honestly.",
+          "Because there aren't any. This was scoped and built as a straightforward website, not an AI-automated system, and we're not going to dress up a simple project as something bigger than it was.",
       },
       {
-        question: "Is this the same kind of system as the missed-call or booking work described elsewhere?",
+        question: "Is thirty3coffee's site live yet?",
         answer:
-          "No, this is a good example of how our services extend beyond enquiry handling. Batch ordering sits closer to admin and back-office, applied to a wholesale ordering context rather than customer enquiries.",
+          "Not yet; it's built and ready, and will go live alongside Feeney Flooring and Blinds. We'll update the status here once it is.",
       },
       {
-        question: "Could a similar system work for other wholesale or B2B businesses?",
+        question: "Is thirty3coffee connected to Feeney Flooring and Blinds?",
         answer:
-          "Yes, in principle. Any business with a recurring, pattern-based ordering relationship with its clients faces a similar opportunity, though the specifics would be scoped individually.",
-      },
-      {
-        question: "Will thirty3coffee's wholesale clients need to learn a new ordering process?",
-        answer:
-          "The aim is to make reordering easier than it currently is, not to add a learning curve. The system is being built around how clients already order, automating the repetitive part rather than introducing an unfamiliar new step.",
+          "Yes, they're run by the same client. Building thirty3coffee's website was included as part of that engagement rather than treated as a separate project, which is reflected in the smaller scope here.",
       },
     ],
-    relatedServices: ["admin-and-back-office", "bookings-and-scheduling"],
-    launchNote: "This system is launching in 2026. Results will be published here once live.",
+    relatedServices: [],
+    launchNote:
+      "This site is built and will go live alongside Feeney Flooring and Blinds. There's no automation in this build to report a result on, it's a straightforward website.",
   },
 ];
 

@@ -219,7 +219,7 @@ export const services: Service[] = [
       {
         question: "Will this work if I take bookings across multiple locations?",
         answer:
-          "Yes, this is a normal part of scoping for businesses like The Warren Collection, who use a similar approach across multiple properties. Each location's real availability is reflected separately.",
+          "Yes, that's a normal part of scoping for multi-location businesses. Each location's real availability is reflected separately.",
       },
       {
         question: "What happens if two customers try to book the exact same slot?",

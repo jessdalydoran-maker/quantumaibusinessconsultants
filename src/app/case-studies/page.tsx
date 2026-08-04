@@ -10,7 +10,7 @@ import { faqSchema, jsonLdScript } from "@/lib/schema";
 export const metadata: Metadata = {
   title: "Case Studies",
   description:
-    "Real results from real independent businesses running on Quantum AI systems: health & wellness, hospitality, and food & beverage.",
+    "Real results from real independent businesses running on Quantum AI systems: hospitality, trades, and food & beverage.",
   alternates: { canonical: "/case-studies" },
 };
 
@@ -18,12 +18,12 @@ const faqs = [
   {
     question: "Are these results typical, or best-case examples?",
     answer:
-      "They're the complete list of clients whose systems have been live long enough to report on honestly, not a filtered selection of the best-performing ones. We have three published case studies because we have three engagements we can report on truthfully, not because we've hidden weaker results.",
+      "They're the complete list of clients whose projects we can report on honestly, not a filtered selection of the best-performing ones. We have three published case studies because we have three engagements to show, not because we've hidden weaker results. Not all three involve the same amount of AI, either, some clients need a full automated system, others need something much simpler, and we publish both kinds.",
   },
   {
-    question: "Why don't you have case studies in trades or the other industries you list?",
+    question: "Why do these case studies vary so much in scope?",
     answer:
-      "Our published portfolio reflects where our earliest client relationships happened to be, which skewed toward health & wellness, hospitality, and food & beverage. Our current focus has shifted toward trades and service businesses, and we expect that portfolio gap to close as those engagements mature enough to report on. We won't publish a trades case study until we have a real one.",
+      "Because the clients themselves varied. Feeney Flooring and Blinds needed a full AI system: a product specialist, WhatsApp, and calendar management. Crookedstone House needed a proper website and a CRM behind it. thirty3coffee just needed a real website. We scope each project around what the business actually needs, not a fixed package, and we'd rather publish that honestly than make every case study look like the biggest one.",
   },
   {
     question: "How do you decide what result to publish for a client?",
@@ -119,8 +119,10 @@ export default function CaseStudiesPage() {
                       {study.result.label}
                     </p>
                   </div>
-                ) : (
+                ) : study.status === "launching" ? (
                   <p className="text-xs uppercase tracking-wide text-bronze">Launching 2026</p>
+                ) : (
+                  <p className="text-xs uppercase tracking-wide text-bronze">Live</p>
                 )}
               </Link>
             ))}
@@ -132,37 +134,35 @@ export default function CaseStudiesPage() {
         <Container>
           <p className="text-xs uppercase tracking-[0.3em] text-bronze">What Ties These Together</p>
           <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
-            Three different industries, one consistent pattern.
+            Different businesses, deliberately different-sized fixes.
           </h2>
           <div className="mt-8 max-w-2xl space-y-4 text-text-muted">
             <p>
-              A Belfast health clinic, a multi-property hospitality group, and a growing wholesale
-              coffee roaster don&apos;t look like the same kind of business on the surface. But
-              the underlying problem in each case was recognisably similar: real demand arriving
-              faster, or more repetitively, than a busy team could handle by hand, not because of
-              a lack of skill or effort, but because of a structural gap between how much attention
-              a task needed and how much was realistically available for it.
+              A B&amp;B near Belfast International Airport, a flooring and blinds specialist, and
+              an independent coffee shop don&apos;t look like the same kind of project, and they
+              aren&apos;t. One needed a full AI system: a product specialist, WhatsApp, and two
+              booking calendars it manages directly. Another needed a proper website and a CRM
+              behind it, so no enquiry gets lost between a booking platform, email, and the phone.
+              The third just needed a real website, nothing automated, because that&apos;s what
+              actually solved its problem.
             </p>
             <p>
-              In each case, the fix wasn&apos;t to add headcount or hope the team would somehow
-              find more hours in the day. It was to build a system specifically around where that
-              gap actually was: enquiry timing for the clinic, round-the-clock consistency for
-              the hospitality group, repetitive ordering admin for the coffee roaster, and let it
-              close that gap automatically, every time, rather than depending on someone catching
-              it manually.
+              We don&apos;t scope every project as if it needs the same amount of AI. Some
+              businesses we work with need a genuinely automated system; others need something
+              much simpler, done properly. Figuring out which is true for you starts with a real
+              conversation about what&apos;s actually going wrong, not a fixed package.
             </p>
             <p>
-              That&apos;s the same underlying approach we&apos;d bring to a trades business, a
-              salon, or a professional services firm. See{" "}
+              See{" "}
               <Link href="/industries" className="text-gold hover:underline">
                 industries
               </Link>{" "}
-              for how it applies specifically to yours, or{" "}
+              for how this applies to yours, or{" "}
               <Link href="/how-it-works" className="text-gold hover:underline">
                 how it works
               </Link>{" "}
-              for the process that gets us from a first conversation to a system like the ones
-              above.
+              for the process that gets us from a first conversation to a system scoped around
+              what you actually need.
             </p>
           </div>
         </Container>

@@ -199,10 +199,9 @@ export default function Home() {
             Built for businesses like yours.
           </h2>
           <p className="mt-4 max-w-2xl text-text-muted">
-            We recently built a full booking, follow-up, and review system for a flooring and
-            blinds retailer in Northern Ireland — calendars that fill themselves, quotes that get
-            chased automatically, and reviews requested after every job, without anyone lifting a
-            phone.
+            We recently built an AI product specialist for a flooring and blinds retailer in
+            Northern Ireland — trained on their actual range, linked to WhatsApp, and managing two
+            separate booking calendars directly, without anyone lifting a phone.
           </p>
         </Container>
       </section>
@@ -267,8 +266,10 @@ export default function Home() {
                       {study.result.label}
                     </p>
                   </div>
-                ) : (
+                ) : study.status === "launching" ? (
                   <p className="text-xs uppercase tracking-wide text-bronze">Launching 2026</p>
+                ) : (
+                  <p className="text-xs uppercase tracking-wide text-bronze">Live</p>
                 )}
               </Link>
             ))}
