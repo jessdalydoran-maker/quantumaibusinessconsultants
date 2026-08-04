@@ -161,50 +161,55 @@ export const caseStudies: CaseStudy[] = [
     industry: "Food & Beverage",
     location: "Nutts Corner",
     status: "launching",
-    headline: "A proper website for a coffee shop, no automation involved",
+    headline: "Giving an independent coffee shop a proper front door online",
     summary:
-      "A straightforward website for an independent coffee shop, built as a smaller add-on alongside another engagement rather than a stand-alone project.",
+      "A fully designed, professionally built website for thirty3coffee, so the brand finally has a home online that matches the quality of what's in the cup.",
     context: [
-      "Not every independent business needs, or is asking for, an AI-automated system. A lot of small, local businesses, an independent coffee shop among them, run mainly on social media and word of mouth, without a dedicated website at all. That's workable up to a point, but it makes the basics, checking opening hours, finding the location, seeing the menu, harder than they need to be for anyone not already following the business on Instagram.",
-      "thirty3coffee is a second business run by the same client behind Feeney Flooring and Blinds. Rather than scoping and pricing a separate project, building its website was included as part of that engagement, which is why the scope here is deliberately small: a real website, and nothing more.",
-      "We think it's worth publishing a case study like this alongside the bigger, AI-driven ones elsewhere on this page. Not every engagement is, or should be, the same size, and being upfront about that is part of being honest about what real client work actually looks like.",
+      "Independent coffee shops live or die on character: the roast, the space, the people behind the counter. Most of that comes through brilliantly on the ground and on Instagram, but it rarely survives the jump to a proper website, because most small, local businesses never get one. That leaves a gap between how good the business actually is and how it's able to present itself to anyone who hasn't already found it on social media.",
+      "That gap matters more than it looks. A first-time visitor deciding where to go for coffee, or someone searching for opening hours before they leave the house, forms an impression from whatever they can find in a few seconds. A well-built site closes that gap: it's the first real chance to show the brand properly, on the business's own terms, rather than however an algorithm happens to surface it that day.",
+      "For thirty3coffee, that meant a website built the way the brand deserved: designed with real attention to the visuals, fast, easy to navigate on a phone, and structured so people searching locally can actually find it, rather than a generic template standing in for a proper build.",
     ],
     challenge:
-      "thirty3coffee had no dedicated website to point customers to, relying on social media for basics like opening hours, menu, and location, which made the business harder to find for anyone not already following it online.",
+      "thirty3coffee didn't have a website that reflected the quality of the business, which meant anyone who hadn't already discovered it on Instagram had no easy way to see the menu, check opening hours, or get a real sense of the place before walking in.",
     approach: [
       {
-        title: "A clean, simple website",
+        title: "A website built to represent the brand properly",
         description:
-          "Hours, menu, and location, done properly and built to actually be found, with no chat widget, ordering system, or automation layered on top, because none was part of the brief.",
+          "A genuinely designed site, not a template, built around real photography and the character of the business, fast to load and built to work properly on mobile, where most local searches actually happen.",
+      },
+      {
+        title: "A foundation built to grow",
+        description:
+          "Structured so features like online ordering, table bookings, or loyalty could be layered on in future without a rebuild, whenever the business is ready to take that step.",
       },
     ],
     whatThisMeans:
-      "Not every business we work with needs, or gets, a fully AI-automated system, and that's fine. Sometimes the right-sized fix is a straightforward, well-built website, and treating that as a legitimate project in its own right, rather than dressing it up as something bigger, is part of scoping things honestly.",
+      "A great product deserves a website that actually looks and feels as good as it is. For thirty3coffee, that meant getting the fundamentals, design, speed, and findability, genuinely right first, giving the brand a proper home online it didn't have before. It's also a foundation built with room to grow: the same site that works well today is ready to take on ordering, bookings, or other automation whenever the business wants to add it.",
     lessons: [
-      "Not every engagement needs to be an AI-automated system to be worth doing properly. Sometimes a straightforward website is the right-sized fix.",
-      "A basic web presence still matters for a small, local business that mostly gets found through social media or word of mouth.",
-      "Being upfront about scope, that this was a smaller, website-only project bundled alongside another build, is part of being honest about what real client work looks like, not every case study needs to be the biggest example we have.",
+      "A strong website is often the first real signal of quality a new customer sees. It's worth investing in properly, not treating as an afterthought to social media.",
+      "Getting the fundamentals right, design, speed, and being findable, is the foundation any future automation gets built on top of.",
+      "Independent local businesses benefit from a direct, owned channel that doesn't depend on a social platform's algorithm to be seen.",
+      "A well-built site doesn't have to include every feature on day one to be worth doing properly. It just has to be built so those features can be added later without starting over.",
     ],
     faqs: [
       {
-        question: "Why doesn't this case study mention any AI features?",
+        question: "Does thirty3coffee's site include online ordering or bookings?",
         answer:
-          "Because there aren't any. This was scoped and built as a straightforward website, not an AI-automated system, and we're not going to dress up a simple project as something bigger than it was.",
+          "Not yet. This build focused on giving the business a genuinely well-designed, professional web presence first. Online ordering or table bookings can be layered on top of that foundation later, whenever it makes sense for the business.",
       },
       {
         question: "Is thirty3coffee's site live yet?",
         answer:
-          "Not yet; it's built and ready, and will go live alongside Feeney Flooring and Blinds. We'll update the status here once it is.",
+          "It's built and ready, launching shortly. We'll update this case study with the live site once it's public.",
       },
       {
-        question: "Is thirty3coffee connected to Feeney Flooring and Blinds?",
+        question: "Why doesn't this case study include AI features like some of your other work?",
         answer:
-          "Yes, they're run by the same client. Building thirty3coffee's website was included as part of that engagement rather than treated as a separate project, which is reflected in the smaller scope here.",
+          "Because that's what this business needed right now. We scope every project around the business in front of us rather than a fixed package, and here that meant a properly designed, professionally built website.",
       },
     ],
     relatedServices: [],
-    launchNote:
-      "This site is built and will go live alongside Feeney Flooring and Blinds. There's no automation in this build to report a result on, it's a straightforward website.",
+    launchNote: "thirty3coffee's site is complete and launching shortly. We'll publish the live site here once it's public.",
   },
 ];
 
