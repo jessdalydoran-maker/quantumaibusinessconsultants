@@ -6,6 +6,7 @@ import { FaqAccordion } from "@/components/FaqAccordion";
 import { HeroBanner } from "@/components/HeroBanner";
 import { PinnedSection } from "@/components/PinnedSection";
 import { GlowOrb } from "@/components/GlowOrb";
+import { Reveal } from "@/components/Reveal";
 import { services } from "@/lib/content/services";
 import { industries } from "@/lib/content/industries";
 import { caseStudies } from "@/lib/content/case-studies";
@@ -82,7 +83,7 @@ export default function Home() {
 
       <section className="border-b border-border py-20 md:py-28">
         <Container>
-          <div className="max-w-3xl space-y-5 text-text-muted">
+          <Reveal className="max-w-3xl space-y-5 text-text-muted">
             <p>
               {site.name} designs and builds AI systems built around your business for
               independent trades and service businesses across Northern Ireland. We handle the
@@ -98,7 +99,7 @@ export default function Home() {
               reflects on how much of a busy day is realistically left over for admin once the
               actual work is done.
             </p>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -142,7 +143,7 @@ export default function Home() {
 
       <section className="border-b border-border py-20 md:py-28">
         <Container>
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <Reveal className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-bronze">What We Build</p>
               <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
@@ -152,39 +153,42 @@ export default function Home() {
             <Button href="/services" variant="ghost">
               View all services &rarr;
             </Button>
-          </div>
+          </Reveal>
 
-          <p className="mt-8 max-w-2xl text-text-muted">
-            Every business&apos;s version of missed calls, slow follow-up, and admin overload looks
-            different, so we don&apos;t sell a fixed package and try to make your business fit
-            it. Each of the four areas below has a low-cost quick win to start with, and a fuller
-            custom-built option for when you&apos;re ready for more. See{" "}
-            <Link href="/how-it-works" className="text-gold hover:underline">
-              how it works
-            </Link>{" "}
-            for the difference between the two.
-          </p>
+          <Reveal delay={0.1}>
+            <p className="mt-8 max-w-2xl text-text-muted">
+              Every business&apos;s version of missed calls, slow follow-up, and admin overload
+              looks different, so we don&apos;t sell a fixed package and try to make your
+              business fit it. Each of the four areas below has a low-cost quick win to start
+              with, and a fuller custom-built option for when you&apos;re ready for more. See{" "}
+              <Link href="/how-it-works" className="text-gold hover:underline">
+                how it works
+              </Link>{" "}
+              for the difference between the two.
+            </p>
+          </Reveal>
 
           <div className="mt-14 divide-y divide-border border-t border-border">
             {services.map((service, i) => (
-              <Link
-                key={service.slug}
-                href={`/services/${service.slug}`}
-                className="group flex flex-col gap-3 py-8 transition-colors hover:bg-bg-alt md:flex-row md:items-center md:gap-10 md:px-4"
-              >
-                <span className="font-display text-2xl text-text-muted md:w-16">
-                  0{i + 1}
-                </span>
-                <div className="flex-1">
-                  <h3 className="font-display text-xl text-text group-hover:text-gold md:text-2xl">
-                    {service.name}
-                  </h3>
-                  <p className="mt-2 max-w-2xl text-sm text-text-muted">{service.dek}</p>
-                </div>
-                <span className="font-display text-gold opacity-0 transition-opacity group-hover:opacity-100 md:text-2xl">
-                  &rarr;
-                </span>
-              </Link>
+              <Reveal key={service.slug} delay={i * 0.08}>
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="group flex flex-col gap-3 py-8 transition-all duration-300 hover:bg-bg-alt hover:pl-2 md:flex-row md:items-center md:gap-10 md:px-4"
+                >
+                  <span className="font-display text-2xl text-text-muted transition-colors group-hover:text-gold md:w-16">
+                    0{i + 1}
+                  </span>
+                  <div className="flex-1">
+                    <h3 className="font-display text-xl text-text group-hover:text-gold md:text-2xl">
+                      {service.name}
+                    </h3>
+                    <p className="mt-2 max-w-2xl text-sm text-text-muted">{service.dek}</p>
+                  </div>
+                  <span className="font-display text-gold opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100 md:text-2xl">
+                    &rarr;
+                  </span>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -205,70 +209,33 @@ export default function Home() {
 
       <section className="border-b border-border py-20 md:py-28">
         <Container>
-          <p className="text-xs uppercase tracking-[0.3em] text-bronze">Who We Work With</p>
-          <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
-            Built around how your business actually operates.
-          </h2>
-          <p className="mt-4 max-w-2xl text-text-muted">
-            A physio clinic&apos;s booking flow isn&apos;t a tradesperson&apos;s callout flow,
-            and a salon&apos;s no-show problem isn&apos;t a solicitor&apos;s intake problem. We
-            build around the specifics of your industry rather than adapting one generic template
-            across every client.
-          </p>
+          <Reveal>
+            <p className="text-xs uppercase tracking-[0.3em] text-bronze">Who We Work With</p>
+            <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
+              Built around how your business actually operates.
+            </h2>
+            <p className="mt-4 max-w-2xl text-text-muted">
+              A physio clinic&apos;s booking flow isn&apos;t a tradesperson&apos;s callout flow,
+              and a salon&apos;s no-show problem isn&apos;t a solicitor&apos;s intake problem. We
+              build around the specifics of your industry rather than adapting one generic
+              template across every client.
+            </p>
+          </Reveal>
           <div className="mt-12 grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
-            {industries.map((industry) => (
-              <Link
-                key={industry.slug}
-                href={`/industries/${industry.slug}`}
-                className="group flex flex-col justify-between gap-6 bg-bg-alt p-6 transition-colors hover:bg-bg-raised"
-              >
-                <h3 className="font-display text-lg text-text group-hover:text-gold">
-                  {industry.name}
-                </h3>
-                <span className="text-xs uppercase tracking-wide text-text-muted group-hover:text-gold">
-                  Explore &rarr;
-                </span>
-              </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-border py-20 md:py-28">
-        <Container>
-          <p className="text-xs uppercase tracking-[0.3em] text-bronze">Our Work</p>
-          <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
-            Businesses already running smarter.
-          </h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {caseStudies.map((study) => (
-              <Link
-                key={study.slug}
-                href={`/case-studies/${study.slug}`}
-                className="group flex flex-col justify-between gap-6 rounded-sm border border-border p-8 transition-colors hover:border-gold"
-              >
-                <div>
-                  <p className="text-xs uppercase tracking-wide text-text-muted">
-                    {study.industry} &middot; {study.location}
-                  </p>
-                  <h3 className="mt-3 font-display text-xl text-text group-hover:text-gold">
-                    {study.client}
+            {industries.map((industry, i) => (
+              <Reveal key={industry.slug} delay={i * 0.06}>
+                <Link
+                  href={`/industries/${industry.slug}`}
+                  className="group flex h-full flex-col justify-between gap-6 bg-bg-alt p-6 transition-all duration-300 hover:-translate-y-1 hover:bg-bg-raised"
+                >
+                  <h3 className="font-display text-lg text-text group-hover:text-gold">
+                    {industry.name}
                   </h3>
-                  <p className="mt-3 text-sm text-text-muted">{study.summary}</p>
-                </div>
-                {study.result ? (
-                  <div>
-                    <span className="font-display text-3xl text-gold">{study.result.stat}</span>
-                    <p className="text-xs uppercase tracking-wide text-text-muted">
-                      {study.result.label}
-                    </p>
-                  </div>
-                ) : study.status === "launching" ? (
-                  <p className="text-xs uppercase tracking-wide text-bronze">Launching 2026</p>
-                ) : (
-                  <p className="text-xs uppercase tracking-wide text-bronze">Live</p>
-                )}
-              </Link>
+                  <span className="text-xs uppercase tracking-wide text-text-muted group-hover:text-gold">
+                    Explore &rarr;
+                  </span>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -276,25 +243,72 @@ export default function Home() {
 
       <section className="border-b border-border py-20 md:py-28">
         <Container>
-          <p className="text-xs uppercase tracking-[0.3em] text-bronze">Time Is Money</p>
-          <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
-            See what admin is actually costing you.
-          </h2>
-          <div className="mt-12">
-            <RoiCalculator />
+          <Reveal>
+            <p className="text-xs uppercase tracking-[0.3em] text-bronze">Our Work</p>
+            <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
+              Businesses already running smarter.
+            </h2>
+          </Reveal>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {caseStudies.map((study, i) => (
+              <Reveal key={study.slug} delay={i * 0.1}>
+                <Link
+                  href={`/case-studies/${study.slug}`}
+                  className="group flex h-full flex-col justify-between gap-6 rounded-sm border border-border p-8 transition-all duration-300 hover:-translate-y-1 hover:border-gold"
+                >
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-text-muted">
+                      {study.industry} &middot; {study.location}
+                    </p>
+                    <h3 className="mt-3 font-display text-xl text-text group-hover:text-gold">
+                      {study.client}
+                    </h3>
+                    <p className="mt-3 text-sm text-text-muted">{study.summary}</p>
+                  </div>
+                  {study.result ? (
+                    <div>
+                      <span className="font-display text-3xl text-gold">{study.result.stat}</span>
+                      <p className="text-xs uppercase tracking-wide text-text-muted">
+                        {study.result.label}
+                      </p>
+                    </div>
+                  ) : study.status === "launching" ? (
+                    <p className="text-xs uppercase tracking-wide text-bronze">Launching 2026</p>
+                  ) : (
+                    <p className="text-xs uppercase tracking-wide text-bronze">Live</p>
+                  )}
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </section>
 
       <section className="border-b border-border py-20 md:py-28">
         <Container>
-          <p className="text-xs uppercase tracking-[0.3em] text-bronze">Common Questions</p>
-          <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
-            Before you book a call.
-          </h2>
-          <div className="mt-8 max-w-3xl">
+          <Reveal>
+            <p className="text-xs uppercase tracking-[0.3em] text-bronze">Time Is Money</p>
+            <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
+              See what admin is actually costing you.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.15} className="mt-12">
+            <RoiCalculator />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="border-b border-border py-20 md:py-28">
+        <Container>
+          <Reveal>
+            <p className="text-xs uppercase tracking-[0.3em] text-bronze">Common Questions</p>
+            <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
+              Before you book a call.
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1} className="mt-8 max-w-3xl">
             <FaqAccordion faqs={homeFaqs} />
-          </div>
+          </Reveal>
         </Container>
       </section>
 
