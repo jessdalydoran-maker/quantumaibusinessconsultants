@@ -10,13 +10,25 @@ import Image from "next/image";
 export function PageBackdrop() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-bg" aria-hidden>
-      <div className="hero-ambient-move absolute inset-0 opacity-[0.14] grayscale">
+      <div className="hero-ambient-move absolute inset-0 opacity-[0.26] grayscale">
         <Image src="/hero.png" alt="" fill priority sizes="100vw" className="object-cover" style={{ objectPosition: "70% 40%" }} />
       </div>
       <div className="page-backdrop-stars absolute inset-0 opacity-70" />
       <div
         className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,var(--color-bg)_88%)]"
       />
+      {/* Thin lights drifting across the whole fixed backdrop, not tied to
+          any one object's silhouette — ambient rather than object-specific,
+          since this layer sits behind every section, not just the hero.
+          Each gets its own half-viewport-wide containing block so the
+          sweep's `left` keyframes (0-150%) resolve against a real width
+          instead of a zero-width wrapper. */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/2 overflow-hidden opacity-60">
+        <div className="hero-light-sweep" />
+      </div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/2 overflow-hidden opacity-50">
+        <div className="hero-light-sweep-b" style={{ animationDelay: "-5.2s" }} />
+      </div>
     </div>
   );
 }
