@@ -85,20 +85,52 @@ h4 {
   animation: marquee 32s linear infinite;
 }
 
-/* Hero light sweep: a soft diagonal highlight that loops across the hero
-   image continuously, independent of scroll position (see HeroBanner). */
+/* Hero background: a slow, continuous drift/breathe independent of scroll,
+   so the image itself feels alive rather than a static plate the scroll-
+   scale just zooms. Long duration and small range so it reads as ambient
+   motion, not an obvious loop. */
+@keyframes hero-ambient-move {
+  0%,
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+.hero-ambient-move {
+  animation: hero-ambient-move 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Hero light sweep: a bright strike — fast rise, brief flicker, slow
+   fade — that loops across the hero image on a long cycle, independent of
+   scroll position (see HeroBanner). */
 @keyframes hero-light-sweep {
-  0% {
+  0%,
+  36% {
     transform: translateX(-60%) skewX(-18deg);
     opacity: 0;
   }
-  15% {
-    opacity: 0.5;
+  40% {
+    opacity: 1;
+  }
+  43% {
+    opacity: 0.2;
+  }
+  46% {
+    opacity: 0.85;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.2;
   }
-  65% {
+  62% {
+    transform: translateX(60%) skewX(-18deg);
+    opacity: 0.45;
+  }
+  78% {
+    transform: translateX(220%) skewX(-18deg);
     opacity: 0;
   }
   100% {
@@ -109,18 +141,19 @@ h4 {
 
 .hero-light-sweep {
   position: absolute;
-  top: -20%;
-  bottom: -20%;
+  top: -25%;
+  bottom: -25%;
   left: 0;
-  width: 22%;
+  width: 26%;
   background: linear-gradient(
     100deg,
     transparent,
-    rgba(245, 241, 235, 0.35),
-    rgba(213, 176, 84, 0.55),
+    rgba(255, 255, 255, 0.75),
+    rgba(245, 241, 235, 0.95),
+    rgba(217, 169, 76, 0.85),
     transparent
   );
-  animation: hero-light-sweep 3.4s ease-in-out infinite;
+  animation: hero-light-sweep 6.5s ease-in-out infinite;
   pointer-events: none;
 }
 
@@ -128,6 +161,10 @@ h4 {
   .hero-light-sweep {
     animation: none;
     display: none;
+  }
+
+  .hero-ambient-move {
+    animation: none;
   }
 
   html {
