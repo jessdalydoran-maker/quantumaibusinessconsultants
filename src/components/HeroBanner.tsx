@@ -52,7 +52,10 @@ export function HeroBanner() {
         />
 
         {!prefersReducedMotion && (
-          <div className="hero-light-sweep" aria-hidden style={{ mixBlendMode: "screen" }} />
+          <>
+            <div className="hero-flash-pulse" aria-hidden style={{ mixBlendMode: "screen" }} />
+            <div className="hero-light-sweep" aria-hidden style={{ mixBlendMode: "screen" }} />
+          </>
         )}
 
         <div className="pointer-events-none absolute right-6 top-6 flex h-14 w-14 items-center justify-center rounded-full border border-border-strong bg-bg/60 backdrop-blur-sm sm:right-10 sm:top-10 sm:h-16 sm:w-16">

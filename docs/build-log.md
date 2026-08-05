@@ -1,3 +1,42 @@
+## Marketing site — pinned-graphic sections repeated down the page + brighter flash
+
+Follow-up feedback on the hero work above: (1) the pinned-graphic-behind-overlay-content
+treatment should repeat down the page like the actual Cerebrium reference (per screenshots the
+user sent — a security section, a CTA section, etc. each have their own pinned object, not just
+the hero), not be a one-off at the top; (2) the light effect still didn't read as "lightning"; (3)
+mobile needed checking.
+
+**Repeated the pattern**: extracted the hero's sticky/scroll-scale logic into a reusable
+`PinnedSection.tsx` (graphic pins behind copy, scales in slightly on scroll, releases into the
+next section) and applied it to three more homepage sections (`Sound familiar?`, `Real Results`,
+the closing CTA), alternating left/right/center copy alignment. Since there's no bespoke photo
+asset for these sections (unlike the hero's `hero.png`), built `GlowOrb.tsx` — a CSS-only
+gold/green glowing sphere with orbit rings — so the same visual language repeats without
+fabricating new bespoke renders.
+
+**Fixed the light**: the previous version was a soft 26%-wide diagonal band — visible but easy to
+miss. Added a second, dominant effect: `hero-flash-pulse`, a full-frame radial white/gold burst
+(fast rise, brief flicker, slow fade) centred on the graphic, layered with `mix-blend-mode:
+screen` on top of the existing sweep. This is the part that actually reads as a distant lightning
+strike lighting up the whole scene, not a moving highlight. Both share the reusable CSS classes
+so hero and every `PinnedSection`/`GlowOrb` flash together.
+
+**Real bug caught mid-verification, not part of the ask**: my own `npm run start` test server was
+stale after a rebuild (`EADDRINUSE` on the restart, old process still bound to the port) — early
+screenshots showed the new sections completely missing and `body.scrollHeight` far too small,
+which would have been a false "it's broken" read if taken at face value. Killed the actual PID
+(`lsof`/`ss` -> `fuser -k`, not just `pkill` by name, which was matching and killing its own
+replacement), confirmed a clean `✓ Ready` log, then re-verified — all four pinned sections
+measured their correct heights and rendered correctly. Worth noting because it's exactly the kind
+of self-inflicted false negative that's easy to ship a wrong fix against if you don't check why a
+result looks wrong before reacting to it.
+
+**Mobile audit**: confirmed via Playwright at 390px width — no horizontal overflow anywhere on
+the page, nav hamburger menu unaffected, all four pinned sections' orbs/image render and release
+correctly, `dvh`-based heights hold up.
+
+---
+
 ## Marketing site — dark editorial design system + scroll hero (interactive session)
 
 Requested: overhaul the public marketing site to a premium dark-green/gold editorial look, with a

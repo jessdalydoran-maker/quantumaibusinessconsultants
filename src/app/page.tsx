@@ -4,6 +4,8 @@ import { Button } from "@/components/Button";
 import { RoiCalculator } from "@/components/RoiCalculator";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { HeroBanner } from "@/components/HeroBanner";
+import { PinnedSection } from "@/components/PinnedSection";
+import { GlowOrb } from "@/components/GlowOrb";
 import { services } from "@/lib/content/services";
 import { industries } from "@/lib/content/industries";
 import { caseStudies } from "@/lib/content/case-studies";
@@ -100,47 +102,43 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="border-b border-border py-20 md:py-28">
-        <Container>
-          <div className="grid gap-12 md:grid-cols-[1fr_2fr] md:gap-16">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-bronze">Sound familiar?</p>
-              <h2 className="mt-4 font-display text-3xl text-text md:text-4xl">
-                You&apos;re doing everything. The AI does the rest.
-              </h2>
-              <p className="mt-4 text-sm text-text-muted">
-                Three patterns show up again and again in the businesses we talk to. See if any
-                of them sound like your week.
-              </p>
+      <PinnedSection
+        eyebrow="Sound familiar?"
+        title="You're doing everything. The AI does the rest."
+        graphic={<GlowOrb tone="green" />}
+      >
+        <p>
+          Three patterns show up again and again in the businesses we talk to. See if any of them
+          sound like your week.
+        </p>
+        <div className="mt-8 space-y-6">
+          {[
+            {
+              n: "01",
+              title: "Missed calls = missed revenue",
+              body: "AI answers every call, 24/7. Never miss a lead because you were busy working.",
+            },
+            {
+              n: "02",
+              title: "Chasing enquiries manually",
+              body: "Automated follow-up fires instantly across email and SMS, converting interest into bookings.",
+            },
+            {
+              n: "03",
+              title: "No time to grow",
+              body: "Systems run the admin. You run the business. Reclaim hours of your week.",
+            },
+          ].map((item) => (
+            <div key={item.n} className="flex gap-4">
+              <span className="font-display text-2xl text-gold">{item.n}</span>
+              <div>
+                <h3 className="text-lg text-text">{item.title}</h3>
+                <p className="mt-1 text-sm text-text-muted">{item.body}</p>
+              </div>
             </div>
-            <div className="grid gap-10 sm:grid-cols-3">
-              {[
-                {
-                  n: "01",
-                  title: "Missed calls = missed revenue",
-                  body: "AI answers every call, 24/7. Never miss a lead because you were busy working.",
-                },
-                {
-                  n: "02",
-                  title: "Chasing enquiries manually",
-                  body: "Automated follow-up fires instantly across email and SMS, converting interest into bookings.",
-                },
-                {
-                  n: "03",
-                  title: "No time to grow",
-                  body: "Systems run the admin. You run the business. Reclaim hours of your week.",
-                },
-              ].map((item) => (
-                <div key={item.n}>
-                  <span className="font-display text-3xl text-gold">{item.n}</span>
-                  <h3 className="mt-4 text-lg text-text">{item.title}</h3>
-                  <p className="mt-2 text-sm text-text-muted">{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
+          ))}
+        </div>
+      </PinnedSection>
 
       <section className="border-b border-border py-20 md:py-28">
         <Container>
@@ -192,20 +190,19 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="border-b border-border py-20 md:py-28">
-        <Container>
-          <p className="text-xs uppercase tracking-[0.3em] text-bronze">Real Results</p>
-          <h2 className="mt-4 max-w-lg font-display text-3xl text-text md:text-4xl">
-            Built for businesses like yours.
-          </h2>
-          <p className="mt-4 max-w-2xl text-text-muted">
-            We recently built a full booking, follow-up, and review system for a flooring and
-            blinds retailer in Northern Ireland — calendars that fill themselves, quotes that get
-            chased automatically, and reviews requested after every job, without anyone lifting a
-            phone.
-          </p>
-        </Container>
-      </section>
+      <PinnedSection
+        eyebrow="Real Results"
+        title="Built for businesses like yours."
+        graphic={<GlowOrb tone="gold" />}
+        align="right"
+      >
+        <p>
+          We recently built a full booking, follow-up, and review system for a flooring and
+          blinds retailer in Northern Ireland — calendars that fill themselves, quotes that get
+          chased automatically, and reviews requested after every job, without anyone lifting a
+          phone.
+        </p>
+      </PinnedSection>
 
       <section className="border-b border-border py-20 md:py-28">
         <Container>
@@ -300,22 +297,22 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-24 md:py-32">
-        <Container className="text-center">
-          <h2 className="text-balance mx-auto max-w-2xl font-display text-4xl text-text md:text-5xl">
-            Ready to reclaim your time?
-          </h2>
-          <p className="mx-auto mt-6 max-w-lg text-text-muted">
-            Book a no-obligation discovery call. We&apos;ll spend an hour understanding your
-            business and show you exactly what a custom-built system could look like for you.
-          </p>
-          <div className="mt-10">
-            <Button href={site.bookingUrl} variant="primary">
-              Book Your Discovery Call
-            </Button>
-          </div>
-        </Container>
-      </section>
+      <PinnedSection
+        eyebrow="Let's Talk"
+        title="Ready to reclaim your time?"
+        graphic={<GlowOrb tone="gold" />}
+        align="center"
+      >
+        <p className="mx-auto max-w-lg">
+          Book a no-obligation discovery call. We&apos;ll spend an hour understanding your
+          business and show you exactly what a custom-built system could look like for you.
+        </p>
+        <div className="mt-8">
+          <Button href={site.bookingUrl} variant="primary">
+            Book Your Discovery Call
+          </Button>
+        </div>
+      </PinnedSection>
     </>
   );
 }
