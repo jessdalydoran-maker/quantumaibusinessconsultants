@@ -1,3 +1,23 @@
+## Marketing site — fixed the mid-screen clip seam on the backdrop bolts
+
+Seventh round: a hard vertical line was cutting the backdrop's light bolts off in the middle of
+the screen.
+
+**Cause**: the previous round split the two backdrop bolts into a left-half and a right-half
+`overflow-hidden` container each (done to give `left`'s percentage keyframes a real width to
+resolve against, not a zero-width wrapper). That meant each bolt had its own hard clip edge
+sitting exactly at the 50% viewport boundary — when a diagonal bolt reached that edge mid-travel,
+`overflow-hidden` sliced it off in a straight vertical line, visible mid-screen against the
+diagonal light.
+
+**Fix**: widened both containers to the full viewport (`inset-0`) instead of a half each. The
+`left` keyframes now resolve against the real full width as intended, and the only remaining
+clip is `PageBackdrop`'s own outer `overflow-hidden`, which sits at the actual screen edge — so
+there's nothing left to produce a visible seam. Confirmed via screenshots at both bolts' peak
+frames that the streak now runs cleanly edge-to-edge.
+
+---
+
 ## Marketing site — brighter backdrop + lights on the fixed layer
 
 Sixth round: make PageBackdrop more visible, and give it its own light bolts (not just imagery).
