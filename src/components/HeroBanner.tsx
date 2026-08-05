@@ -29,18 +29,25 @@ export function HeroBanner() {
     <div ref={containerRef} className="relative h-[130dvh] sm:h-[170dvh] md:h-[220dvh]">
       <div className="sticky top-0 h-dvh w-full overflow-hidden border-b border-border bg-bg">
         <motion.div className="absolute inset-0" style={{ scale }}>
-          <Image
-            src="/hero.png"
-            alt="An illuminated globe with data connections converging to a single point, representing enquiries from every channel unified into one AI system."
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
+          <div className={`absolute inset-0 ${prefersReducedMotion ? "" : "hero-ambient-move"}`}>
+            <Image
+              src="/hero.png"
+              alt="An illuminated globe with data connections converging to a single point, representing enquiries from every channel unified into one AI system."
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
         </motion.div>
 
+        {/* A light, even scrim rather than a solid wash — the image stays the
+            backdrop the whole way across, with the copy sitting as an overlay
+            on top of it (helped along by the text-shadow on the copy below)
+            instead of the image being half-hidden behind a gradient. */}
+        <div className="absolute inset-0 bg-bg/35" aria-hidden />
         <div
-          className="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-transparent md:from-bg md:via-bg/55 md:to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-bg/70 via-transparent to-transparent"
           aria-hidden
         />
 
@@ -52,7 +59,7 @@ export function HeroBanner() {
           <Image src="/logo-mark.png" alt="" width={28} height={28} className="opacity-90" />
         </div>
 
-        <div className="relative flex h-dvh items-center">
+        <div className="relative flex h-dvh items-center" style={{ textShadow: "0 2px 24px rgba(2, 19, 10, 0.85)" }}>
           <Container>
             <p className="text-xs uppercase tracking-[0.3em] text-bronze">
               AI Systems for Trades &amp; Service Businesses
