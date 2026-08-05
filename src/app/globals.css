@@ -108,25 +108,29 @@ h4 {
    most of the 7s cycle is calm, and the actual crossing happens in well
    under a second, like a strike rather than a slow sweep or a broad flash.
    Independent of scroll position (see HeroBanner). */
+/* `left` (not transform: translateX) so the percentages are relative to
+   the clip container's width, not this thin bar's own ~3%-wide box —
+   translateX's percentage basis is the element's own size, which made the
+   bar barely move at all when that was tried first. */
 @keyframes hero-light-sweep {
   0%,
   88% {
-    transform: translateX(-30%) skewX(-20deg);
+    left: -20%;
     opacity: 0;
   }
   89% {
     opacity: 1;
   }
   94% {
-    transform: translateX(70%) skewX(-20deg);
+    left: 60%;
     opacity: 1;
   }
   98% {
-    transform: translateX(150%) skewX(-20deg);
+    left: 130%;
     opacity: 0.4;
   }
   100% {
-    transform: translateX(170%) skewX(-20deg);
+    left: 150%;
     opacity: 0;
   }
 }
@@ -155,30 +159,33 @@ h4 {
 .hero-flash-pulse {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at 62% 48%,
-    rgba(255, 255, 255, 0.8),
-    rgba(217, 169, 76, 0.35) 25%,
-    transparent 45%
-  );
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.55), transparent 55%);
   animation: hero-flash-pulse 7s ease-out infinite;
   pointer-events: none;
 }
 
+/* Solid, opaque core (no mix-blend-mode — screen blending can never look
+   fully solid) with the glow carried by box-shadow instead of a
+   transparency fade across the bar's own width, so it reads as a hard,
+   bright bolt rather than a soft translucent band. Only fades at its
+   leading/trailing tips. */
 .hero-light-sweep {
   position: absolute;
-  top: -25%;
-  bottom: -25%;
+  top: -10%;
+  bottom: -10%;
   left: 0;
-  width: 6%;
+  width: 3%;
+  transform: skewX(-20deg);
   background: linear-gradient(
-    100deg,
+    180deg,
     transparent,
-    rgba(255, 255, 255, 0.85),
-    rgba(245, 241, 235, 0.95),
-    rgba(217, 169, 76, 0.85),
+    #fff 8%,
+    #fff 92%,
     transparent
   );
+  box-shadow:
+    0 0 18px 4px rgba(255, 255, 255, 0.9),
+    0 0 46px 14px rgba(217, 169, 76, 0.55);
   animation: hero-light-sweep 7s linear infinite;
   pointer-events: none;
 }

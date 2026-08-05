@@ -1,3 +1,36 @@
+## Marketing site — light bolt: opaque, clipped to the globe, and a real translateX bug
+
+Third round of feedback, with side-by-side screenshots against the Cerebrium reference this
+time. Three complaints: the bolt looked translucent, its path was unrelated to the globe (looked
+random), and it still didn't read as "lightning."
+
+**The transparency had a real cause**: `mix-blend-mode: screen` was applied to the bolt. Screen
+blending is mathematically incapable of ever looking fully solid against anything but pure
+black — that's not a tuning issue, it's what the blend mode does. Removed it entirely; the core
+is now solid opaque white (`#fff`) with the glow carried by `box-shadow` instead of blending.
+
+**"Random" fixed by clipping to the object**: wrapped the bolt in a circular
+`overflow-hidden` container sized and positioned over the globe (hero) / the sphere itself
+(`GlowOrb`), so the bolt can only ever be visible where it crosses the object — it now reads as
+lightning striking the globe specifically, not a bar sweeping the whole section.
+
+**Real bug found while verifying, not visible from the diagnosis above**: after making the clip
+container thinner (3% width) and confirming it in code, screenshots kept showing no visible
+motion at all. Checked computed styles via Playwright instead of guessing — the bolt's `opacity`
+was correctly animating, but its `transform: translateX(...)` was translating by a few *pixels*,
+not by the intended fraction of the container's width. Root cause: CSS `%` on `transform:
+translateX` resolves against the **element's own** bounding box, not its containing block — and
+the element is only ~19px wide (3% of the clip circle), so `translateX(70%)` moved it a
+negligible ~13px instead of most of the way across a 640px circle. Switched from animating
+`transform: translateX` to animating the `left` property instead (which correctly resolves
+against the containing block), keeping `transform` only for the static `skewX`. Confirmed via
+computed-style sampling across a full cycle that `left` now sweeps from -20% to 150% of the
+actual container width, and via cropped screenshots timed to the peak-opacity window that the
+result is a clean, solid, opaque bolt clipped tight to the globe's silhouette — visually matching
+the reference.
+
+---
+
 ## Marketing site — thinner shooting light + hero image cropped out on mobile
 
 Second round of follow-up feedback: (1) the light effect (full-frame radial flash from the
