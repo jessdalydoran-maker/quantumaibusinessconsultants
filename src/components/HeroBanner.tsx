@@ -37,6 +37,7 @@ export function HeroBanner() {
               priority
               sizes="100vw"
               className="object-cover"
+              style={{ objectPosition: "78% 45%" }}
             />
           </div>
         </motion.div>

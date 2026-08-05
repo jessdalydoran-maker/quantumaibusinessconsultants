@@ -104,60 +104,47 @@ h4 {
   will-change: transform;
 }
 
-/* Hero light sweep: a bright strike — fast rise, brief flicker, slow
-   fade — that loops across the hero image on a long cycle, independent of
-   scroll position (see HeroBanner). */
+/* Hero light: a thin bolt that shoots across the frame fast, then rests —
+   most of the 7s cycle is calm, and the actual crossing happens in well
+   under a second, like a strike rather than a slow sweep or a broad flash.
+   Independent of scroll position (see HeroBanner). */
 @keyframes hero-light-sweep {
   0%,
-  36% {
-    transform: translateX(-60%) skewX(-18deg);
+  88% {
+    transform: translateX(-30%) skewX(-20deg);
     opacity: 0;
   }
-  40% {
+  89% {
     opacity: 1;
   }
-  43% {
-    opacity: 0.2;
+  94% {
+    transform: translateX(70%) skewX(-20deg);
+    opacity: 1;
   }
-  46% {
-    opacity: 0.85;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  62% {
-    transform: translateX(60%) skewX(-18deg);
-    opacity: 0.45;
-  }
-  78% {
-    transform: translateX(220%) skewX(-18deg);
-    opacity: 0;
+  98% {
+    transform: translateX(150%) skewX(-20deg);
+    opacity: 0.4;
   }
   100% {
-    transform: translateX(220%) skewX(-18deg);
+    transform: translateX(170%) skewX(-20deg);
     opacity: 0;
   }
 }
 
-/* A full-frame radial flash, like a distant lightning strike lighting up
-   the whole scene rather than a band sweeping across it — this is the part
-   that actually reads as "lightning" at a glance, on the same cycle as the
-   diagonal sweep above so the two land together. */
+/* A small, subtle glow that accompanies the bolt on the same fast window —
+   companion punch, not a dominant full-frame flash. */
 @keyframes hero-flash-pulse {
   0%,
-  36% {
+  88% {
     opacity: 0;
   }
-  39% {
-    opacity: 0.95;
+  91% {
+    opacity: 0.4;
   }
-  41% {
-    opacity: 0.25;
+  94% {
+    opacity: 0.15;
   }
-  44% {
-    opacity: 0.75;
-  }
-  50% {
+  98% {
     opacity: 0;
   }
   100% {
@@ -167,15 +154,14 @@ h4 {
 
 .hero-flash-pulse {
   position: absolute;
-  inset: -10%;
+  inset: 0;
   background: radial-gradient(
     circle at 62% 48%,
-    rgba(255, 255, 255, 0.95),
-    rgba(245, 241, 235, 0.65) 30%,
-    rgba(217, 169, 76, 0.4) 50%,
-    transparent 72%
+    rgba(255, 255, 255, 0.8),
+    rgba(217, 169, 76, 0.35) 25%,
+    transparent 45%
   );
-  animation: hero-flash-pulse 6.5s ease-out infinite;
+  animation: hero-flash-pulse 7s ease-out infinite;
   pointer-events: none;
 }
 
@@ -184,16 +170,16 @@ h4 {
   top: -25%;
   bottom: -25%;
   left: 0;
-  width: 26%;
+  width: 6%;
   background: linear-gradient(
     100deg,
     transparent,
-    rgba(255, 255, 255, 0.75),
+    rgba(255, 255, 255, 0.85),
     rgba(245, 241, 235, 0.95),
     rgba(217, 169, 76, 0.85),
     transparent
   );
-  animation: hero-light-sweep 6.5s ease-in-out infinite;
+  animation: hero-light-sweep 7s linear infinite;
   pointer-events: none;
 }
 
