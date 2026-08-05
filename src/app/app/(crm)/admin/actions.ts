@@ -151,8 +151,17 @@ export async function updatePlanTierAction(formData: FormData) {
   }
 
   const admin = createAdminClient();
-  const { error } = await admin.from("accounts").update({ plan_tier: planTier }).eq("id", accountId);
+  const { data, error } = await admin
+    .from("accounts")
+    .update({ plan_tier: planTier })
+    .eq("id", accountId)
+    .select("id");
   if (error) throw new Error(error.message);
+  if (!data || data.length === 0) {
+    throw new Error(
+      "Plan tier was not updated — no matching account row. This usually means the admin client isn't authenticating with the service role (check SUPABASE_SERVICE_ROLE_KEY in the deployment's environment variables)."
+    );
+  }
 
   revalidatePath("/app/admin");
 }
@@ -178,8 +187,17 @@ export async function updateFeatureOverrideAction(formData: FormData) {
     features[featureKey] = value === "true";
   }
 
-  const { error } = await admin.from("accounts").update({ features }).eq("id", accountId);
+  const { data, error } = await admin
+    .from("accounts")
+    .update({ features })
+    .eq("id", accountId)
+    .select("id");
   if (error) throw new Error(error.message);
+  if (!data || data.length === 0) {
+    throw new Error(
+      "Feature override was not saved — no matching account row. This usually means the admin client isn't authenticating with the service role (check SUPABASE_SERVICE_ROLE_KEY in the deployment's environment variables)."
+    );
+  }
 
   revalidatePath("/app/admin");
 }

@@ -18,7 +18,17 @@ export async function updateVoiceSettingsAction(formData: FormData) {
   }
 
   const businessContext = String(formData.get("businessContext") || "").trim();
-  const fallbackPhoneNumber = String(formData.get("fallbackPhoneNumber") || "").trim() || null;
+  const notificationEmail = String(formData.get("notificationEmail") || "").trim();
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const notificationEmails = notificationEmail
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+
+  if (notificationEmails.length === 0 || !notificationEmails.every((e) => emailPattern.test(e))) {
+    throw new Error("Enter at least one valid client care team email address.");
+  }
 
   const { data: existing } = await supabase
     .from("voice_agents")
@@ -36,7 +46,6 @@ export async function updateVoiceSettingsAction(formData: FormData) {
         existingAgentId: existing?.provider_agent_id,
         existingLlmId: existing?.provider_llm_id,
         businessContext,
-        fallbackPhoneNumber,
         functionWebhookUrl: `${site.url}/api/webhooks/retell-function`,
       });
       agentId = result.agentId;
@@ -56,7 +65,7 @@ export async function updateVoiceSettingsAction(formData: FormData) {
     {
       account_id: accountId,
       business_context: businessContext,
-      fallback_phone_number: fallbackPhoneNumber,
+      notification_email: notificationEmail,
       provider_agent_id: agentId,
       provider_llm_id: llmId,
       status,
