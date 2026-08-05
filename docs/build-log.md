@@ -1,3 +1,21 @@
+## Marketing site — brighter backdrop + lights on the fixed layer
+
+Sixth round: make PageBackdrop more visible, and give it its own light bolts (not just imagery).
+
+- Bumped the backdrop image from `opacity-[0.14]` to `opacity-[0.26]`.
+- Added the same solid-core bolt (`.hero-light-sweep`/`-b`) used in the hero/orbs, but not
+  clipped to any one object's circle this time — the backdrop isn't "the globe," it's the whole
+  page's atmosphere, so the two bolts each get their own half-viewport-wide container instead
+  (left half / right half) so they read as ambient rather than tied to a specific silhouette.
+  Reused the existing `left`-based keyframes rather than `transform: translateX` for the same
+  reason as before — percentage `left` resolves against the containing block's real width.
+- Verified via computed-style timing (both bolts fire on their expected ~7s cycles) and
+  screenshots at the confirmed peak frames, scrolled to a flat section so `PageBackdrop` itself
+  (not a `PinnedSection`) is what's actually on screen — a solid, thin, opaque streak crossing
+  behind the case-study cards.
+
+---
+
 ## Marketing site — fixed page-wide backdrop (the actual Cerebrium mechanism)
 
 Fifth round: went back to the Cerebrium reference and clarified what was actually meant by
