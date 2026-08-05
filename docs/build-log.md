@@ -1,3 +1,35 @@
+## Marketing site — dark editorial design system + scroll hero (interactive session)
+
+Requested: overhaul the public marketing site to a premium dark-green/gold editorial look, with a
+Cerebrium-style scroll-scale hero animation. Checked the actual codebase first rather than
+rebuilding from scratch — the colour tokens, Playfair Display/Work Sans typography, eyebrow
+labels, two-line gold-accented headline, two-button CTA pattern, and generous section spacing
+requested were **already fully implemented** site-wide (`globals.css`, `PageHero.tsx`,
+`Button.tsx`, every public page) from an earlier session. No changes made there — redoing already-
+correct work would just be busywork with regression risk.
+
+**What was actually missing and built**: the Cerebrium-style scroll-driven hero. `HeroBanner.tsx`
+is now a client component using Framer Motion (`useScroll`/`useTransform`) — the hero image scales
+1.28x → 1x → 1.28x across a 130dvh (mobile) to 220dvh (desktop) scroll container, staying `sticky`
+while the hero copy scrolls with it, then releases into the marquee section below. A continuous
+CSS-keyframe diagonal light sweep (independent of scroll, `mix-blend-mode: screen`) loops across
+the image every 3.4s. Added a small circular badge (existing `logo-mark.png`) in the hero's corner,
+per the "optional nice-to-have" in the brief. `prefers-reduced-motion` disables both the scale
+transform and the light sweep, falling back to a static full-size image.
+
+**Bug found and fixed along the way, not part of the ask but blocking it**: `position: sticky`
+was silently broken across the *entire site*, including the existing header nav — `overflow-x:
+hidden` on both `html` and `body` in `globals.css`, with no `overflow-y` set, triggers a CSS spec
+rule that auto-converts the y-axis to `auto`, turning `body` into its own scroll container
+detached from `window`/viewport scroll. Confirmed via Playwright: before the fix, `position:
+sticky` elements tracked the outer container 1:1 instead of pinning (verified header nav
+scrolled away too, not just the new hero). Fixed by switching both to `overflow-x: clip`, which
+prevents horizontal scroll without creating a new scrolling box. Verified via real Playwright
+scroll-and-screenshot runs (not just visual inspection) at multiple scroll offsets, desktop and
+mobile, before and after the fix.
+
+---
+
 # Build Log — Autonomous session, Prompts 4–10
 
 This log records every judgment call made without stopping to ask, per the "Autonomous Build
