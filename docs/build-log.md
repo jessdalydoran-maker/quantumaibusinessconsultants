@@ -1,3 +1,37 @@
+## Marketing site — fixed page-wide backdrop (the actual Cerebrium mechanism)
+
+Fifth round: went back to the Cerebrium reference and clarified what was actually meant by
+"content as an overlay" — not more scroll-triggered reveals (previous round), but literally: a
+background image that stays put while the page content scrolls over it, everywhere, not just
+within the hero's own scroll-scale section.
+
+**This called for a much simpler primitive than what had been built so far.** All four previous
+rounds used `position: sticky` scoped to individual sections (`PinnedSection`), which only holds
+imagery in place for that section's own scroll range before releasing into a flat, opaque
+`bg-bg` section. That's why the flat sections still looked static — they were never designed to
+show anything but a solid colour. The actual fix is `position: fixed`, which — unlike
+`sticky` — never releases; it stays pinned to the viewport for the entire page, which is exactly
+"content scrolls over it" with zero extra scroll-linked JS.
+
+**Built `PageBackdrop.tsx`**: one fixed, full-viewport, `-z-10`, `pointer-events-none` layer
+containing a faint (`opacity-[0.14]`, grayscale) copy of `hero.png`, a CSS-only tiled starfield
+(`.page-backdrop-stars` — eight radial-gradient dots tiled at 340px, not individual DOM elements,
+so it's one paint layer, not dozens), and a vignette to keep edges dark. Mounted once in
+`SiteChrome`'s marketing branch only — confirmed it does **not** touch `/app`, since `SiteChrome`
+already branches on `pathname.startsWith("/app")` and renders bare `{children}` for the CRM with
+no chrome at all.
+
+**Why this composes correctly with the sticky sections and doesn't need them removed**: `each
+PinnedSection`'s own sticky div keeps its own opaque `bg-bg` (it's carrying real
+imagery/`GlowOrb`s that need to stay fully opaque, not blended with the backdrop), so within those
+sections the backdrop is simply covered — no visual conflict. The flat text sections in between
+have no background colour of their own, which is what actually made them look flat before; with
+nothing above the fixed backdrop now, they show it straight through. Verified via screenshots at
+five scroll depths that the same imagery is now genuinely visible and continuous behind every
+section on the page, not just the hero.
+
+---
+
 ## Marketing site — second hero bolt + scroll-reveal on every remaining static section
 
 Fourth round: (1) more lights, especially in the hero; (2) the rest of the page (everything not

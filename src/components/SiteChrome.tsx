@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ChatWidget } from "@/components/ChatWidget";
+import { PageBackdrop } from "@/components/PageBackdrop";
 
 // The CRM (/app/**) renders its own nav/shell (see src/app/app/layout.tsx) and
 // must never show the marketing header, footer, or AI receptionist widget.
@@ -18,6 +19,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <>
+      <PageBackdrop />
       <Header />
       <main id="main-content" className="flex-1">
         {children}
