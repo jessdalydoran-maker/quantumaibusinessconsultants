@@ -31,6 +31,7 @@ export function GlowOrb({ tone = "gold" }: { tone?: "gold" | "green" }) {
         <div className="absolute inset-0 overflow-hidden rounded-full">
           <div className="hero-flash-pulse" />
           <div className="hero-light-sweep" />
+          <div className="hero-light-sweep-b" />
         </div>
       </div>
     </div>

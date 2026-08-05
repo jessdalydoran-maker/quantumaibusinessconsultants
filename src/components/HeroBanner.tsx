@@ -59,6 +59,7 @@ export function HeroBanner() {
           <div className="pointer-events-none absolute right-[-10%] top-[16%] aspect-square w-[85%] max-w-[640px] overflow-hidden rounded-full sm:right-[-2%] sm:top-[10%] sm:w-[62%]">
             <div className="hero-flash-pulse" aria-hidden />
             <div className="hero-light-sweep" aria-hidden />
+            <div className="hero-light-sweep-b" aria-hidden />
           </div>
         )}
 

@@ -1,3 +1,30 @@
+## Marketing site — second hero bolt + scroll-reveal on every remaining static section
+
+Fourth round: (1) more lights, especially in the hero; (2) the rest of the page (everything not
+already using PinnedSection) felt static/boring next to the animated hero — wanted the
+Cerebrium-level "alive" feeling applied more broadly, not just at the top.
+
+**More lights**: added a second bolt (`.hero-light-sweep-b`) to the hero and both `GlowOrb`
+instances — same mechanism as the first, different skew angle and a `-3.5s` animation-delay so it
+strikes at a different point in the 7s cycle instead of firing in lockstep with the first.
+Confirmed via computed-style sampling that the two bolts peak at genuinely different timestamps
+(~2.1-2.4s and ~5.5-6.1s into the cycle), not simultaneously.
+
+**Scroll-reveal for the rest of the page**: built `Reveal`/`RevealStagger` (`src/components/
+Reveal.tsx`) — a thin wrapper around Framer Motion's `whileInView`, fade + rise on scroll into
+view, `once: true` so it never re-triggers, and a no-op under `prefers-reduced-motion`. Applied
+it to every section on the homepage that wasn't already a `PinnedSection`: the intro copy, the
+services list (staggered per row), the industries grid (staggered per tile), the case study cards
+(staggered), the ROI calculator, and the FAQ block. Also added hover-lift (`-translate-y-1`) to
+the industries and case-study cards, and a small arrow-slide on the services list, since "static"
+was as much about zero interaction feedback as about scroll animation.
+
+Scope was kept to the homepage, matching where all four rounds of this feedback have been aimed —
+the same `Reveal` component is trivial to apply to the secondary pages (`/services`,
+`/industries`, etc.) if that's wanted next.
+
+---
+
 ## Marketing site — light bolt: opaque, clipped to the globe, and a real translateX bug
 
 Third round of feedback, with side-by-side screenshots against the Cerebrium reference this
