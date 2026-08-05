@@ -1,3 +1,29 @@
+## Marketing site — thinner shooting light + hero image cropped out on mobile
+
+Second round of follow-up feedback: (1) the light effect (full-frame radial flash from the
+previous round) should be thinner and read as shooting across, not a broad flash; (2) mobile was
+still broken — the hero image looked "completely cut off."
+
+**Diagnosed the mobile bug precisely before touching anything**: measured the rendered `<img>`
+via Playwright at an iPhone 13 viewport rather than guessing. `hero.png` is a 1718×916 landscape
+photo with its focal subject (the globe) positioned well right-of-centre. `object-cover` with no
+explicit `object-position` defaults to a centred crop — fine on a wide desktop viewport, but on a
+tall narrow mobile viewport the centred crop keeps only a thin vertical slice around the image's
+horizontal midpoint, which is nowhere near the globe. The globe wasn't broken or missing, it was
+being cropped out by design-default browser behaviour. Fixed with an explicit
+`objectPosition: "78% 45%"`, confirmed by screenshot at iPhone 13 dimensions before and after —
+the globe is now the dominant visual on mobile, not a sliver in the corner.
+
+**Redesigned the light** per feedback: replaced the 26%-wide, multi-second broad flash with a
+6%-wide bolt whose actual visible motion is compressed into roughly the last 12% of a 7s cycle
+(~0.8s) — long calm, then a fast thin diagonal streak, rather than a slow sweep or a broad
+full-frame wash. The full-frame radial pulse from the previous round is now a small, low-opacity
+companion glow synced to the same fast window rather than the dominant effect. Verified by
+sampling frames across a full cycle and confirming a resting frame and a mid-shoot frame actually
+look distinct.
+
+---
+
 ## Marketing site — pinned-graphic sections repeated down the page + brighter flash
 
 Follow-up feedback on the hero work above: (1) the pinned-graphic-behind-overlay-content
