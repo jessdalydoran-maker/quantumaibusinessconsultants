@@ -26,8 +26,12 @@ export function GlowOrb({ tone = "gold" }: { tone?: "gold" | "green" }) {
                 : "0 0 120px 20px rgba(31,122,74,0.22), inset -30px -30px 80px rgba(2,19,10,0.65)",
           }}
         />
-        <div className="hero-flash-pulse" style={{ mixBlendMode: "screen" }} />
-        <div className="hero-light-sweep" style={{ mixBlendMode: "screen" }} />
+        {/* Clipped to the sphere's own circle so the bolt only ever crosses
+            the orb, not the whole section. */}
+        <div className="absolute inset-0 overflow-hidden rounded-full">
+          <div className="hero-flash-pulse" />
+          <div className="hero-light-sweep" />
+        </div>
       </div>
     </div>
   );
